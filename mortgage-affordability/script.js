@@ -3,14 +3,12 @@ var pymChild = null;
 
 function drawGraphic() {
 
-  deposit = 40000 // an assumption for now 
-  mortgageTerm = 25 //assume 25 years
-  monthlySpend = 1500 // starting value
-
+  //set up colour scales for map 
   colour = d3.scaleOrdinal()
     .domain([true, false])
     .range(['#206095', '#F66068'])
 
+  //read in bank of england data 
   boe = boe.map(function (d) {
     return {
       date: d3.timeParse("%d %b %Y")(d.DATE).getTime(),
@@ -20,6 +18,7 @@ function drawGraphic() {
   })
   maxDate = d3.max(boe, d => d.date)
 
+  // find latest data
   latestBoe = boe.filter(d => d.date == maxDate).map(function (d) {
     return {
       date: new Date(d.date),
@@ -30,150 +29,186 @@ function drawGraphic() {
 
   rates = latestBoe.flatMap(d => d.value)
 
+  // use the rates to set up a threshold scale
   rate = d3.scaleThreshold()
     .domain([0.60, 0.75, 0.85, 0.9, 0.95])
     .range(rates.concat(null))
 
-  detached = {}
-  semi = {}
-  flat = {}
-  terrace = {}
-  areaname = {}
+  d3.select('#submit').on('click', function () {
 
-  graphic_data.forEach(d => {
-    detached[d.Area_Code] = canIaffordit(+d.Detached_Average_Price);
-    semi[d.Area_Code] = canIaffordit(+d.Semi_Detached_Average_Price);
-    flat[d.Area_Code] = canIaffordit(+d.Flat_Average_Price)
-    terrace[d.Area_Code] = canIaffordit(+d.Terraced_Average_Price)
-    areaname[d.Area_Code] = d.Region_Name
-  })
-
-  // data = graphic_data.map(function (area) {
-  //   return {
-  //     ...area,
-  //     detached: canIaffordit(+area.Detached_Average_Price),
-  //     semi: canIaffordit(+area.Semi_Detached_Average_Price),
-  //     flat: canIaffordit(+area.Flat_Average_Price),
-  //     terrace: canIaffordit(+area.Terraced_Average_Price)
-  //   }
-  // })
-
-  // console.log(data)
-
-  map = new maplibregl.Map({
-    container: 'map', // container id
-    style: '../lib/style.json', //stylesheet location //includes key for API
-    center: [-2.5, 54], // starting position
-    minZoom: 3.5,//
-    zoom: 4.5, // starting zoom
-    maxZoom: 13, //
-    attributionControl: false // needed for compact attribution
-  })
-
-  // Add zoom and rotation controls to the map.
-  map.addControl(new maplibregl.NavigationControl({ showCompass: false }));
-
-  // Disable map rotation using right click + drag
-  map.dragRotate.disable();
-
-  // Disable map rotation using touch rotation gesture
-  map.touchZoomRotate.disableRotation();
-
-  // Add geolocation controls to the map.
-  // map.addControl(new maplibregl.GeolocateControl({
-  //   positionOptions: {
-  //     enableHighAccuracy: true
-  //   }
-  // }));
-
-  //add compact attribution
-  map.addControl(new maplibregl.AttributionControl({
-    compact: true
-  }));
-
-  // if touch screen, disable stuff
-  if (isTouchDevice()) {
-    map.scrollZoom.disable();
-    map.dragPan.disable();
-  };
-
-  //convert topojson to geojson
-  for (key in geog.objects) {
-    areas = topojson.feature(geog, geog.objects[key])
-  }
+    d3.select('#results').style("display",'block')
+    // get deposit, mortgage term and monthly spend
+    deposit = document.getElementById('deposit').value
+    mortgageTerm = document.getElementById('mortgageTerm').value
+    monthlySpend = document.getElementById('spending').value
 
 
+    detached = {}
+    semi = {}
+    flat = {}
+    terrace = {}
+    areaname = {}
 
-  areas.features.map(function (d, i) {
-    if (!isNaN(terrace[d.properties.AREACD])) { d.properties.fill = colour(terrace[d.properties.AREACD]) }
-    else { d.properties.fill = '#ccc' };
-  });
+    graphic_data.forEach(d => {
+      detached[d.Area_Code] = canIaffordit(+d.Detached_Average_Price);
+      semi[d.Area_Code] = canIaffordit(+d.Semi_Detached_Average_Price);
+      flat[d.Area_Code] = canIaffordit(+d.Flat_Average_Price)
+      terrace[d.Area_Code] = canIaffordit(+d.Terraced_Average_Price)
+      areaname[d.Area_Code] = d.Region_Name
+    })
 
-  map.on('load', loadmap);
 
-  function loadmap() {
-    map.addSource('area', { 'type': 'geojson', 'data': areas });
+    map = new maplibregl.Map({
+      container: 'map', // container id
+      style: '../lib/style.json', //stylesheet location //includes key for API
+      center: [-2.5, 54], // starting position
+      minZoom: 3.5,//
+      zoom: 4, // starting zoom
+      maxZoom: 13, //
+      attributionControl: false // needed for compact attribution
+    })
 
-    map.addLayer({
-      'id': 'area',
-      'type': 'fill',
-      'source': 'area',
-      'touchAction': 'none',
-      'layout': {},
-      'paint': {
-        'fill-color': {
-          type: 'identity',
-          property: 'fill'
-        },
-        'fill-opacity': 0.9,
-        'fill-outline-color': '#fff'
-      }
-    }, 'place_city');
+    // Add zoom and rotation controls to the map.
+    map.addControl(new maplibregl.NavigationControl({ showCompass: false }));
 
-    //Get current year for copyright
-    today = new Date();
-    copyYear = today.getFullYear();
-    map.style.sourceCaches['area']._source.attribution = "Contains OS data &copy; Crown copyright and database right " + copyYear;
+    // Disable map rotation using right click + drag
+    map.dragRotate.disable();
 
-    map.addLayer({
-      "id": "state-fills-hover",
-      "type": "line",
-      "source": "area",
-      "layout": {},
-      "paint": {
-        "line-color": "#000",
-        "line-width": 2
-      },
-      "filter": ["==", "AREACD", ""]
-    }, 'place_city');
+    // Disable map rotation using touch rotation gesture
+    map.touchZoomRotate.disableRotation();
 
-    map.addLayer({
-      'id': 'area_labels',
-      'type': 'symbol',
-      'source': 'area',
-      'minzoom': 10,
-      'layout': {
-        "text-field": '{AREANM}',
-        "text-font": ["Open Sans", "Arial Unicode MS Regular"],
-        "text-size": 14
-      },
-      'paint': {
-        "text-color": "#666",
-        "text-halo-color": "#fff",
-        "text-halo-width": 1,
-        "text-halo-blur": 1
-      }
+    // Add geolocation controls to the map.
+    // map.addControl(new maplibregl.GeolocateControl({
+    //   positionOptions: {
+    //     enableHighAccuracy: true
+    //   }
+    // }));
+
+    //add compact attribution
+    map.addControl(new maplibregl.AttributionControl({
+      compact: true
+    }));
+
+    map.fitBounds([
+      [-18.94,49.91],
+      [12.09,60.84]
+    ])
+
+    // if touch screen, disable stuff
+    if (isTouchDevice()) {
+      map.scrollZoom.disable();
+      map.dragPan.disable();
+    };
+
+    //convert topojson to geojson
+    for (key in geog.objects) {
+      areas = topojson.feature(geog, geog.objects[key])
+    }
+
+
+    areas.features.map(function (d, i) {
+      if (!isNaN(detached[d.properties.AREACD])) { d.properties.fill = colour(detached[d.properties.AREACD]) }
+      else { d.properties.fill = '#ccc' };
     });
 
-    // //Highlight stroke on mouseover (and show area information)
-    // map.on("mousemove", "area", onMove);
+    map.on('load', loadmap);
 
-    // // Reset the state-fills-hover layer's filter when the mouse leaves the layer.
-    // map.on("mouseleave", "area", onLeave);
+    function loadmap() {
+      map.addSource('area', { 'type': 'geojson', 'data': areas });
 
-    // //Add click event
-    // map.on("click", "area", onClick);
-  }
+      map.addLayer({
+        'id': 'area',
+        'type': 'fill',
+        'source': 'area',
+        'touchAction': 'none',
+        'layout': {},
+        'paint': {
+          'fill-color': {
+            type: 'identity',
+            property: 'fill'
+          },
+          'fill-opacity': 0.9,
+          'fill-outline-color': '#fff'
+        }
+      }, 'place_city');
+
+      //Get current year for copyright
+      today = new Date();
+      copyYear = today.getFullYear();
+      map.style.sourceCaches['area']._source.attribution = "Contains OS data &copy; Crown copyright and database right " + copyYear;
+
+      map.addLayer({
+        "id": "state-fills-hover",
+        "type": "line",
+        "source": "area",
+        "layout": {},
+        "paint": {
+          "line-color": "#000",
+          "line-width": 2
+        },
+        "filter": ["==", "AREACD", ""]
+      }, 'place_city');
+
+      map.addLayer({
+        'id': 'area_labels',
+        'type': 'symbol',
+        'source': 'area',
+        'minzoom': 10,
+        'layout': {
+          "text-field": '{AREANM}',
+          "text-font": ["Open Sans", "Arial Unicode MS Regular"],
+          "text-size": 14
+        },
+        'paint': {
+          "text-color": "#666",
+          "text-halo-color": "#fff",
+          "text-halo-width": 1,
+          "text-halo-blur": 1
+        }
+      });
+
+      // //Highlight stroke on mouseover (and show area information)
+      // map.on("mousemove", "area", onMove);
+
+      // // Reset the state-fills-hover layer's filter when the mouse leaves the layer.
+      // map.on("mouseleave", "area", onLeave);
+
+      // //Add click event
+      // map.on("click", "area", onClick);
+    }
+
+    d3.select('#type').on('change',function(){
+      type=eval(d3.select(this).property('value'))
+
+      //update properties to the geojson based on the property type selected
+			areas.features.map(function(d,i) {
+        if(!isNaN(type[d.properties.AREACD]))
+         {d.properties.fill = colour(type[d.properties.AREACD])}
+        else {d.properties.fill = '#ccc'};
+     });
+
+     //Reattach geojson data to area layer
+     map.getSource('area').setData(areas);
+
+     //set up style object
+     styleObject = {
+                 type: 'identity',
+                 property: 'fill'
+           }
+     //repaint area layer map usign the styles above
+     map.setPaintProperty('area', 'fill-color', styleObject);
+
+    })
+
+  })
+
+
+
+
+
+
+
+
 
 
   function canIaffordit(price) {
