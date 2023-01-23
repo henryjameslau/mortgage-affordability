@@ -3,11 +3,6 @@ var pymChild = null;
 
 function drawGraphic() {
 
-  //set up colour scales for map 
-  colour = d3.scaleOrdinal()
-    .domain([true, false])
-    .range(['#206095', '#F66068'])
-
   //read in bank of england data 
   boe = boe.map(function (d) {
     return {
@@ -34,14 +29,10 @@ function drawGraphic() {
     .domain([0.60, 0.75, 0.85, 0.9, 0.95])
     .range(rates.concat(null))
 
-  d3.select('#submit').on('click', function () {
 
-    d3.select('#results').style("display",'block')
-    // get deposit, mortgage term and monthly spend
+    // get deposit, mortgage term
     deposit = document.getElementById('deposit').value
     mortgageTerm = document.getElementById('mortgageTerm').value
-    monthlySpend = document.getElementById('spending').value
-
 
     detached = {}
     semi = {}
@@ -50,12 +41,20 @@ function drawGraphic() {
     areaname = {}
 
     graphic_data.forEach(d => {
-      detached[d.Area_Code] = canIaffordit(+d.Detached_Average_Price);
-      semi[d.Area_Code] = canIaffordit(+d.Semi_Detached_Average_Price);
-      flat[d.Area_Code] = canIaffordit(+d.Flat_Average_Price)
-      terrace[d.Area_Code] = canIaffordit(+d.Terraced_Average_Price)
+      detached[d.Area_Code] = monthlyrepayments(+d.Detached_Average_Price);
+      semi[d.Area_Code] = monthlyrepayments(+d.Semi_Detached_Average_Price);
+      flat[d.Area_Code] = monthlyrepayments(+d.Flat_Average_Price)
+      terrace[d.Area_Code] = monthlyrepayments(+d.Terraced_Average_Price)
       areaname[d.Area_Code] = d.Region_Name
     })
+
+    detached_prices=Object.values(detached).filter(d=>!isNaN(d)).sort(d3.ascending)
+    detachedBreaks=ss.equalIntervalBreaks(detached_prices,5)
+
+    //set up colour scales for map 
+    colour = d3.scaleThreshold()
+      .domain(detachedBreaks.slice(1))
+      .range(['#BCD6E9', '#A4C3DC','#8DB3D3','#77A2C5','#6390B5'])
 
 
     map = new maplibregl.Map({
@@ -127,8 +126,8 @@ function drawGraphic() {
             type: 'identity',
             property: 'fill'
           },
-          'fill-opacity': 0.9,
-          'fill-outline-color': '#fff'
+          'fill-opacity': 1,
+          'fill-outline-color': '#707071'
         }
       }, 'place_city');
 
@@ -177,56 +176,61 @@ function drawGraphic() {
       // map.on("click", "area", onClick);
     }
 
-    d3.select('#type').on('change',function(){
-      type=eval(d3.select(this).property('value'))
+    // d3.select('#type').on('change',function(){
+    //   type=eval(d3.select(this).property('value'))
 
-      //update properties to the geojson based on the property type selected
-			areas.features.map(function(d,i) {
-        if(!isNaN(type[d.properties.AREACD]))
-         {d.properties.fill = colour(type[d.properties.AREACD])}
-        else {d.properties.fill = '#ccc'};
-     });
+    //   //update properties to the geojson based on the property type selected
+		// 	areas.features.map(function(d,i) {
+    //     if(!isNaN(type[d.properties.AREACD]))
+    //      {d.properties.fill = colour(type[d.properties.AREACD])}
+    //     else {d.properties.fill = '#ccc'};
+    //  });
 
-     //Reattach geojson data to area layer
-     map.getSource('area').setData(areas);
+    //  //Reattach geojson data to area layer
+    //  map.getSource('area').setData(areas);
 
-     //set up style object
-     styleObject = {
-                 type: 'identity',
-                 property: 'fill'
-           }
-     //repaint area layer map usign the styles above
-     map.setPaintProperty('area', 'fill-color', styleObject);
+    //  //set up style object
+    //  styleObject = {
+    //              type: 'identity',
+    //              property: 'fill'
+    //        }
+    //  //repaint area layer map usign the styles above
+    //  map.setPaintProperty('area', 'fill-color', styleObject);
 
-    })
-
-  })
+    // })
 
 
-
-
-
-
-
-
-
-
-  function canIaffordit(price) {
+  function monthlyrepayments(price){
+    if(price==""){return NaN}
     loan = price - deposit;
     ltv = loan / price
 
     ourRate = rate(ltv)
     monthlyrate = ourRate / 1200
     term = mortgageTerm * 12
-    maxprice = monthlySpend * ((1 + monthlyrate) ** term - 1) / (monthlyrate * (1 + monthlyrate) ** term)
 
-    if (maxprice > loan) {
-      result = true
-    } else {
-      result = false
-    }
-    return result
-  }
+    payment = loan * (monthlyrate * (1 + monthlyrate) ** term) / ((1 + monthlyrate) ** term - 1) 
+
+    return Math.round(payment * 100) / 100
+    
+  }  
+
+  // function canIaffordit(price) {
+  //   loan = price - deposit;
+  //   ltv = loan / price
+
+  //   ourRate = rate(ltv)
+  //   monthlyrate = ourRate / 1200
+  //   term = mortgageTerm * 12
+  //   maxprice = monthlySpend * ((1 + monthlyrate) ** term - 1) / (monthlyrate * (1 + monthlyrate) ** term)
+
+  //   if (maxprice > loan) {
+  //     result = true
+  //   } else {
+  //     result = false
+  //   }
+  //   return +result
+  // }
 
 
 
