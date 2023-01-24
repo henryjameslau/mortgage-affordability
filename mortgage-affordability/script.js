@@ -71,10 +71,10 @@ function drawGraphic() {
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }));
 
     // Disable map rotation using right click + drag
-    map.dragRotate.disable();
+    // map.dragRotate.disable();
 
     // Disable map rotation using touch rotation gesture
-    map.touchZoomRotate.disableRotation();
+    // map.touchZoomRotate.disableRotation();
 
     // Add geolocation controls to the map.
     // map.addControl(new maplibregl.GeolocateControl({
@@ -95,8 +95,8 @@ function drawGraphic() {
 
     // if touch screen, disable stuff
     if (isTouchDevice()) {
-      map.scrollZoom.disable();
-      map.dragPan.disable();
+      // map.scrollZoom.disable();
+      // map.dragPan.disable();
     };
 
     //convert topojson to geojson
