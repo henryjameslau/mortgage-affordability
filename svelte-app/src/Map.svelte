@@ -11,7 +11,8 @@
 	// export let color = "#206095";
 	// export let lineWidth = 2.5;
 	// export let fillOpacity = 0.2;
-	export let colour 
+	export let colour;
+	export let choices;
 	let geojson;
 	let map;
 	let container;
@@ -34,7 +35,7 @@
 			container,
 			style,
 			bounds,
-			interactive: false,
+			interactive: true,
 		});
 
 		map.addControl(new maplibre.NavigationControl({ showCompass: false }));
@@ -54,7 +55,7 @@
 					"fill-opacity": 1,
 					"fill-outline-color": "#707071",
 				},
-			});
+			},'place_other');
 			map.addLayer({
 				id: "boundary-line",
 				type: "line",
@@ -72,17 +73,19 @@
 		if (map) map.fitBounds(bounds, { padding: 20 });
 	}
 
-	function setData(data) {
-		if (map) {
-			map.getSource("boundary").setData(data);
+	function setData(choices) {
+		console.log(choices)
 
-			styleObject = {
-				type: "identity",
-				property: "fill",
-			};
-			//repaint area layer map usign the styles above
-			map.setPaintProperty("area", "fill-color", styleObject);
-		}
+		// if (map) {
+		// 	map.getSource("boundary").setData(data);
+
+		// 	styleObject = {
+		// 		type: "identity",
+		// 		property: "fill",
+		// 	};
+		// 	//repaint area layer map usign the styles above
+		// 	map.setPaintProperty("area", "fill-color", styleObject);
+		// }
 	}
 
 	$: bounds = geojson
@@ -94,7 +97,7 @@
 	// $: {
 
 	// }
-	$: setData(data);
+	$: setData(choices);
 	$: fitBounds(bounds);
 </script>
 

@@ -102,6 +102,8 @@
     }
   });
 
+  $: choices = {a:mortgageTerm,b:deposit,c:propertyType}
+
   function monthlyrepayments(price) {
     if (price == "") {
       return NaN;
@@ -173,7 +175,7 @@
 
 <div id="results">
   <div id="map" style="height:300px;">
-    <Map data={prices} {colour} />
+    <Map data={prices} {colour} {choices}/>
   </div>
 </div>
 <hr />
