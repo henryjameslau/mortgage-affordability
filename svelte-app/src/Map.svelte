@@ -4,6 +4,12 @@
 	import { onMount } from "svelte";
 	import { feature } from "topojson";
 	import topo from "./data/geog.json";
+	import { csv } from "d3-fetch";
+	import { autoType } from "d3-dsv";
+	import { max, ascending } from "d3-array";
+	import { timeParse } from "d3-time-format";
+	import { scaleThreshold } from "d3-scale";
+	import { equalIntervalBreaks } from "simple-statistics";
 
 	const style = "https://bothness.github.io/ons-basemaps/data/style-omt.json";
 
@@ -16,6 +22,71 @@
 	let geojson;
 	let map;
 	let container;
+	let boe;
+	let hpi;
+	let prices = {};
+
+	let boeLookup = {
+		IUMZICQ: "2 year, 60% LTV",
+		IUMBV34: "2 year, 75% LTV",
+		IUMZICR: "2 year, 85% LTV",
+		IUMB482: "2 year, 90% LTV",
+		IUM2WTL: "2 year, 95% LTV",
+	};
+
+	let propertyLookup = {
+		Detached: "averagePriceDetached.value",
+		"Semi-detached": "averagePriceSemiDetached.value",
+		Terraced: "averagePriceTerraced.value",
+		Flat: "averagePriceFlatMaisonette.value",
+	};
+
+	let latestHpi;
+	let rate;
+
+	onMount(async () => {
+		(boe = await csv(
+			"https://corsproxy.io/?https://www.bankofengland.co.uk/boeapps/database/_iadb-fromshowcolumns.asp?csv.x=yes&Datefrom=01/Sep/2022&Dateto=now&SeriesCodes=IUMZICQ,IUMBV34,IUMZICR,IUMB482,IUM2WTL&CSVF=CN&UsingCodes=Y&VPD=N&VFD=N",
+			autoType
+		)),
+			(hpi = await csv(
+				"https://raw.githubusercontent.com/ONSvisual/land-registry-flat-data/main/landreg.csv",
+				autoType
+			));
+
+		let maxHpiDate = max(hpi, (d) => d["date.value"]).getTime();
+
+		//read in bank of england data
+		boe = boe.map(function (d) {
+			return {
+				date: timeParse("%d %b %Y")(d.DATE).getTime(),
+				series: boeLookup[d.SERIES],
+				value: +d.VALUE,
+			};
+		});
+
+		let boeBefore = boe.filter((d) => d.date < maxHpiDate);
+		let latestBoeBeforeHpi = max(boeBefore, (d) => d.date);
+
+		// find relevant data to latest HPI data
+		let latestBoe = boe
+			.filter((d) => d.date == latestBoeBeforeHpi)
+			.map(function (d) {
+				return {
+					date: new Date(d.date),
+					series: d.series,
+					value: d.value,
+				};
+			});
+
+		const rates = latestBoe.flatMap((d) => d.value);
+
+		rate = scaleThreshold()
+			.domain([0.6, 0.75, 0.85, 0.9, 0.95])
+			.range(rates.concat(null));
+
+		latestHpi = hpi.filter((d) => d["date.value"].getTime() == maxHpiDate);
+	});
 
 	onMount(() => {
 		for (let key in topo.objects) {
@@ -42,20 +113,23 @@
 
 		map.on("load", () => {
 			map.addSource("boundary", { type: "geojson", data: geojson });
-			map.addLayer({
-				id: "boundary-fill",
-				type: "fill",
-				source: "boundary",
-				layout: {},
-				paint: {
-					"fill-color": {
-						type: "identity",
-						property: "fill",
+			map.addLayer(
+				{
+					id: "boundary-fill",
+					type: "fill",
+					source: "boundary",
+					layout: {},
+					paint: {
+						"fill-color": {
+							type: "identity",
+							property: "fill",
+						},
+						"fill-opacity": 1,
+						"fill-outline-color": "#707071",
 					},
-					"fill-opacity": 1,
-					"fill-outline-color": "#707071",
 				},
-			},'place_other');
+				"place_other"
+			);
 			map.addLayer({
 				id: "boundary-line",
 				type: "line",
@@ -74,18 +148,59 @@
 	}
 
 	function setData(choices) {
-		console.log(choices)
+		if (latestHpi)
+			latestHpi.forEach((d) => {
+				prices[d.code] = monthlyrepayments(
+					d[propertyLookup[choices.propertyType]]
+				);
+			});
 
-		// if (map) {
-		// 	map.getSource("boundary").setData(data);
+		let pricevalues = Object.values(prices)
+			.filter((d) => !isNaN(d))
+			.sort(ascending);
+		let breaks = equalIntervalBreaks(pricevalues, 5);
 
-		// 	styleObject = {
-		// 		type: "identity",
-		// 		property: "fill",
-		// 	};
-		// 	//repaint area layer map usign the styles above
-		// 	map.setPaintProperty("area", "fill-color", styleObject);
-		// }
+		//set up colour scales for map
+		colour = scaleThreshold()
+			.domain(breaks.slice(1))
+			.range(["#BCD6E9", "#A4C3DC", "#8DB3D3", "#77A2C5", "#6390B5"]);
+
+		if(geojson) geojson.features.map(function (d, i) {
+			if (!isNaN(prices[d.properties.AREACD])) {
+				d.properties.fill = colour(prices[d.properties.AREACD]);
+			} else {
+				d.properties.fill = "#ccc";
+			}
+		});
+		if (map) {
+			map.getSource("boundary-fill").setData(prices);
+
+			styleObject = {
+				type: "identity",
+				property: "fill",
+			};
+			//repaint area layer map usign the styles above
+			map.setPaintProperty("boundary-fill", "fill-color", styleObject);
+		}
+	}
+
+	function monthlyrepayments(price) {
+		console.log(price);
+		if (price == "") {
+			return "Unavailable";
+		}
+		let loan = price - choices.deposit;
+		let ltv = loan / price;
+
+		let ourRate = rate(ltv);
+		let monthlyrate = ourRate / 1200;
+		let term = choices.mortgageTerm * 12;
+
+		let payment =
+			(loan * (monthlyrate * (1 + monthlyrate) ** term)) /
+			((1 + monthlyrate) ** term - 1);
+
+		return Math.round(payment * 100) / 100;
 	}
 
 	$: bounds = geojson

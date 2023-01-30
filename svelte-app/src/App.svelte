@@ -14,20 +14,20 @@
   let prices = {};
   let colour;
 
-  let boeLookup = {
-    IUMZICQ: "2 year, 60% LTV",
-    IUMBV34: "2 year, 75% LTV",
-    IUMZICR: "2 year, 85% LTV",
-    IUMB482: "2 year, 90% LTV",
-    IUM2WTL: "2 year, 95% LTV",
-  };
+  // let boeLookup = {
+  //   IUMZICQ: "2 year, 60% LTV",
+  //   IUMBV34: "2 year, 75% LTV",
+  //   IUMZICR: "2 year, 85% LTV",
+  //   IUMB482: "2 year, 90% LTV",
+  //   IUM2WTL: "2 year, 95% LTV",
+  // };
 
-  let propertyLookup = {
-    Detached: "averagePriceDetached.value",
-    "Semi-detached": "averagePriceSemiDetached.value",
-    Terrace: "averagePriceTerraced.value",
-    Flat: "averagePriceFlatMaisonette.value",
-  };
+  // let propertyLookup = {
+  //   Detached: "averagePriceDetached.value",
+  //   "Semi-detached": "averagePriceSemiDetached.value",
+  //   Terrace: "averagePriceTerraced.value",
+  //   Flat: "averagePriceFlatMaisonette.value",
+  // };
 
   // onMount(
   //   async () => {
@@ -39,88 +39,72 @@
   // $: console.log(hpi)
   // console.log(topo)
 
-  Promise.all([
-    csv(
-      "https://raw.githubusercontent.com/ONSvisual/land-registry-flat-data/main/landreg.csv",
-      autoType
-    ),
-    csv(
-      "https://corsproxy.io/?https://www.bankofengland.co.uk/boeapps/database/_iadb-fromshowcolumns.asp?csv.x=yes&Datefrom=01/Sep/2022&Dateto=now&SeriesCodes=IUMZICQ,IUMBV34,IUMZICR,IUMB482,IUM2WTL&CSVF=CN&UsingCodes=Y&VPD=N&VFD=N",
-      autoType
-    ),
-  ]).then(([hpi, boe]) => {
-    let maxHpiDate = max(hpi, (d) => d["date.value"]).getTime();
+  // Promise.all([
+  //   csv(
+  //     "https://raw.githubusercontent.com/ONSvisual/land-registry-flat-data/main/landreg.csv",
+  //     autoType
+  //   ),
+  //   csv(
+  //     "https://corsproxy.io/?https://www.bankofengland.co.uk/boeapps/database/_iadb-fromshowcolumns.asp?csv.x=yes&Datefrom=01/Sep/2022&Dateto=now&SeriesCodes=IUMZICQ,IUMBV34,IUMZICR,IUMB482,IUM2WTL&CSVF=CN&UsingCodes=Y&VPD=N&VFD=N",
+  //     autoType
+  //   ),
+  // ]).then(([hpi, boe]) => {
+  //   let maxHpiDate = max(hpi, (d) => d["date.value"]).getTime();
 
-    //read in bank of england data
-    boe = boe.map(function (d) {
-      return {
-        date: timeParse("%d %b %Y")(d.DATE).getTime(),
-        series: boeLookup[d.SERIES],
-        value: +d.VALUE,
-      };
-    });
+  //   //read in bank of england data
+  //   boe = boe.map(function (d) {
+  //     return {
+  //       date: timeParse("%d %b %Y")(d.DATE).getTime(),
+  //       series: boeLookup[d.SERIES],
+  //       value: +d.VALUE,
+  //     };
+  //   });
 
-    let boeBefore = boe.filter((d) => d.date < maxHpiDate);
-    let maxBoeBefore = max(boeBefore, (d) => d.date);
+  //   let boeBefore = boe.filter((d) => d.date < maxHpiDate);
+  //   let maxBoeBefore = max(boeBefore, (d) => d.date);
 
-    // find relevant data to latest HPI data
-    let latestBoe = boe
-      .filter((d) => d.date == maxBoeBefore)
-      .map(function (d) {
-        return {
-          date: new Date(d.date),
-          series: d.series,
-          value: d.value,
-        };
-      });
+  //   // find relevant data to latest HPI data
+  //   let latestBoe = boe
+  //     .filter((d) => d.date == maxBoeBefore)
+  //     .map(function (d) {
+  //       return {
+  //         date: new Date(d.date),
+  //         series: d.series,
+  //         value: d.value,
+  //       };
+  //     });
 
-    const rates = latestBoe.flatMap((d) => d.value);
+  //   const rates = latestBoe.flatMap((d) => d.value);
 
-    const rate = scaleThreshold()
-      .domain([0.6, 0.75, 0.85, 0.9, 0.95])
-      .range(rates.concat(null));
+  //   const rate = scaleThreshold()
+  //     .domain([0.6, 0.75, 0.85, 0.9, 0.95])
+  //     .range(rates.concat(null));
 
-    const latestHpi = hpi.filter((d) => d["date.value"] == maxHpiDate);
+  //   const latestHpi = hpi.filter((d) => d["date.value"] == maxHpiDate);
 
-    $: {
-      latestHpi.forEach((d) => {
-        prices[d.Area_Code] = monthlyrepayments(
-          +d[propertyLookup[propertyType]]
-        );
-        console.log(prices);
-      });
+  //   $: {
+  //     latestHpi.forEach((d) => {
+  //       prices[d.Area_Code] = monthlyrepayments(
+  //         +d[propertyLookup[propertyType]]
+  //       );
+  //       console.log(prices);
+  //     });
 
-      let pricevalues = Object.values(prices)
-        .filter((d) => !isNaN(d))
-        .sort(ascending);
-      let breaks = equalIntervalBreaks(pricevalues, 5);
+  //     let pricevalues = Object.values(prices)
+  //       .filter((d) => !isNaN(d))
+  //       .sort(ascending);
+  //     let breaks = equalIntervalBreaks(pricevalues, 5);
 
-      //set up colour scales for map
-      colour = scaleThreshold()
-        .domain(breaks.slice(1))
-        .range(["#BCD6E9", "#A4C3DC", "#8DB3D3", "#77A2C5", "#6390B5"]);
-    }
-  });
+  //     //set up colour scales for map
+  //     colour = scaleThreshold()
+  //       .domain(breaks.slice(1))
+  //       .range(["#BCD6E9", "#A4C3DC", "#8DB3D3", "#77A2C5", "#6390B5"]);
+  //   }
+  // });
 
-  $: choices = {a:mortgageTerm,b:deposit,c:propertyType}
+  $: choices = {mortgageTerm:mortgageTerm,deposit:deposit,propertyType:propertyType}
 
-  function monthlyrepayments(price) {
-    if (price == "") {
-      return NaN;
-    }
-    let loan = price - deposit;
-    let ltv = loan / price;
-
-    let ourRate = rate(ltv);
-    let monthlyrate = ourRate / 1200;
-    let term = mortgageTerm * 12;
-
-    let payment =
-      (loan * (monthlyrate * (1 + monthlyrate) ** term)) /
-      ((1 + monthlyrate) ** term - 1);
-
-    return Math.round(payment * 100) / 100;
-  }
+  
 </script>
 
 <!-- svelte-ignore non-top-level-reactive-declaration -->
