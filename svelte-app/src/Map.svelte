@@ -13,12 +13,8 @@
 
 	const style = "https://bothness.github.io/ons-basemaps/data/style-omt.json";
 
-	export let data = {};
-	// export let color = "#206095";
-	// export let lineWidth = 2.5;
-	// export let fillOpacity = 0.2;
-	export let colour;
-	export let choices;
+	export let choices = {mortgageTerm:25,deposit:30000,propertyType:'Detached'};
+	let colour;
 	let geojson;
 	let map;
 	let container;
@@ -49,11 +45,12 @@
 			"https://corsproxy.io/?https://www.bankofengland.co.uk/boeapps/database/_iadb-fromshowcolumns.asp?csv.x=yes&Datefrom=01/Sep/2022&Dateto=now&SeriesCodes=IUMZICQ,IUMBV34,IUMZICR,IUMB482,IUM2WTL&CSVF=CN&UsingCodes=Y&VPD=N&VFD=N",
 			autoType
 		)),
-			(hpi = await csv(
-				"https://raw.githubusercontent.com/ONSvisual/land-registry-flat-data/main/landreg.csv",
-				autoType
-			));
+		(hpi = await csv(
+			"https://raw.githubusercontent.com/ONSvisual/land-registry-flat-data/main/landreg.csv",
+			autoType
+		));
 
+		// find the latest date for HPI data
 		let maxHpiDate = max(hpi, (d) => d["date.value"]).getTime();
 
 		//read in bank of england data
@@ -92,11 +89,10 @@
 		for (let key in topo.objects) {
 			geojson = feature(topo, topo.objects[key]);
 		}
-		console.log(geojson);
 
 		geojson.features.map(function (d, i) {
-			if (!isNaN(data[d.properties.AREACD])) {
-				d.properties.fill = colour(data[d.properties.AREACD]);
+			if (!isNaN(prices[d.properties.AREACD])) {
+				d.properties.fill = colour(prices[d.properties.AREACD]);
 			} else {
 				d.properties.fill = "#ccc";
 			}
@@ -130,16 +126,17 @@
 				},
 				"place_other"
 			);
-			map.addLayer({
-				id: "boundary-line",
-				type: "line",
-				source: "boundary",
-				layout: {},
-				paint: {
-					"line-color": "#206095",
-					"line-width": 1,
-				},
-			});
+			// map.addLayer({
+			// 	id: "boundary-line",
+			// 	type: "line",
+			// 	source: "boundary",
+			// 	layout: {},
+			// 	paint: {
+			// 		"line-color": "#206095",
+			// 		"line-width": 1,
+			// 	},
+			// });
+			setData(choices)
 		});
 	});
 
@@ -148,7 +145,7 @@
 	}
 
 	function setData(choices) {
-		if (latestHpi)
+		if (latestHpi) //populate prices object
 			latestHpi.forEach((d) => {
 				prices[d.code] = monthlyrepayments(
 					d[propertyLookup[choices.propertyType]]
@@ -172,20 +169,13 @@
 				d.properties.fill = "#ccc";
 			}
 		});
-		if (map) {
-			map.getSource("boundary-fill").setData(prices);
-
-			styleObject = {
-				type: "identity",
-				property: "fill",
-			};
-			//repaint area layer map usign the styles above
-			map.setPaintProperty("boundary-fill", "fill-color", styleObject);
-		}
+		geojson = geojson
+		
+		map && map.getSource('boundary') && map.getSource("boundary").setData(geojson);
+		
 	}
 
 	function monthlyrepayments(price) {
-		console.log(price);
 		if (price == "") {
 			return "Unavailable";
 		}
@@ -209,10 +199,8 @@
 				[-9, 49],
 				[2, 61],
 		  ];
-	// $: {
 
-	// }
-	$: setData(choices);
+	$: container && setData(choices);
 	$: fitBounds(bounds);
 </script>
 
