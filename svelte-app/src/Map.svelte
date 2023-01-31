@@ -200,7 +200,7 @@
 				[2, 61],
 		  ];
 
-	$: container && setData(choices);
+	$: container && boe && hpi && setData(choices);
 	$: fitBounds(bounds);
 </script>
 
