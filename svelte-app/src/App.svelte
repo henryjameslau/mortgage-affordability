@@ -61,7 +61,7 @@
 </details>
 
 <div id="results">
-  <div id="map" style="height:300px;">
+  <div id="map-container" style="height:300px;">
     <Map {choices}/>
   </div>
 </div>

@@ -1,4 +1,5 @@
 <script>
+	import Legend from './Legend.svelte'
 	import maplibre from "maplibre-gl";
 	import bbox from "@turf/bbox";
 	import { onMount } from "svelte";
@@ -21,6 +22,7 @@
 	let boe;
 	let hpi;
 	let prices = {};
+	let breaks;
 
 	let boeLookup = {
 		IUMZICQ: "2 year, 60% LTV",
@@ -155,18 +157,18 @@
 		let pricevalues = Object.values(prices)
 			.filter((d) => !isNaN(d))
 			.sort(ascending);
-		let breaks = equalIntervalBreaks(pricevalues, 5);
+		breaks = equalIntervalBreaks(pricevalues, 4);
 
 		//set up colour scales for map
 		colour = scaleThreshold()
 			.domain(breaks.slice(1))
-			.range(["#BCD6E9", "#A4C3DC", "#8DB3D3", "#77A2C5", "#6390B5"]);
+			.range(["#E9EFF4","#BCD6E9", "#8DB3D3", "#6390B5"]);
 
 		if(geojson) geojson.features.map(function (d, i) {
 			if (!isNaN(prices[d.properties.AREACD])) {
 				d.properties.fill = colour(prices[d.properties.AREACD]);
 			} else {
-				d.properties.fill = "#ccc";
+				d.properties.fill = "#EC9AA4";
 			}
 		});
 		geojson = geojson
@@ -211,8 +213,11 @@
 	/>
 </svelte:head>
 
-<div id="map" bind:this={container} />
-
+<div id="map" bind:this={container}/>
+<div>
+	<Legend {breaks} {colour}></Legend>
+</div>
+	
 <style>
 	#map {
 		width: 100%;
