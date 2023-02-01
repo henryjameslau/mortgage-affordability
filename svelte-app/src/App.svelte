@@ -37,6 +37,7 @@
 	let hpi;
 	let breaks;
   let colour;
+  let areaovertime;
 
 
 	onMount(async () => {
@@ -82,7 +83,7 @@
 			.range(rates.concat(null));
 
 		latestHpi = hpi.filter((d) => d["date.value"].getTime() == maxHpiDate);
-
+    
 	});
 
 
@@ -90,6 +91,10 @@
 
 
 $: {
+
+  if(hpi){
+    areaovertime = hpi.filter(d=>d.code==$areacd)
+  }
 
   function monthlyrepayments(price) {
 		if (price == "") {
@@ -115,7 +120,7 @@ $: {
 				);
 			});
 
-      let pricevalues = Object.values(prices)
+    let pricevalues = Object.values(prices)
 			.filter((d) => !isNaN(d))
 			.sort(ascending);
 		breaks = equalIntervalBreaks(pricevalues, 4);
@@ -184,7 +189,7 @@ $: {
     <Map {prices} {colour}/>
   </div>
   <div>
-    <Areainfo {latestHpi} property={propertyLookup[propertyType]}/>
+    <Areainfo {latestHpi} {propertyType} {areaovertime}/>
     <Legend {breaks} {colour}/></div>
 </div>
 <hr />
