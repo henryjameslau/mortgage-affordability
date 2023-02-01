@@ -4,6 +4,7 @@
 	import { onMount } from "svelte";
 	import { feature } from "topojson";
 	import topo from "./data/geog.json";
+	import {areacd} from './stores.js';
 
 	
 	const style = "https://bothness.github.io/ons-basemaps/data/style-omt.json";
@@ -13,6 +14,9 @@
 	let map;
 	let container;
 	let geojson;
+	let selected;
+	let newAREACD;
+	let oldAREACD;
 
 	onMount(() => {
 		for (let key in topo.objects) {
@@ -55,19 +59,76 @@
 				},
 				"place_other"
 			);
-			// map.addLayer({
-			// 	id: "boundary-line",
-			// 	type: "line",
-			// 	source: "boundary",
-			// 	layout: {},
-			// 	paint: {
-			// 		"line-color": "#206095",
-			// 		"line-width": 1,
-			// 	},
-			// });
+			map.addLayer({
+				id: "boundary-line",
+				type: "line",
+				source: "boundary",
+				layout: {},
+				paint: {
+					"line-color": "#FBC900",
+					"line-width": 3,
+				},
+				"filter": ["==", "AREACD", ""]
+			},"place_other");
 			setData(prices)
 		});
+
+		//Highlight stroke on mouseover (and show area information)
+		map.on("mousemove", "boundary-fill", onMove);
+
+		// Reset the state-fills-hover layer's filter when the mouse leaves the layer.
+		map.on("mouseleave", "boundary-fill", onLeave);
+
+		//Add click event
+		map.on("click", "boundary-fill", onClick);
+
+		function onMove(e) {
+				map.getCanvasContainer().style.cursor = 'pointer';
+
+				newAREACD = e.features[0].properties.AREACD;
+
+				if(newAREACD != oldAREACD) {
+					oldAREACD = e.features[0].properties.AREACD;
+					map.setFilter("boundary-line", ["==", "AREACD", e.features[0].properties.AREACD]);
+				}
+		};
+
+
+		function onLeave() {
+				map.getCanvasContainer().style.cursor = null;
+				map.setFilter("boundary-line", ["==", "AREACD", ""]);
+				oldAREACD = "";
+
+		};
+
+		function onClick(e) {
+				disableMouseEvents();
+				areacd.set(e.features[0].properties.AREACD)
+
+				newAREACD = e.features[0].properties.AREACD;
+				if(newAREACD != oldAREACD) {
+					oldAREACD = e.features[0].properties.AREACD;
+					map.setFilter("boundary-line", ["==", "AREACD", e.features[0].properties.AREACD]);
+				}
+		};
+
+		function disableMouseEvents() {
+				map.off("mousemove", "boundary-fill", onMove);
+				map.off("mouseleave", "boundary-fill", onLeave);
+
+				selected = true;
+		}
+
+		function enableMouseEvents() {
+				map.on("mousemove", "boundary-fill", onMove);
+				map.on("click", "boundary-fill", onClick);
+				map.on("mouseleave", "boundary-fill", onLeave);
+
+				selected = false;
+		}
+
 	});
+
 
 	function fitBounds(bounds) {
 		if (map) map.fitBounds(bounds, { padding: 20 });

@@ -2,12 +2,14 @@
   import { onMount } from "svelte";
   import Map from "./Map.svelte";
   import Legend from './Legend.svelte'
+  import Areainfo from './Areainfo.svelte'
 	import { csv } from "d3-fetch";
 	import { autoType } from "d3-dsv";
 	import { max, ascending } from "d3-array";
 	import { timeParse } from "d3-time-format";
 	import { scaleThreshold } from "d3-scale";
 	import { equalIntervalBreaks } from "simple-statistics";
+  import {areacd} from './stores.js';
 
   let mortgageTerm = 25;
   let deposit = 30000;
@@ -123,6 +125,8 @@ $: {
 			.domain(breaks.slice(1))
 			.range(["#E9EFF4","#BCD6E9", "#8DB3D3", "#6390B5"]);
 }
+
+
 </script>
 
 <!-- svelte-ignore non-top-level-reactive-declaration -->
@@ -179,7 +183,9 @@ $: {
   <div id="map-container" style="height:300px;">
     <Map {prices} {colour}/>
   </div>
-  <div><Legend {breaks} {colour}/></div>
+  <div>
+    <Areainfo {latestHpi} property={propertyLookup[propertyType]}/>
+    <Legend {breaks} {colour}/></div>
 </div>
 <hr />
 <h3>Use and share</h3>
