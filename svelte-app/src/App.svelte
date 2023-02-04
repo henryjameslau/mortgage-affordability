@@ -93,7 +93,7 @@
 $: {
 
   if(hpi){
-    areaovertime = hpi.filter(d=>d.code==$areacd)
+    areaovertime = hpi.filter(d=>d.code==$areacd).sort((a,b)=>a['date.value']-b['date.value'])
   }
 
   function monthlyrepayments(price) {

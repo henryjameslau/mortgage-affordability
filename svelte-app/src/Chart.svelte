@@ -1,5 +1,7 @@
 <script>
     import { LineChart } from "@onsvisual/svelte-charts";
+    import {timeFormat} from 'd3-time-format';
+    import {format} from 'd3-format';
     export let areaovertime;
  
 
@@ -15,8 +17,6 @@
         "value"
     );
 
-    $: console.log(pivoted)
-
     function pivot(data, columns, name, value) {
         const keep = Object.keys(data[0]).filter((c) => !columns.includes(c));
         return data.flatMap((d) => {
@@ -29,5 +29,8 @@
 </script>
 
 {#if pivoted}
-    <LineChart data={pivoted} xKey="date.value" yKey="value" zKey="property" area={false} title="Multi-line chart" legend/>
+    <LineChart colors={['#206095','#27A0CC','#A8BD3A','#F66068']} data={pivoted} yFormatTick={d=>format('.3~s')(d)} xFormatTick={d=>timeFormat('%Y')(d)} xScale='time' xKey="date.value" yKey="value" zKey="property" yPrefix="£" area={false} >
+        
+    </LineChart>
+
 {/if}
