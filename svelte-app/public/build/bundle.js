@@ -120547,7 +120547,7 @@ var app = (function () {
     function create_fragment(ctx) {
     	let h1;
     	let t1;
-    	let h2;
+    	let h20;
     	let t3;
     	let hr0;
     	let t4;
@@ -120590,22 +120590,24 @@ var app = (function () {
     	let input3;
     	let t28;
     	let div7;
+    	let h21;
+    	let t30;
     	let div5;
     	let map;
-    	let t29;
+    	let t31;
     	let div6;
     	let areainfo;
-    	let t30;
-    	let legend;
-    	let t31;
-    	let hr2;
     	let t32;
-    	let h3;
+    	let legend;
+    	let t33;
+    	let hr2;
     	let t34;
-    	let div8;
+    	let h3;
     	let t36;
-    	let div9;
+    	let div8;
     	let t38;
+    	let div9;
+    	let t40;
     	let div10;
     	let current;
     	let mounted;
@@ -120641,8 +120643,8 @@ var app = (function () {
     			h1 = element("h1");
     			h1.textContent = "Where in the UK can you afford to buy a property?";
     			t1 = space();
-    			h2 = element("h2");
-    			h2.textContent = "Fill in some details below to find out which areas are affordable depending on\n  your budget. Click on each area to find out about house prices.";
+    			h20 = element("h2");
+    			h20.textContent = "Fill in some details below to find out which areas are affordable depending\n\ton your budget. Click on each area to find out about house prices.";
     			t3 = space();
     			hr0 = element("hr");
     			t4 = space();
@@ -120680,7 +120682,7 @@ var app = (function () {
     			summary.textContent = "Adjust monthly repayment price range";
     			t20 = space();
     			p = element("p");
-    			p.textContent = "Enter the minimum and maximum monthly mortgage payments that suits your\n    budget.";
+    			p.textContent = "Enter the minimum and maximum monthly mortgage payments that suits your\n\t\tbudget.";
     			t22 = space();
     			fieldset1 = element("fieldset");
     			div3 = element("div");
@@ -120696,89 +120698,93 @@ var app = (function () {
     			input3 = element("input");
     			t28 = space();
     			div7 = element("div");
+    			h21 = element("h2");
+    			h21.textContent = "Map of average monthly mortgage";
+    			t30 = space();
     			div5 = element("div");
     			create_component(map.$$.fragment);
-    			t29 = space();
+    			t31 = space();
     			div6 = element("div");
     			create_component(areainfo.$$.fragment);
-    			t30 = space();
-    			create_component(legend.$$.fragment);
-    			t31 = space();
-    			hr2 = element("hr");
     			t32 = space();
+    			create_component(legend.$$.fragment);
+    			t33 = space();
+    			hr2 = element("hr");
+    			t34 = space();
     			h3 = element("h3");
     			h3.textContent = "Use and share";
-    			t34 = space();
+    			t36 = space();
     			div8 = element("div");
     			div8.textContent = "Get data";
-    			t36 = space();
+    			t38 = space();
     			div9 = element("div");
     			div9.textContent = "Embed";
-    			t38 = space();
+    			t40 = space();
     			div10 = element("div");
     			div10.textContent = "Share";
-    			add_location(h1, file, 138, 0, 3409);
-    			add_location(h2, file, 139, 0, 3468);
-    			add_location(hr0, file, 143, 0, 3626);
+    			add_location(h1, file, 139, 0, 3585);
+    			add_location(h20, file, 140, 0, 3644);
+    			add_location(hr0, file, 144, 0, 3800);
     			attr_dev(label0, "for", "mortgageTerm");
-    			add_location(label0, file, 146, 4, 3656);
+    			add_location(label0, file, 147, 2, 3827);
     			attr_dev(input0, "type", "number");
     			attr_dev(input0, "id", "mortgageTerm");
-    			add_location(input0, file, 147, 4, 3717);
-    			add_location(div0, file, 145, 2, 3646);
+    			add_location(input0, file, 148, 2, 3886);
+    			add_location(div0, file, 146, 1, 3819);
     			attr_dev(label1, "for", "deposit");
-    			add_location(label1, file, 151, 4, 3807);
+    			add_location(label1, file, 152, 2, 3972);
     			attr_dev(input1, "type", "number");
     			attr_dev(input1, "id", "deposit");
-    			add_location(input1, file, 152, 4, 3855);
-    			add_location(div1, file, 150, 2, 3797);
+    			add_location(input1, file, 153, 2, 4018);
+    			add_location(div1, file, 151, 1, 3964);
     			attr_dev(label2, "for", "propertyType");
-    			add_location(label2, file, 156, 4, 3935);
+    			add_location(label2, file, 157, 2, 4094);
     			option0.__value = "Detached";
     			option0.value = option0.__value;
-    			add_location(option0, file, 158, 6, 4053);
+    			add_location(option0, file, 159, 3, 4207);
     			option1.__value = "Semi-detached";
     			option1.value = option1.__value;
-    			add_location(option1, file, 159, 6, 4085);
+    			add_location(option1, file, 160, 3, 4236);
     			option2.__value = "Terraced";
     			option2.value = option2.__value;
-    			add_location(option2, file, 160, 6, 4122);
+    			add_location(option2, file, 161, 3, 4270);
     			option3.__value = "Flat";
     			option3.value = option3.__value;
-    			add_location(option3, file, 161, 6, 4154);
+    			add_location(option3, file, 162, 3, 4299);
     			attr_dev(select, "id", "propertyType");
-    			if (/*propertyType*/ ctx[2] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[13].call(select));
-    			add_location(select, file, 157, 4, 3994);
-    			add_location(div2, file, 155, 2, 3925);
-    			add_location(fieldset0, file, 144, 0, 3633);
-    			add_location(hr1, file, 166, 0, 4212);
-    			add_location(summary, file, 168, 2, 4231);
-    			add_location(p, file, 169, 2, 4289);
+    			if (/*propertyType*/ ctx[2] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[15].call(select));
+    			add_location(select, file, 158, 2, 4151);
+    			add_location(div2, file, 156, 1, 4086);
+    			add_location(fieldset0, file, 145, 0, 3807);
+    			add_location(hr1, file, 167, 0, 4354);
+    			add_location(summary, file, 169, 1, 4372);
+    			add_location(p, file, 170, 1, 4429);
     			attr_dev(label3, "for", "minimum");
-    			add_location(label3, file, 175, 6, 4417);
+    			add_location(label3, file, 176, 3, 4546);
     			attr_dev(input2, "type", "number");
     			attr_dev(input2, "id", "minimum");
-    			add_location(input2, file, 176, 6, 4460);
-    			add_location(div3, file, 174, 4, 4405);
+    			add_location(input2, file, 177, 3, 4586);
+    			add_location(div3, file, 175, 2, 4537);
     			attr_dev(label4, "for", "maximum");
-    			add_location(label4, file, 180, 6, 4525);
+    			add_location(label4, file, 181, 3, 4665);
     			attr_dev(input3, "type", "number");
     			attr_dev(input3, "id", "maximum");
-    			add_location(input3, file, 181, 6, 4568);
-    			add_location(div4, file, 179, 4, 4513);
-    			add_location(fieldset1, file, 173, 2, 4390);
-    			add_location(details, file, 167, 0, 4219);
+    			add_location(input3, file, 182, 3, 4705);
+    			add_location(div4, file, 180, 2, 4656);
+    			add_location(fieldset1, file, 174, 1, 4524);
+    			add_location(details, file, 168, 0, 4361);
+    			add_location(h21, file, 188, 1, 4817);
     			attr_dev(div5, "id", "map-container");
     			set_style(div5, "height", "300px");
-    			add_location(div5, file, 187, 2, 4663);
-    			add_location(div6, file, 190, 2, 4750);
+    			add_location(div5, file, 189, 1, 4859);
+    			add_location(div6, file, 192, 1, 4943);
     			attr_dev(div7, "id", "results");
-    			add_location(div7, file, 186, 0, 4642);
-    			add_location(hr2, file, 194, 0, 4859);
-    			add_location(h3, file, 195, 0, 4866);
-    			add_location(div8, file, 196, 0, 4889);
-    			add_location(div9, file, 197, 0, 4909);
-    			add_location(div10, file, 198, 0, 4926);
+    			add_location(div7, file, 187, 0, 4797);
+    			add_location(hr2, file, 197, 0, 5052);
+    			add_location(h3, file, 198, 0, 5059);
+    			add_location(div8, file, 199, 0, 5082);
+    			add_location(div9, file, 200, 0, 5102);
+    			add_location(div10, file, 201, 0, 5119);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -120786,7 +120792,7 @@ var app = (function () {
     		m: function mount(target, anchor) {
     			insert_dev(target, h1, anchor);
     			insert_dev(target, t1, anchor);
-    			insert_dev(target, h2, anchor);
+    			insert_dev(target, h20, anchor);
     			insert_dev(target, t3, anchor);
     			insert_dev(target, hr0, anchor);
     			insert_dev(target, t4, anchor);
@@ -120825,37 +120831,43 @@ var app = (function () {
     			append_dev(div3, label3);
     			append_dev(div3, t24);
     			append_dev(div3, input2);
+    			set_input_value(input2, /*minimum*/ ctx[8]);
     			append_dev(fieldset1, t25);
     			append_dev(fieldset1, div4);
     			append_dev(div4, label4);
     			append_dev(div4, t27);
     			append_dev(div4, input3);
+    			set_input_value(input3, /*maximum*/ ctx[9]);
     			insert_dev(target, t28, anchor);
     			insert_dev(target, div7, anchor);
+    			append_dev(div7, h21);
+    			append_dev(div7, t30);
     			append_dev(div7, div5);
     			mount_component(map, div5, null);
-    			append_dev(div7, t29);
+    			append_dev(div7, t31);
     			append_dev(div7, div6);
     			mount_component(areainfo, div6, null);
-    			append_dev(div6, t30);
+    			append_dev(div6, t32);
     			mount_component(legend, div6, null);
-    			insert_dev(target, t31, anchor);
+    			insert_dev(target, t33, anchor);
     			insert_dev(target, hr2, anchor);
-    			insert_dev(target, t32, anchor);
-    			insert_dev(target, h3, anchor);
     			insert_dev(target, t34, anchor);
-    			insert_dev(target, div8, anchor);
+    			insert_dev(target, h3, anchor);
     			insert_dev(target, t36, anchor);
-    			insert_dev(target, div9, anchor);
+    			insert_dev(target, div8, anchor);
     			insert_dev(target, t38, anchor);
+    			insert_dev(target, div9, anchor);
+    			insert_dev(target, t40, anchor);
     			insert_dev(target, div10, anchor);
     			current = true;
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(input0, "input", /*input0_input_handler*/ ctx[11]),
-    					listen_dev(input1, "input", /*input1_input_handler*/ ctx[12]),
-    					listen_dev(select, "change", /*select_change_handler*/ ctx[13])
+    					listen_dev(input0, "input", /*input0_input_handler*/ ctx[13]),
+    					listen_dev(input1, "input", /*input1_input_handler*/ ctx[14]),
+    					listen_dev(select, "change", /*select_change_handler*/ ctx[15]),
+    					listen_dev(input2, "input", /*input2_input_handler*/ ctx[16]),
+    					listen_dev(input3, "input", /*input3_input_handler*/ ctx[17])
     				];
 
     				mounted = true;
@@ -120872,6 +120884,14 @@ var app = (function () {
 
     			if (dirty & /*propertyType*/ 4) {
     				select_option(select, /*propertyType*/ ctx[2]);
+    			}
+
+    			if (dirty & /*minimum*/ 256 && to_number(input2.value) !== /*minimum*/ ctx[8]) {
+    				set_input_value(input2, /*minimum*/ ctx[8]);
+    			}
+
+    			if (dirty & /*maximum*/ 512 && to_number(input3.value) !== /*maximum*/ ctx[9]) {
+    				set_input_value(input3, /*maximum*/ ctx[9]);
     			}
 
     			const map_changes = {};
@@ -120904,7 +120924,7 @@ var app = (function () {
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(h1);
     			if (detaching) detach_dev(t1);
-    			if (detaching) detach_dev(h2);
+    			if (detaching) detach_dev(h20);
     			if (detaching) detach_dev(t3);
     			if (detaching) detach_dev(hr0);
     			if (detaching) detach_dev(t4);
@@ -120918,15 +120938,15 @@ var app = (function () {
     			destroy_component(map);
     			destroy_component(areainfo);
     			destroy_component(legend);
-    			if (detaching) detach_dev(t31);
+    			if (detaching) detach_dev(t33);
     			if (detaching) detach_dev(hr2);
-    			if (detaching) detach_dev(t32);
-    			if (detaching) detach_dev(h3);
     			if (detaching) detach_dev(t34);
-    			if (detaching) detach_dev(div8);
+    			if (detaching) detach_dev(h3);
     			if (detaching) detach_dev(t36);
-    			if (detaching) detach_dev(div9);
+    			if (detaching) detach_dev(div8);
     			if (detaching) detach_dev(t38);
+    			if (detaching) detach_dev(div9);
+    			if (detaching) detach_dev(t40);
     			if (detaching) detach_dev(div10);
     			mounted = false;
     			run_all(dispose);
@@ -120947,7 +120967,7 @@ var app = (function () {
     function instance($$self, $$props, $$invalidate) {
     	let $areacd;
     	validate_store(areacd, 'areacd');
-    	component_subscribe($$self, areacd, $$value => $$invalidate(10, $areacd = $$value));
+    	component_subscribe($$self, areacd, $$value => $$invalidate(12, $areacd = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('App', slots, []);
     	let mortgageTerm = 25;
@@ -120977,9 +120997,12 @@ var app = (function () {
     	let breaks;
     	let colour;
     	let areaovertime;
+    	let customised = false;
+    	let minimum;
+    	let maximum;
 
     	onMount(async () => {
-    		(boe = await csv("https://corsproxy.io/?https://www.bankofengland.co.uk/boeapps/database/_iadb-fromshowcolumns.asp?csv.x=yes&Datefrom=01/Sep/2022&Dateto=now&SeriesCodes=IUMZICQ,IUMBV34,IUMZICR,IUMB482,IUM2WTL&CSVF=CN&UsingCodes=Y&VPD=N&VFD=N", autoType), $$invalidate(9, hpi = await csv("https://raw.githubusercontent.com/ONSvisual/land-registry-flat-data/main/landreg.csv", autoType)));
+    		(boe = await csv("https://corsproxy.io/?https://www.bankofengland.co.uk/boeapps/database/_iadb-fromshowcolumns.asp?csv.x=yes&Datefrom=01/Sep/2022&Dateto=now&SeriesCodes=IUMZICQ,IUMBV34,IUMZICR,IUMB482,IUM2WTL&CSVF=CN&UsingCodes=Y&VPD=N&VFD=N", autoType), $$invalidate(11, hpi = await csv("https://raw.githubusercontent.com/ONSvisual/land-registry-flat-data/main/landreg.csv", autoType)));
 
     		// find the latest date for HPI data
     		let maxHpiDate = max$1(hpi, d => d["date.value"]).getTime();
@@ -121006,9 +121029,14 @@ var app = (function () {
     		});
 
     		const rates = latestBoe.flatMap(d => d.value);
-    		$$invalidate(8, rate = threshold().domain([0.6, 0.75, 0.85, 0.9, 0.95]).range(rates.concat(null)));
+    		$$invalidate(10, rate = threshold().domain([0.6, 0.75, 0.85, 0.9, 0.95]).range(rates.concat(null)));
     		$$invalidate(3, latestHpi = hpi.filter(d => d["date.value"].getTime() == maxHpiDate));
     	});
+
+    	if (pricevalues) {
+    		minimum = pricevalues[0];
+    		maximum = pricevalues[pricevalues.length - 1];
+    	}
 
     	const writable_props = [];
 
@@ -121029,6 +121057,16 @@ var app = (function () {
     	function select_change_handler() {
     		propertyType = select_value(this);
     		$$invalidate(2, propertyType);
+    	}
+
+    	function input2_input_handler() {
+    		minimum = to_number(this.value);
+    		$$invalidate(8, minimum);
+    	}
+
+    	function input3_input_handler() {
+    		maximum = to_number(this.value);
+    		$$invalidate(9, maximum);
     	}
 
     	$$self.$capture_state = () => ({
@@ -121057,6 +121095,9 @@ var app = (function () {
     		breaks,
     		colour,
     		areaovertime,
+    		customised,
+    		minimum,
+    		maximum,
     		$areacd
     	});
 
@@ -121065,15 +121106,18 @@ var app = (function () {
     		if ('deposit' in $$props) $$invalidate(1, deposit = $$props.deposit);
     		if ('propertyType' in $$props) $$invalidate(2, propertyType = $$props.propertyType);
     		if ('boeLookup' in $$props) boeLookup = $$props.boeLookup;
-    		if ('propertyLookup' in $$props) $$invalidate(16, propertyLookup = $$props.propertyLookup);
+    		if ('propertyLookup' in $$props) $$invalidate(20, propertyLookup = $$props.propertyLookup);
     		if ('latestHpi' in $$props) $$invalidate(3, latestHpi = $$props.latestHpi);
-    		if ('rate' in $$props) $$invalidate(8, rate = $$props.rate);
+    		if ('rate' in $$props) $$invalidate(10, rate = $$props.rate);
     		if ('prices' in $$props) $$invalidate(4, prices = $$props.prices);
     		if ('boe' in $$props) boe = $$props.boe;
-    		if ('hpi' in $$props) $$invalidate(9, hpi = $$props.hpi);
+    		if ('hpi' in $$props) $$invalidate(11, hpi = $$props.hpi);
     		if ('breaks' in $$props) $$invalidate(5, breaks = $$props.breaks);
     		if ('colour' in $$props) $$invalidate(6, colour = $$props.colour);
     		if ('areaovertime' in $$props) $$invalidate(7, areaovertime = $$props.areaovertime);
+    		if ('customised' in $$props) customised = $$props.customised;
+    		if ('minimum' in $$props) $$invalidate(8, minimum = $$props.minimum);
+    		if ('maximum' in $$props) $$invalidate(9, maximum = $$props.maximum);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -121081,10 +121125,10 @@ var app = (function () {
     	}
 
     	$$self.$$.update = () => {
-    		if ($$self.$$.dirty & /*hpi, $areacd, deposit, rate, mortgageTerm, latestHpi, propertyType, prices, breaks*/ 1855) {
+    		if ($$self.$$.dirty & /*hpi, $areacd, deposit, rate, mortgageTerm, latestHpi, propertyType, prices, breaks*/ 7231) {
     			{
     				if (hpi) {
-    					$$invalidate(7, areaovertime = hpi.filter(d => d.code == $areacd).sort((a, b) => a['date.value'] - b['date.value']));
+    					$$invalidate(7, areaovertime = hpi.filter(d => d.code == $areacd).sort((a, b) => a["date.value"] - b["date.value"]));
     				}
 
     				function monthlyrepayments(price) {
@@ -121123,12 +121167,16 @@ var app = (function () {
     		breaks,
     		colour,
     		areaovertime,
+    		minimum,
+    		maximum,
     		rate,
     		hpi,
     		$areacd,
     		input0_input_handler,
     		input1_input_handler,
-    		select_change_handler
+    		select_change_handler,
+    		input2_input_handler,
+    		input3_input_handler
     	];
     }
 
