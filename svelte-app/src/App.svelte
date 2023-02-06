@@ -8,8 +8,11 @@
 	import { max, ascending } from "d3-array";
 	import { timeParse } from "d3-time-format";
 	import { scaleThreshold } from "d3-scale";
+	import { format } from "d3-format";
+
 	import { equalIntervalBreaks } from "simple-statistics";
 	import { areacd } from "./stores.js";
+	import RangeSlider from "svelte-range-slider-pips";
 
 	let mortgageTerm = 25;
 	let deposit = 30000;
@@ -38,9 +41,12 @@
 	let breaks;
 	let colour;
 	let areaovertime;
-	let customised = false;
+	let pricevalues;
 	let minimum;
 	let maximum;
+	let slidermin;
+	let slidermax;
+	let customise = false;
 
 	onMount(async () => {
 		(boe = await csv(
@@ -118,10 +124,19 @@
 				);
 			});
 
-		let pricevalues = Object.values(prices)
+		pricevalues = Object.values(prices)
 			.filter((d) => !isNaN(d))
 			.sort(ascending);
 		breaks = equalIntervalBreaks(pricevalues, 4);
+
+		// if (customise) {
+			// let custompricevalues = pricevalues.filter((d) => d > slidermin);
+		// 	let custombreaks = equalIntervalBreaks(custompricevalues, 3);
+
+		// 	colour = scaleThreshold()
+		// 		.domain(custombreaks.slice(1))
+		// 		.range(["f4c2c8", "#BCD6E9", "#8DB3D3", "#6390B5"]);
+		// }
 
 		//set up colour scales for map
 		colour = scaleThreshold()
@@ -129,10 +144,33 @@
 			.range(["#E9EFF4", "#BCD6E9", "#8DB3D3", "#6390B5"]);
 	}
 
-	if (pricevalues) {
+	$: if (pricevalues) {
 		minimum = pricevalues[0];
 		maximum = pricevalues[pricevalues.length - 1];
 	}
+
+	$: if (!customise) {
+		slidermin = minimum;
+		slidermax = maximum;
+	}
+
+	$: if (customise&&colour) {
+		let custompricevalues = pricevalues.filter((d) => d > slidermin);
+		breaks = equalIntervalBreaks(custompricevalues, 3);
+
+		colour = scaleThreshold()
+			.domain(breaks)
+			.range(["#f4c2c8", "#BCD6E9", "#8DB3D3", "#6390B5"]);
+
+
+	}
+
+	function setSliderInputs(e) {
+		slidermin = e.detail.values[0];
+		slidermax = e.detail.values[1];
+		customise = true;
+	}
+
 </script>
 
 <!-- svelte-ignore non-top-level-reactive-declaration -->
@@ -175,13 +213,30 @@
 	<fieldset>
 		<div>
 			<label for="minimum">Minimum</label>
-			<input bind:value={minimum} type="number" id="minimum" />
+			<input bind:value={slidermin} type="number" id="minimum" />
 		</div>
 
 		<div>
 			<label for="maximum">Maximum</label>
-			<input bind:value={maximum} type="number" id="maximum" />
+			<input bind:value={slidermax} type="number" id="maximum" />
 		</div>
+		<RangeSlider
+			range
+			values={[slidermin, slidermax]}
+			min={minimum}
+			max={maximum}
+			float="true"
+			hoverable="true"
+			pips="true"
+			pipstep="500"
+			all="label"
+			prefix="£"
+			on:change={(e) => {
+				setSliderInputs(e);
+			}}
+			formatter={(v) => format(".2s")(v)}
+			handleFormatter={(v) => format(",.0f")(v)}
+		/>
 	</fieldset>
 </details>
 
@@ -192,7 +247,7 @@
 	</div>
 	<div>
 		<Areainfo {latestHpi} {propertyType} {areaovertime} />
-		<Legend {breaks} {colour} />
+		<Legend {breaks} {colour} {customise}/>
 	</div>
 </div>
 <hr />
