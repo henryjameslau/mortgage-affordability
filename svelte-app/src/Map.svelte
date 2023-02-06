@@ -154,7 +154,7 @@
 				[-9, 49],
 				[2, 61],
 		  ];
-	$: container && setData(prices);
+	$: container && colour && setData(prices);
 	$: fitBounds(bounds);
 </script>
 

@@ -51,21 +51,23 @@
 
 {#if $areacd}
     <p>Property prices in {thisarea["regionName.value"]}</p>
-    <div class="legend--item">
-        <div class="legend--icon--circle" style="background-color: #206095;" />
-        <div><p class="legend--text">Detached</p></div>
-    </div>
-    <div class="legend--item">
-        <div class="legend--icon--circle" style="background-color: #27A0CC;" />
-        <div><p class="legend--text">Semi-detached</p></div>
-    </div>
-    <div class="legend--item">
-        <div class="legend--icon--circle" style="background-color: #A8BD3A;" />
-        <div><p class="legend--text">Terraced</p></div>
-    </div>
-    <div class="legend--item">
-        <div class="legend--icon--circle" style="background-color: #F66068;" />
-        <div><p class="legend--text">Flats</p></div>
+    <div id="legend">
+        <div class="legend--item">
+            <div class="legend--icon--circle" style="background-color: #206095;" />
+            <div><p class="legend--text">Detached</p></div>
+        </div>
+        <div class="legend--item">
+            <div class="legend--icon--circle" style="background-color: #27A0CC;" />
+            <div><p class="legend--text">Semi-detached</p></div>
+        </div>
+        <div class="legend--item">
+            <div class="legend--icon--circle" style="background-color: #A8BD3A;" />
+            <div><p class="legend--text">Terraced</p></div>
+        </div>
+        <div class="legend--item">
+            <div class="legend--icon--circle" style="background-color: #F66068;" />
+            <div><p class="legend--text">Flats</p></div>
+        </div>
     </div>
     <Chart {areaovertime} />
     <p>

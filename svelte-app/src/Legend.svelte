@@ -1,6 +1,7 @@
 <script>
     export let breaks;
     export let colour;
+    export let customise;
     let outofrange = "#EC9AA4"
     import {format} from 'd3-format';
      
@@ -10,14 +11,25 @@
     <div><p>Click on areas on the map to learn more about them.</p></div>
     <div style="display:flex;">
         {#each colour.range().concat(outofrange) as d,i }
-            <div class='vflex'>
+            <div class='vflex' style="margin-right:{customise&&i==0 ? '3px':0};">
                 <div class='legend-block' style="background-color:{d};"></div>
                 <div><p class='legend-text'>
-                    {#if i==breaks.length-1}
-                    Out of budget
+                    {#if customise}
+                        {#if i==breaks.length}
+                        Out of budget
+                        {:else if i==0}
+                        Below minimum
+                        {:else}
+                        £{format(".2~s")(breaks[i])}+
+                        {/if}
                     {:else}
-                    £{format(".2~s")(breaks[i])}+
+                        {#if i==breaks.length-1}
+                        Out of budget
+                        {:else}
+                        £{format(".2~s")(breaks[i])}+
+                        {/if}
                     {/if}
+                    
                     
                 </p></div>
             </div>
