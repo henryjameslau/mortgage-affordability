@@ -175,10 +175,9 @@
 
 <!-- svelte-ignore non-top-level-reactive-declaration -->
 <!-- svelte-ignore non-top-level-reactive-declaration -->
-<h1>Where in the UK can you afford to buy a property?</h1>
+<h1>How are average UK monthly mortgage payments changing?</h1>
 <h2>
-	Fill in some details below to find out which areas are affordable depending
-	on your budget. Click on each area to find out about house prices.
+	Fill in some details below to find out how average mortgage payments are changing near you. Click on each area to find out about hose prices.
 </h2>
 <hr />
 <fieldset>
