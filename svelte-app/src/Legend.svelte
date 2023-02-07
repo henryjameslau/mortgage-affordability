@@ -2,7 +2,6 @@
     export let breaks;
     export let colour;
     export let customise;
-    let outofrange = "#EC9AA4"
     import {format} from 'd3-format';
      
 </script>

@@ -10,6 +10,9 @@
     export let latestHpi;
     export let propertyType;
     export let areaovertime;
+    export let payment;
+    export let deposit;
+    export let mortgageTerm;
     let fiveyearsago;
     let percentageChange;
 
@@ -47,10 +50,14 @@
         }
     }
 
+    function cleararea(){
+        areacd.set(null)
+    }
 </script>
 
 {#if $areacd}
-    <p>Property prices in {thisarea["regionName.value"]}</p>
+    <button aria-label="close selected area information" on:click={cleararea}></button>
+    <h3>Property prices in {thisarea["regionName.value"]}</h3>
     <div id="legend">
         <div class="legend--item">
             <div class="legend--icon--circle" style="background-color: #206095;" />
@@ -71,7 +78,9 @@
     </div>
     <Chart {areaovertime} />
     <p>
-        The average price for a {propertyType.toLowerCase()} property in {thisarea[
+         Mortgage payments for an average {propertyType.toLowerCase()} {propertyType=='Flat' ? "" : 'property'} in {thisarea[
+            "regionName.value"
+        ]} is £{payment} with a deposit of {deposit} and a {mortgageTerm} year mortgage. The average price for a {propertyType.toLowerCase()} property in {thisarea[
             "regionName.value"
         ]} is £{format(".3~s")(thisarea[propertyLookup[propertyType]])} in {timeFormat(
             "%b %Y"
@@ -80,6 +89,21 @@
 {/if}
 
 <style>
+    button{
+        position:relative;
+        top:0;
+        right:0;
+        float:right;
+        background-image: url("./images/Close-cross.png");
+        height:13px;
+        width:13px;
+        border:0;
+        background-color: white;
+    }
+
+    button:focus{
+        outline: orange 3px;
+    }
     #legend {
         display: flex;
         flex-wrap: wrap;

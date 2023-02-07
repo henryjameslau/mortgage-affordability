@@ -42,6 +42,7 @@
 	let colour;
 	let areaovertime;
 	let pricevalues;
+	let payment
 	let minimum;
 	let maximum;
 	let slidermin;
@@ -135,6 +136,10 @@
 			.range(["#E9EFF4", "#BCD6E9", "#8DB3D3", "#6390B5","#EC9AA4"]);
 	}
 
+	$: if(prices){
+		payment=prices[$areacd];
+	}
+
 	$: if (pricevalues) {
 		minimum = pricevalues[0];
 		maximum = pricevalues[pricevalues.length - 1];
@@ -172,7 +177,7 @@
 <h1>How are average UK monthly mortgage payments changing?</h1>
 <h2>
 	Fill in some details below to find out how average mortgage payments are
-	changing near you. Click on each area to find out about hose prices.
+	changing near you. Click on each area to find out about house prices.
 </h2>
 <hr />
 <fieldset>
@@ -240,7 +245,7 @@
 		<Map {prices} {colour} />
 	</div>
 	<div>
-		<Areainfo {latestHpi} {propertyType} {areaovertime} />
+		<Areainfo {latestHpi} {propertyType} {areaovertime} {payment} {deposit} {mortgageTerm}/>
 		<Legend {breaks} {colour} {customise} />
 	</div>
 </div>
