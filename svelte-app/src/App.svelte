@@ -129,19 +129,10 @@
 			.sort(ascending);
 		breaks = equalIntervalBreaks(pricevalues, 4);
 
-		// if (customise) {
-			// let custompricevalues = pricevalues.filter((d) => d > slidermin);
-		// 	let custombreaks = equalIntervalBreaks(custompricevalues, 3);
-
-		// 	colour = scaleThreshold()
-		// 		.domain(custombreaks.slice(1))
-		// 		.range(["f4c2c8", "#BCD6E9", "#8DB3D3", "#6390B5"]);
-		// }
-
 		//set up colour scales for map
 		colour = scaleThreshold()
-			.domain(breaks.slice(1))
-			.range(["#E9EFF4", "#BCD6E9", "#8DB3D3", "#6390B5"]);
+			.domain(breaks)
+			.range(["#E9EFF4", "#BCD6E9", "#8DB3D3", "#6390B5","#EC9AA4"]);
 	}
 
 	$: if (pricevalues) {
@@ -154,15 +145,15 @@
 		slidermax = maximum;
 	}
 
-	$: if (customise&&colour) {
-		let custompricevalues = pricevalues.filter((d) => d > slidermin);
+	$: if (customise && colour) {
+		let custompricevalues = pricevalues
+			.filter((d) => d > slidermin)
+			.filter((d) => d < slidermax);
 		breaks = equalIntervalBreaks(custompricevalues, 3);
 
 		colour = scaleThreshold()
 			.domain(breaks)
-			.range(["#f4c2c8", "#BCD6E9", "#8DB3D3", "#6390B5"]);
-
-
+			.range(["#E9EFF4", "#BCD6E9", "#8DB3D3", "#6390B5","#EC9AA4"]);
 	}
 
 	function setSliderInputs(e) {
@@ -170,14 +161,18 @@
 		slidermax = e.detail.values[1];
 		customise = true;
 	}
-
 </script>
+
+<svelte:head>
+	<script src="https:cdn.ons.gov.uk/vendor/pym/1.3.2/pym.min.js"></script>
+</svelte:head>
 
 <!-- svelte-ignore non-top-level-reactive-declaration -->
 <!-- svelte-ignore non-top-level-reactive-declaration -->
 <h1>How are average UK monthly mortgage payments changing?</h1>
 <h2>
-	Fill in some details below to find out how average mortgage payments are changing near you. Click on each area to find out about hose prices.
+	Fill in some details below to find out how average mortgage payments are
+	changing near you. Click on each area to find out about hose prices.
 </h2>
 <hr />
 <fieldset>
@@ -241,12 +236,12 @@
 
 <div id="results">
 	<h2>Map of average monthly mortgage</h2>
-	<div id="map-container" style="height:300px;">
+	<div id="map-container" style="height:585px;">
 		<Map {prices} {colour} />
 	</div>
 	<div>
 		<Areainfo {latestHpi} {propertyType} {areaovertime} />
-		<Legend {breaks} {colour} {customise}/>
+		<Legend {breaks} {colour} {customise} />
 	</div>
 </div>
 <hr />

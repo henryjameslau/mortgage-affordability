@@ -10,20 +10,20 @@
 {#if colour}
     <div><p>Click on areas on the map to learn more about them.</p></div>
     <div style="display:flex;">
-        {#each colour.range().concat(outofrange) as d,i }
-            <div class='vflex' style="margin-right:{customise&&i==0 ? '3px':0};">
+        {#each colour.range() as d,i }
+            <div class='vflex'>
                 <div class='legend-block' style="background-color:{d};"></div>
                 <div><p class='legend-text'>
                     {#if customise}
-                        {#if i==breaks.length}
+                        {#if i==colour.range().length-1}
                         Out of budget
                         {:else if i==0}
                         Below minimum
                         {:else}
-                        £{format(".2~s")(breaks[i])}+
+                        £{format(".2~s")(breaks[i-1])}+
                         {/if}
                     {:else}
-                        {#if i==breaks.length-1}
+                        {#if i==colour.range().length-1}
                         Out of budget
                         {:else}
                         £{format(".2~s")(breaks[i])}+
