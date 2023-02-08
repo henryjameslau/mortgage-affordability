@@ -210,12 +210,12 @@
 <fieldset>
 	<div>
 		<label for="mortgageTerm">Mortgage term in years</label>
-		<input type="number" id="mortgageTerm" bind:value={mortgageTerm} />
+		<input type="number" min="0" max="30" id="mortgageTerm" bind:value={mortgageTerm} />
 	</div>
 
 	<div>
 		<label for="deposit">Deposit amount</label>
-		<input type="number" id="deposit" bind:value={deposit} />
+		<input type="number" min="0" id="deposit" bind:value={deposit} />
 	</div>
 
 	<div>
