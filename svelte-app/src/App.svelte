@@ -42,7 +42,7 @@
 	let colour;
 	let areaovertime;
 	let pricevalues;
-	let payment
+	let payment;
 	let minimum;
 	let maximum;
 	let slidermin;
@@ -102,9 +102,6 @@
 		}
 
 		function monthlyrepayments(price) {
-			if (price == "") {
-				return "Unavailable";
-			}
 			let loan = price - deposit;
 			let ltv = loan / price;
 
@@ -115,9 +112,14 @@
 			let payment =
 				(loan * (monthlyrate * (1 + monthlyrate) ** term)) /
 				((1 + monthlyrate) ** term - 1);
-
-			return Math.round(payment * 100) / 100;
+			if(payment){
+				return Math.round(payment * 100) / 100;
+			}else{
+				return "out of budget"
+			}
+			
 		}
+
 		if (latestHpi)
 			latestHpi.forEach((d) => {
 				prices[d.code] = monthlyrepayments(
@@ -130,14 +132,31 @@
 			.sort(ascending);
 		breaks = equalIntervalBreaks(pricevalues, 4);
 
-		//set up colour scales for map
-		colour = scaleThreshold()
-			.domain(breaks)
-			.range(["#E9EFF4", "#BCD6E9", "#8DB3D3", "#6390B5","#EC9AA4"]);
+		if (breaks.some((v) => v < 0)) {
+			breaks.splice(findneg(breaks)+1,0,0)
+			breaks.shift()
+
+			colour = scaleThreshold()
+				.domain(breaks)
+				.range([
+					"#22D0B6",
+					"#E9EFF4",
+					"#BCD6E9",
+					"#8DB3D3",
+					"#6390B5",
+					"#EC9AA4",
+				]);
+
+		} else {
+			//set up colour scales for map
+			colour = scaleThreshold()
+				.domain(breaks.slice(1))
+				.range(["#E9EFF4", "#BCD6E9", "#8DB3D3", "#6390B5", "#EC9AA4"]);
+		}
 	}
 
-	$: if(prices){
-		payment=prices[$areacd];
+	$: if (prices) {
+		payment = prices[$areacd];
 	}
 
 	$: if (pricevalues) {
@@ -158,13 +177,21 @@
 
 		colour = scaleThreshold()
 			.domain(breaks)
-			.range(["#E9EFF4", "#BCD6E9", "#8DB3D3", "#6390B5","#EC9AA4"]);
+			.range(["#E9EFF4", "#BCD6E9", "#8DB3D3", "#6390B5", "#EC9AA4"]);
 	}
 
 	function setSliderInputs(e) {
 		slidermin = e.detail.values[0];
 		slidermax = e.detail.values[1];
 		customise = true;
+	}
+
+	function findneg(arr) {
+		let indices = arr
+			.map((a, i) => (a < 0 ? i : -1))
+			.filter((a) => a !== -1);
+		let maxindex = max(indices);
+		return maxindex;
 	}
 </script>
 
@@ -219,23 +246,26 @@
 			<label for="maximum">Maximum</label>
 			<input bind:value={slidermax} type="number" id="maximum" />
 		</div>
-		<RangeSlider
-			range
-			values={[slidermin, slidermax]}
-			min={minimum}
-			max={maximum}
-			float="true"
-			hoverable="true"
-			pips="true"
-			pipstep="500"
-			all="label"
-			prefix="£"
-			on:change={(e) => {
-				setSliderInputs(e);
-			}}
-			formatter={(v) => format(".2s")(v)}
-			handleFormatter={(v) => format(",.0f")(v)}
-		/>
+		{#if breaks.length>0}
+			<RangeSlider
+				range
+				values={[slidermin, slidermax]}
+				min={minimum}
+				max={maximum}
+				float="true"
+				hoverable="true"
+				pips
+				pipstep={(maximum - minimum) / 5}
+				all="label"
+				prefix="£"
+				on:change={(e) => {
+					setSliderInputs(e);
+				}}
+				formatter={(v) => format(",.0f")(v)}
+				handleFormatter={(v) => format(",.0f")(v)}
+			/>
+		{/if}
+		
 	</fieldset>
 </details>
 
@@ -245,10 +275,21 @@
 		<Map {prices} {colour} />
 	</div>
 	<div>
-		<Areainfo {latestHpi} {propertyType} {areaovertime} {payment} {deposit} {mortgageTerm}/>
+		{#if breaks.length>0}
+		<Areainfo
+			{latestHpi}
+			{propertyType}
+			{areaovertime}
+			{payment}
+			{deposit}
+			{mortgageTerm}
+		/>
 		<Legend {breaks} {colour} {customise} />
+		{/if}
+		
 	</div>
 </div>
+
 <hr />
 <h3>Use and share</h3>
 <div>Get data</div>

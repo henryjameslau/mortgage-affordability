@@ -3,11 +3,13 @@
     export let colour;
     export let customise;
     import {format} from 'd3-format';
+    import { areacd } from "./stores.js";
+
      
 </script>
 
 {#if colour}
-    <div><p>Click on areas on the map to learn more about them.</p></div>
+    {#if !$areacd}<div><p>Click on areas on the map to learn more about them.</p></div>{/if}
     <div style="display:flex;">
         {#each colour.range() as d,i }
             <div class='vflex'>
@@ -19,13 +21,21 @@
                         {:else if i==0}
                         Below minimum
                         {:else}
-                        £{format(".2~s")(breaks[i-1])}+
+                        £{format(".2~s")(breaks[i-1])}–£{format(".2~s")(breaks[i])}
+                        {/if}
+                    {:else if breaks.some((v) => v ==0)} 
+                        {#if i==colour.range().length-1}
+                        Out of budget
+                        {:else if i==0}
+                        Cash buyer
+                        {:else}
+                        £{format(".2~s")(breaks[i-1])}–£{format(".2~s")(breaks[i])}
                         {/if}
                     {:else}
                         {#if i==colour.range().length-1}
                         Out of budget
                         {:else}
-                        £{format(".2~s")(breaks[i])}+
+                        £{format(".2~s")(breaks[i])}–£{format(".2~s")(breaks[i+1])}
                         {/if}
                     {/if}
                     

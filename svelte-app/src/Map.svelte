@@ -36,6 +36,7 @@
 			style,
 			bounds,
 			interactive: true,
+			maxBounds:[[-18, 49],[11, 61]]
 		});
 
 		map.addControl(new maplibre.NavigationControl({ showCompass: false }));
@@ -138,8 +139,10 @@
 		geojson.features.map(function (d, i) {
 			if (!isNaN(prices[d.properties.AREACD])) {
 				d.properties.fill = colour(prices[d.properties.AREACD]);
-			} else {
+			} else if(prices[d.properties.AREACD]=='out of budget'){
 				d.properties.fill = "#EC9AA4";
+			} else {
+				d.properties.fill = "#C6C6C6";
 			}
 		});
 

@@ -2,9 +2,8 @@
     import { areacd } from "./stores.js";
     import { format } from "d3-format";
     import { timeFormat } from "d3-time-format";
-    import { max,ascending } from "d3-array";
-    import {timeYear} from 'd3-time';
-
+    import { max, ascending } from "d3-array";
+    import { timeYear } from "d3-time";
 
     import Chart from "./Chart.svelte";
     export let latestHpi;
@@ -15,7 +14,7 @@
     export let mortgageTerm;
     let fiveyearsago;
     let percentageChange;
-
+    let thisarea;
 
     let propertyLookup = {
         Detached: "averagePriceDetached.value",
@@ -31,77 +30,111 @@
         Flat: "hpiFlatMaisonette.value",
     };
 
-    let thisarea;
-    $: if (latestHpi) {
+    $: if (latestHpi && $areacd) {
         thisarea = latestHpi.filter((d) => d.code == $areacd)[0];
     }
 
     $: if (areaovertime) {
         let maxdate = max(areaovertime, (d) => d["date.value"]);
         if (maxdate) {
-            let indexnow = areaovertime.filter(d=>d["date.value"].getTime() == maxdate.getTime())[0][indexLookup[propertyType]]
-            let newdate = timeYear.offset(maxdate,-5)
-            
+            let indexnow = areaovertime.filter(
+                (d) => d["date.value"].getTime() == maxdate.getTime()
+            )[0][indexLookup[propertyType]];
+            let newdate = timeYear.offset(maxdate, -5);
+
             fiveyearsago = areaovertime.filter(
                 (d) => d["date.value"].getTime() == newdate.getTime()
             )[0];
-            let index5yearsago = fiveyearsago[indexLookup[propertyType]]
-            percentageChange = 100*(indexnow-index5yearsago)/index5yearsago
+            let index5yearsago = fiveyearsago[indexLookup[propertyType]];
+            percentageChange =
+                (100 * (indexnow - index5yearsago)) / index5yearsago;
         }
     }
 
-    function cleararea(){
-        areacd.set(null)
+    function cleararea() {
+        areacd.set(null);
     }
 </script>
 
-{#if $areacd}
-    <button aria-label="close selected area information" on:click={cleararea}></button>
+{#if $areacd && thisarea}
+    <button aria-label="close selected area information" on:click={cleararea} />
     <h3>Property prices in {thisarea["regionName.value"]}</h3>
     <div id="legend">
         <div class="legend--item">
-            <div class="legend--icon--circle" style="background-color: #206095;" />
+            <div
+                class="legend--icon--circle"
+                style="background-color: #206095;"
+            />
             <div><p class="legend--text">Detached</p></div>
         </div>
         <div class="legend--item">
-            <div class="legend--icon--circle" style="background-color: #27A0CC;" />
+            <div
+                class="legend--icon--circle"
+                style="background-color: #27A0CC;"
+            />
             <div><p class="legend--text">Semi-detached</p></div>
         </div>
         <div class="legend--item">
-            <div class="legend--icon--circle" style="background-color: #A8BD3A;" />
+            <div
+                class="legend--icon--circle"
+                style="background-color: #A8BD3A;"
+            />
             <div><p class="legend--text">Terraced</p></div>
         </div>
         <div class="legend--item">
-            <div class="legend--icon--circle" style="background-color: #F66068;" />
+            <div
+                class="legend--icon--circle"
+                style="background-color: #F66068;"
+            />
             <div><p class="legend--text">Flats</p></div>
         </div>
     </div>
     <Chart {areaovertime} />
-    <p>
-         Mortgage payments for an average {propertyType.toLowerCase()} {propertyType=='Flat' ? "" : 'property'} in {thisarea[
-            "regionName.value"
-        ]} is £{payment} with a deposit of {deposit} and a {mortgageTerm} year mortgage. The average price for a {propertyType.toLowerCase()} property in {thisarea[
-            "regionName.value"
-        ]} is £{format(".3~s")(thisarea[propertyLookup[propertyType]])} in {timeFormat(
-            "%b %Y"
-        )(thisarea["date.value"])}. This has increased by {format(".0f")(percentageChange)}% since {timeFormat("%b %Y")(fiveyearsago["date.value"])}.
-    </p>
+    {#if thisarea}
+        {#if payment}
+            <p>
+                Typical payments on a 2 year fixed mortgage for an average {propertyType.toLowerCase()}
+                {propertyType == "Flat" ? "" : "property"} in {thisarea[
+                    "regionName.value"
+                ]} is £{format(",.0f")(payment)} with a deposit of £{format(
+                    ",.0f"
+                )(deposit)} and a {mortgageTerm} year mortgage.
+            </p>
+        {/if}
+
+        <p>
+            The average price for a {propertyType.toLowerCase()} property in {thisarea[
+                "regionName.value"
+            ]} is £{format(".3~s")(thisarea[propertyLookup[propertyType]])} in {timeFormat(
+                "%b %Y"
+            )(thisarea["date.value"])}.
+        </p>
+
+        <p>
+            This has increased by {format(".0f")(percentageChange)}% since {timeFormat(
+                "%b %Y"
+            )(fiveyearsago["date.value"])}.
+        </p>
+    {/if}
+{/if}
+{#if $areacd && !thisarea}
+    <p>Data unavailable</p>
 {/if}
 
 <style>
-    button{
-        position:relative;
-        top:0;
-        right:0;
-        float:right;
-        background-image: url("./images/Close-cross.png");
-        height:13px;
-        width:13px;
-        border:0;
+    button {
+        position: relative;
+        top: 0;
+        right: 0;
+        float: right;
+        background-image: url("./images/Close-cross.svg");
+        height: 13px;
+        width: 13px;
+        border: 0;
         background-color: white;
     }
 
-    button:focus{
+    button:focus {
         outline: orange 3px;
     }
     #legend {
