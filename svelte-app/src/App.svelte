@@ -201,7 +201,8 @@
 
 <!-- svelte-ignore non-top-level-reactive-declaration -->
 <!-- svelte-ignore non-top-level-reactive-declaration -->
-<h1>How are average UK monthly mortgage payments changing?</h1>
+<div id="inputs">
+	<h1>How are average UK monthly mortgage payments changing?</h1>
 <h2>
 	Fill in some details below to find out how average mortgage payments are
 	changing near you. Click on each area to find out about house prices.
@@ -268,6 +269,8 @@
 		
 	</fieldset>
 </details>
+</div>
+
 
 <div id="results">
 	<h2>Map of average monthly mortgage</h2>
@@ -291,7 +294,19 @@
 </div>
 
 <hr />
-<h3>Use and share</h3>
-<div>Get data</div>
-<div>Embed</div>
-<div>Share</div>
+<div id="footer">
+	<h3>Use and share</h3>
+	<div>Get data</div>
+	<div>Embed</div>
+	<div>Share</div>
+</div>
+
+
+<style>
+	#inputs{
+		background-color: #F4F7FA;
+	}
+	h1{
+		margin:0;
+	}
+</style>
