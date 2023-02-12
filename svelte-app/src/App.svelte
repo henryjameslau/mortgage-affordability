@@ -51,7 +51,7 @@
 
 	onMount(async () => {
 		(boe = await csv(
-			"https://corsproxy.io/?https://www.bankofengland.co.uk/boeapps/database/_iadb-fromshowcolumns.asp?csv.x=yes&Datefrom=01/Sep/2022&Dateto=now&SeriesCodes=IUMZICQ,IUMBV34,IUMZICR,IUMB482,IUM2WTL&CSVF=CN&UsingCodes=Y&VPD=N&VFD=N",
+			"https://raw.githubusercontent.com/ONSvisual/land-registry-flat-data/main/boe.csv",
 			autoType
 		)),
 			(hpi = await csv(
@@ -112,12 +112,11 @@
 			let payment =
 				(loan * (monthlyrate * (1 + monthlyrate) ** term)) /
 				((1 + monthlyrate) ** term - 1);
-			if(payment){
+			if (payment) {
 				return Math.round(payment * 100) / 100;
-			}else{
-				return "out of budget"
+			} else {
+				return "out of budget";
 			}
-			
 		}
 
 		if (latestHpi)
@@ -133,8 +132,8 @@
 		breaks = equalIntervalBreaks(pricevalues, 4);
 
 		if (breaks.some((v) => v < 0)) {
-			breaks.splice(findneg(breaks)+1,0,0)
-			breaks.shift()
+			breaks.splice(findneg(breaks) + 1, 0, 0);
+			breaks.shift();
 
 			colour = scaleThreshold()
 				.domain(breaks)
@@ -146,7 +145,6 @@
 					"#6390B5",
 					"#EC9AA4",
 				]);
-
 		} else {
 			//set up colour scales for map
 			colour = scaleThreshold()
@@ -201,112 +199,170 @@
 
 <!-- svelte-ignore non-top-level-reactive-declaration -->
 <!-- svelte-ignore non-top-level-reactive-declaration -->
-<div id="inputs">
-	<h1>How are average UK monthly mortgage payments changing?</h1>
-<h2>
-	Fill in some details below to find out how average mortgage payments are
-	changing near you. Click on each area to find out about house prices.
-</h2>
-<hr />
-<fieldset>
-	<div>
-		<label for="mortgageTerm">Mortgage term in years</label>
-		<input type="number" min="0" max="30" id="mortgageTerm" bind:value={mortgageTerm} />
+<div class='flex-container'>
+
+
+	<div id="inputs">
+		<h1>How are average UK monthly mortgage payments changing?</h1>
+		<h2>
+			Fill in some details below to find out how average mortgage payments
+			are changing near you. Click on each area to find out about house
+			prices.
+		</h2>
+		<fieldset>
+			<div>
+				<label for="mortgageTerm">Mortgage term in years</label>
+				<input
+					type="number"
+					min="0"
+					max="30"
+					id="mortgageTerm"
+					bind:value={mortgageTerm}
+				/>
+			</div>
+
+			<div>
+				<label for="deposit">Deposit amount</label>
+				<input
+					type="number"
+					min="0"
+					id="deposit"
+					bind:value={deposit}
+				/>
+			</div>
+
+			<div>
+				<label for="propertyType">Select property type</label>
+				<select bind:value={propertyType} id="propertyType">
+					<option>Detached</option>
+					<option>Semi-detached</option>
+					<option>Terraced</option>
+					<option>Flat</option>
+				</select>
+			</div>
+		</fieldset>
+
+		<details>
+			<summary>Adjust monthly repayment price range</summary>
+			<p>
+				Enter the minimum and maximum monthly mortgage payments that
+				suits your budget.
+			</p>
+			<fieldset>
+				<div>
+					<label for="minimum">Minimum</label>
+					<input bind:value={slidermin} type="number" id="minimum" />
+				</div>
+
+				<div>
+					<label for="maximum">Maximum</label>
+					<input bind:value={slidermax} type="number" id="maximum" />
+				</div>
+				{#if breaks.length > 0}
+					<RangeSlider
+						range
+						values={[slidermin, slidermax]}
+						min={minimum}
+						max={maximum}
+						float="true"
+						hoverable="true"
+						pips
+						pipstep={(maximum - minimum) / 5}
+						all="label"
+						prefix="£"
+						on:change={(e) => {
+							setSliderInputs(e);
+						}}
+						formatter={(v) => format(",.0f")(v)}
+						handleFormatter={(v) => format(",.0f")(v)}
+					/>
+				{/if}
+			</fieldset>
+		</details>
 	</div>
 
-	<div>
-		<label for="deposit">Deposit amount</label>
-		<input type="number" min="0" id="deposit" bind:value={deposit} />
+	<div id="footer">
+		<h3>Use and share</h3>
+		<div>Get data</div>
+		<div>Embed</div>
+		<div>Share</div>
 	</div>
 
-	<div>
-		<label for="propertyType">Select property type</label>
-		<select bind:value={propertyType} id="propertyType">
-			<option>Detached</option>
-			<option>Semi-detached</option>
-			<option>Terraced</option>
-			<option>Flat</option>
-		</select>
-	</div>
-</fieldset>
-
-<hr />
-<details>
-	<summary>Adjust monthly repayment price range</summary>
-	<p>
-		Enter the minimum and maximum monthly mortgage payments that suits your
-		budget.
-	</p>
-	<fieldset>
-		<div>
-			<label for="minimum">Minimum</label>
-			<input bind:value={slidermin} type="number" id="minimum" />
+	<div id="results">
+		<p id='maptitle'>Monthly mortgage payments</p>
+		<div id="map-container">
+			<Map {prices} {colour}/>	
+			<div id="mapinfo">
+				{#if breaks.length > 0}
+					<Areainfo
+						{latestHpi}
+						{propertyType}
+						{areaovertime}
+						{payment}
+						{deposit}
+						{mortgageTerm}
+					/>
+					<Legend {breaks} {colour} {customise} />
+				{/if}
+			</div>
 		</div>
-
-		<div>
-			<label for="maximum">Maximum</label>
-			<input bind:value={slidermax} type="number" id="maximum" />
-		</div>
-		{#if breaks.length>0}
-			<RangeSlider
-				range
-				values={[slidermin, slidermax]}
-				min={minimum}
-				max={maximum}
-				float="true"
-				hoverable="true"
-				pips
-				pipstep={(maximum - minimum) / 5}
-				all="label"
-				prefix="£"
-				on:change={(e) => {
-					setSliderInputs(e);
-				}}
-				formatter={(v) => format(",.0f")(v)}
-				handleFormatter={(v) => format(",.0f")(v)}
-			/>
-		{/if}
-		
-	</fieldset>
-</details>
-</div>
-
-
-<div id="results">
-	<h2>Map of average monthly mortgage</h2>
-	<div id="map-container" style="height:585px;">
-		<Map {prices} {colour} />
 	</div>
-	<div>
-		{#if breaks.length>0}
-		<Areainfo
-			{latestHpi}
-			{propertyType}
-			{areaovertime}
-			{payment}
-			{deposit}
-			{mortgageTerm}
-		/>
-		<Legend {breaks} {colour} {customise} />
-		{/if}
-		
-	</div>
-</div>
 
-<hr />
-<div id="footer">
-	<h3>Use and share</h3>
-	<div>Get data</div>
-	<div>Embed</div>
-	<div>Share</div>
 </div>
-
 
 <style>
-	#inputs{
-		background-color: #F4F7FA;
+
+	.flex-container{
+		display: flex;
+		flex-direction: column;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+		align-items: space-between;
+		height:100vh;
 	}
-	h1{
-		margin:0;
+
+	#inputs {
+		background-color: #f4f7fa;
+		flex: 1 1 auto;
+		width: 400px;
+	}
+	#footer {
+		flex:0 0 auto;
+		width:400px;
+	}
+	#results {
+		flex: 0 1 100vh;
+		order:1;
+		width:calc(100% - 400px);
+	}
+
+	h1 {
+		margin: 0;
+	}
+	#map-container {
+		height: 100%;
+	}
+
+	#mapinfo {
+		position: absolute;
+		bottom: 0;
+		background: white;
+		width: calc(100% - 400px);
+
+	}
+
+	#maptitle {
+		position:absolute;
+		top:20px;
+		z-index: 1;
+		color:#A6BFD5;
+		padding: 8px 12px 10px 12px;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 20px;
+		border: 1px solid #A6BFD5;
+		border-left-width: 4px;
+		margin-left: 18px;
+		background-color: white;
 	}
 </style>

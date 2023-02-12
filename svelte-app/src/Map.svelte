@@ -36,10 +36,15 @@
 			style,
 			bounds,
 			interactive: true,
-			maxBounds:[[-18, 49],[11, 61]]
+			maxBounds:[[-18, 49],[11, 61]],
+			attributionControl:false
 		});
 
 		map.addControl(new maplibre.NavigationControl({ showCompass: false }));
+		map.addControl(new maplibre.AttributionControl({
+compact: true
+}), 'top-left');
+		
 
 		map.on("load", () => {
 			map.addSource("boundary", { type: "geojson", data: geojson });

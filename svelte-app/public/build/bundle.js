@@ -99277,10 +99277,10 @@ var app = (function () {
     			div = element("div");
     			attr_dev(link, "rel", "stylesheet");
     			attr_dev(link, "href", "https://unpkg.com/maplibre-gl@2.1.9/dist/maplibre-gl.css");
-    			add_location(link, file$h, 164, 1, 3765);
+    			add_location(link, file$h, 169, 1, 3879);
     			attr_dev(div, "id", "map");
     			attr_dev(div, "class", "svelte-kh8c1y");
-    			add_location(div, file$h, 170, 0, 3876);
+    			add_location(div, file$h, 175, 0, 3990);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -99346,10 +99346,12 @@ var app = (function () {
     				style,
     				bounds,
     				interactive: true,
-    				maxBounds: [[-18, 49], [11, 61]]
+    				maxBounds: [[-18, 49], [11, 61]],
+    				attributionControl: false
     			});
 
     		map.addControl(new maplibreGl.NavigationControl({ showCompass: false }));
+    		map.addControl(new maplibreGl.AttributionControl({ compact: true }), 'top-left');
 
     		map.on("load", () => {
     			map.addSource("boundary", { type: "geojson", data: geojson });
@@ -120273,6 +120275,8 @@ var app = (function () {
     	let t2_value = /*thisarea*/ ctx[8]["regionName.value"] + "";
     	let t2;
     	let t3;
+    	let div15;
+    	let div13;
     	let div12;
     	let div2;
     	let div0;
@@ -120300,7 +120304,7 @@ var app = (function () {
     	let t15;
     	let chart;
     	let t16;
-    	let if_block_anchor;
+    	let div14;
     	let current;
     	let mounted;
     	let dispose;
@@ -120320,6 +120324,8 @@ var app = (function () {
     			t1 = text$1("Property prices in ");
     			t2 = text$1(t2_value);
     			t3 = space();
+    			div15 = element("div");
+    			div13 = element("div");
     			div12 = element("div");
     			div2 = element("div");
     			div0 = element("div");
@@ -120351,47 +120357,55 @@ var app = (function () {
     			t15 = space();
     			create_component(chart.$$.fragment);
     			t16 = space();
+    			div14 = element("div");
     			if (if_block) if_block.c();
-    			if_block_anchor = empty();
     			attr_dev(button, "aria-label", "close selected area information");
-    			attr_dev(button, "class", "svelte-zbgxvq");
+    			attr_dev(button, "class", "svelte-ov5a4");
     			add_location(button, file$3, 59, 4, 1808);
     			add_location(h3, file$3, 60, 4, 1889);
-    			attr_dev(div0, "class", "legend--icon--circle svelte-zbgxvq");
+    			attr_dev(div0, "class", "legend--icon--circle svelte-ov5a4");
     			set_style(div0, "background-color", "#206095");
-    			add_location(div0, file$3, 63, 12, 2017);
-    			attr_dev(p0, "class", "legend--text svelte-zbgxvq");
-    			add_location(p0, file$3, 67, 17, 2150);
-    			add_location(div1, file$3, 67, 12, 2145);
-    			attr_dev(div2, "class", "legend--item svelte-zbgxvq");
-    			add_location(div2, file$3, 62, 8, 1978);
-    			attr_dev(div3, "class", "legend--icon--circle svelte-zbgxvq");
+    			add_location(div0, file$3, 65, 20, 2099);
+    			attr_dev(p0, "class", "legend--text svelte-ov5a4");
+    			add_location(p0, file$3, 69, 25, 2264);
+    			add_location(div1, file$3, 69, 20, 2259);
+    			attr_dev(div2, "class", "legend--item svelte-ov5a4");
+    			add_location(div2, file$3, 64, 16, 2052);
+    			attr_dev(div3, "class", "legend--icon--circle svelte-ov5a4");
     			set_style(div3, "background-color", "#27A0CC");
-    			add_location(div3, file$3, 70, 12, 2255);
-    			attr_dev(p1, "class", "legend--text svelte-zbgxvq");
-    			add_location(p1, file$3, 74, 17, 2388);
-    			add_location(div4, file$3, 74, 12, 2383);
-    			attr_dev(div5, "class", "legend--item svelte-zbgxvq");
-    			add_location(div5, file$3, 69, 8, 2216);
-    			attr_dev(div6, "class", "legend--icon--circle svelte-zbgxvq");
+    			add_location(div3, file$3, 72, 20, 2393);
+    			attr_dev(p1, "class", "legend--text svelte-ov5a4");
+    			add_location(p1, file$3, 76, 25, 2558);
+    			add_location(div4, file$3, 76, 20, 2553);
+    			attr_dev(div5, "class", "legend--item svelte-ov5a4");
+    			add_location(div5, file$3, 71, 16, 2346);
+    			attr_dev(div6, "class", "legend--icon--circle svelte-ov5a4");
     			set_style(div6, "background-color", "#A8BD3A");
-    			add_location(div6, file$3, 77, 12, 2498);
-    			attr_dev(p2, "class", "legend--text svelte-zbgxvq");
-    			add_location(p2, file$3, 81, 17, 2631);
-    			add_location(div7, file$3, 81, 12, 2626);
-    			attr_dev(div8, "class", "legend--item svelte-zbgxvq");
-    			add_location(div8, file$3, 76, 8, 2459);
-    			attr_dev(div9, "class", "legend--icon--circle svelte-zbgxvq");
+    			add_location(div6, file$3, 79, 20, 2692);
+    			attr_dev(p2, "class", "legend--text svelte-ov5a4");
+    			add_location(p2, file$3, 83, 25, 2857);
+    			add_location(div7, file$3, 83, 20, 2852);
+    			attr_dev(div8, "class", "legend--item svelte-ov5a4");
+    			add_location(div8, file$3, 78, 16, 2645);
+    			attr_dev(div9, "class", "legend--icon--circle svelte-ov5a4");
     			set_style(div9, "background-color", "#F66068");
-    			add_location(div9, file$3, 84, 12, 2736);
-    			attr_dev(p3, "class", "legend--text svelte-zbgxvq");
-    			add_location(p3, file$3, 88, 17, 2869);
-    			add_location(div10, file$3, 88, 12, 2864);
-    			attr_dev(div11, "class", "legend--item svelte-zbgxvq");
-    			add_location(div11, file$3, 83, 8, 2697);
+    			add_location(div9, file$3, 86, 20, 2986);
+    			attr_dev(p3, "class", "legend--text svelte-ov5a4");
+    			add_location(p3, file$3, 90, 25, 3151);
+    			add_location(div10, file$3, 90, 20, 3146);
+    			attr_dev(div11, "class", "legend--item svelte-ov5a4");
+    			add_location(div11, file$3, 85, 16, 2939);
     			attr_dev(div12, "id", "legend");
-    			attr_dev(div12, "class", "svelte-zbgxvq");
-    			add_location(div12, file$3, 61, 4, 1952);
+    			attr_dev(div12, "class", "svelte-ov5a4");
+    			add_location(div12, file$3, 63, 12, 2018);
+    			attr_dev(div13, "id", "chart");
+    			attr_dev(div13, "class", "svelte-ov5a4");
+    			add_location(div13, file$3, 62, 8, 1989);
+    			attr_dev(div14, "id", "textinfo");
+    			attr_dev(div14, "class", "svelte-ov5a4");
+    			add_location(div14, file$3, 95, 8, 3293);
+    			attr_dev(div15, "class", "flex-container svelte-ov5a4");
+    			add_location(div15, file$3, 61, 4, 1952);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, button, anchor);
@@ -120400,7 +120414,9 @@ var app = (function () {
     			append_dev(h3, t1);
     			append_dev(h3, t2);
     			insert_dev(target, t3, anchor);
-    			insert_dev(target, div12, anchor);
+    			insert_dev(target, div15, anchor);
+    			append_dev(div15, div13);
+    			append_dev(div13, div12);
     			append_dev(div12, div2);
     			append_dev(div2, div0);
     			append_dev(div2, t4);
@@ -120424,11 +120440,11 @@ var app = (function () {
     			append_dev(div11, t13);
     			append_dev(div11, div10);
     			append_dev(div10, p3);
-    			insert_dev(target, t15, anchor);
-    			mount_component(chart, target, anchor);
-    			insert_dev(target, t16, anchor);
-    			if (if_block) if_block.m(target, anchor);
-    			insert_dev(target, if_block_anchor, anchor);
+    			append_dev(div13, t15);
+    			mount_component(chart, div13, null);
+    			append_dev(div15, t16);
+    			append_dev(div15, div14);
+    			if (if_block) if_block.m(div14, null);
     			current = true;
 
     			if (!mounted) {
@@ -120448,7 +120464,7 @@ var app = (function () {
     				} else {
     					if_block = create_if_block_2$2(ctx);
     					if_block.c();
-    					if_block.m(if_block_anchor.parentNode, if_block_anchor);
+    					if_block.m(div14, null);
     				}
     			} else if (if_block) {
     				if_block.d(1);
@@ -120469,12 +120485,9 @@ var app = (function () {
     			if (detaching) detach_dev(t0);
     			if (detaching) detach_dev(h3);
     			if (detaching) detach_dev(t3);
-    			if (detaching) detach_dev(div12);
-    			if (detaching) detach_dev(t15);
-    			destroy_component(chart, detaching);
-    			if (detaching) detach_dev(t16);
-    			if (if_block) if_block.d(detaching);
-    			if (detaching) detach_dev(if_block_anchor);
+    			if (detaching) detach_dev(div15);
+    			destroy_component(chart);
+    			if (if_block) if_block.d();
     			mounted = false;
     			dispose();
     		}
@@ -120491,7 +120504,7 @@ var app = (function () {
     	return block;
     }
 
-    // (93:4) {#if thisarea}
+    // (97:12) {#if thisarea}
     function create_if_block_2$2(ctx) {
     	let t0;
     	let p0;
@@ -120540,8 +120553,8 @@ var app = (function () {
     			t13 = text$1("% since ");
     			t14 = text$1(t14_value);
     			t15 = text$1(".");
-    			add_location(p0, file$3, 104, 8, 3445);
-    			add_location(p1, file$3, 112, 8, 3750);
+    			add_location(p0, file$3, 108, 8, 3802);
+    			add_location(p1, file$3, 116, 8, 4107);
     		},
     		m: function mount(target, anchor) {
     			if (if_block) if_block.m(target, anchor);
@@ -120598,14 +120611,14 @@ var app = (function () {
     		block,
     		id: create_if_block_2$2.name,
     		type: "if",
-    		source: "(93:4) {#if thisarea}",
+    		source: "(97:12) {#if thisarea}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (94:8) {#if payment}
+    // (98:8) {#if payment}
     function create_if_block_3$2(ctx) {
     	let p;
     	let t0;
@@ -120643,7 +120656,7 @@ var app = (function () {
     			t10 = text$1(" and a ");
     			t11 = text$1(/*mortgageTerm*/ ctx[4]);
     			t12 = text$1(" year mortgage.");
-    			add_location(p, file$3, 94, 12, 3017);
+    			add_location(p, file$3, 98, 12, 3374);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -120678,14 +120691,14 @@ var app = (function () {
     		block,
     		id: create_if_block_3$2.name,
     		type: "if",
-    		source: "(94:8) {#if payment}",
+    		source: "(98:8) {#if payment}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (120:0) {#if $areacd && !thisarea}
+    // (129:0) {#if $areacd && !thisarea}
     function create_if_block$3(ctx) {
     	let p;
 
@@ -120693,7 +120706,7 @@ var app = (function () {
     		c: function create() {
     			p = element("p");
     			p.textContent = "Data unavailable";
-    			add_location(p, file$3, 120, 4, 3970);
+    			add_location(p, file$3, 129, 4, 4364);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -120707,7 +120720,7 @@ var app = (function () {
     		block,
     		id: create_if_block$3.name,
     		type: "if",
-    		source: "(120:0) {#if $areacd && !thisarea}",
+    		source: "(129:0) {#if $areacd && !thisarea}",
     		ctx
     	});
 
@@ -124490,7 +124503,7 @@ var app = (function () {
     const { Object: Object_1 } = globals;
     const file = "src/App.svelte";
 
-    // (250:2) {#if breaks.length>0}
+    // (261:4) {#if breaks.length > 0}
     function create_if_block_1(ctx) {
     	let rangeslider;
     	let current;
@@ -124549,14 +124562,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1.name,
     		type: "if",
-    		source: "(250:2) {#if breaks.length>0}",
+    		source: "(261:4) {#if breaks.length > 0}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (281:2) {#if breaks.length>0}
+    // (296:4) {#if breaks.length > 0}
     function create_if_block(ctx) {
     	let areainfo;
     	let t;
@@ -124633,7 +124646,7 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(281:2) {#if breaks.length>0}",
+    		source: "(296:4) {#if breaks.length > 0}",
     		ctx
     	});
 
@@ -124644,70 +124657,65 @@ var app = (function () {
     	let script;
     	let script_src_value;
     	let t0;
+    	let div13;
     	let div5;
     	let h1;
     	let t2;
-    	let h20;
+    	let h2;
     	let t4;
-    	let hr0;
-    	let t5;
     	let fieldset0;
     	let div0;
     	let label0;
-    	let t7;
+    	let t6;
     	let input0;
-    	let t8;
+    	let t7;
     	let div1;
     	let label1;
-    	let t10;
+    	let t9;
     	let input1;
-    	let t11;
+    	let t10;
     	let div2;
     	let label2;
-    	let t13;
+    	let t12;
     	let select;
     	let option0;
     	let option1;
     	let option2;
     	let option3;
-    	let t18;
-    	let hr1;
-    	let t19;
+    	let t17;
     	let details;
     	let summary;
+    	let t19;
+    	let p0;
     	let t21;
-    	let p;
-    	let t23;
     	let fieldset1;
     	let div3;
     	let label3;
-    	let t25;
+    	let t23;
     	let input2;
-    	let t26;
+    	let t24;
     	let div4;
     	let label4;
-    	let t28;
+    	let t26;
     	let input3;
-    	let t29;
+    	let t27;
+    	let t28;
+    	let div9;
+    	let h3;
     	let t30;
-    	let div8;
-    	let h21;
-    	let t32;
     	let div6;
-    	let map;
-    	let t33;
+    	let t32;
     	let div7;
     	let t34;
-    	let hr2;
-    	let t35;
+    	let div8;
+    	let t36;
     	let div12;
-    	let h3;
-    	let t37;
-    	let div9;
+    	let p1;
+    	let t38;
+    	let div11;
+    	let map;
     	let t39;
     	let div10;
-    	let t41;
-    	let div11;
     	let current;
     	let mounted;
     	let dispose;
@@ -124727,32 +124735,31 @@ var app = (function () {
     		c: function create() {
     			script = element("script");
     			t0 = space();
+    			div13 = element("div");
     			div5 = element("div");
     			h1 = element("h1");
     			h1.textContent = "How are average UK monthly mortgage payments changing?";
     			t2 = space();
-    			h20 = element("h2");
-    			h20.textContent = "Fill in some details below to find out how average mortgage payments are\n\tchanging near you. Click on each area to find out about house prices.";
+    			h2 = element("h2");
+    			h2.textContent = "Fill in some details below to find out how average mortgage payments\n\t\t\tare changing near you. Click on each area to find out about house\n\t\t\tprices.";
     			t4 = space();
-    			hr0 = element("hr");
-    			t5 = space();
     			fieldset0 = element("fieldset");
     			div0 = element("div");
     			label0 = element("label");
     			label0.textContent = "Mortgage term in years";
-    			t7 = space();
+    			t6 = space();
     			input0 = element("input");
-    			t8 = space();
+    			t7 = space();
     			div1 = element("div");
     			label1 = element("label");
     			label1.textContent = "Deposit amount";
-    			t10 = space();
+    			t9 = space();
     			input1 = element("input");
-    			t11 = space();
+    			t10 = space();
     			div2 = element("div");
     			label2 = element("label");
     			label2.textContent = "Select property type";
-    			t13 = space();
+    			t12 = space();
     			select = element("select");
     			option0 = element("option");
     			option0.textContent = "Detached";
@@ -124762,129 +124769,130 @@ var app = (function () {
     			option2.textContent = "Terraced";
     			option3 = element("option");
     			option3.textContent = "Flat";
-    			t18 = space();
-    			hr1 = element("hr");
-    			t19 = space();
+    			t17 = space();
     			details = element("details");
     			summary = element("summary");
     			summary.textContent = "Adjust monthly repayment price range";
+    			t19 = space();
+    			p0 = element("p");
+    			p0.textContent = "Enter the minimum and maximum monthly mortgage payments that\n\t\t\t\tsuits your budget.";
     			t21 = space();
-    			p = element("p");
-    			p.textContent = "Enter the minimum and maximum monthly mortgage payments that suits your\n\t\tbudget.";
-    			t23 = space();
     			fieldset1 = element("fieldset");
     			div3 = element("div");
     			label3 = element("label");
     			label3.textContent = "Minimum";
-    			t25 = space();
+    			t23 = space();
     			input2 = element("input");
-    			t26 = space();
+    			t24 = space();
     			div4 = element("div");
     			label4 = element("label");
     			label4.textContent = "Maximum";
-    			t28 = space();
+    			t26 = space();
     			input3 = element("input");
-    			t29 = space();
+    			t27 = space();
     			if (if_block0) if_block0.c();
-    			t30 = space();
-    			div8 = element("div");
-    			h21 = element("h2");
-    			h21.textContent = "Map of average monthly mortgage";
-    			t32 = space();
-    			div6 = element("div");
-    			create_component(map.$$.fragment);
-    			t33 = space();
-    			div7 = element("div");
-    			if (if_block1) if_block1.c();
-    			t34 = space();
-    			hr2 = element("hr");
-    			t35 = space();
-    			div12 = element("div");
+    			t28 = space();
+    			div9 = element("div");
     			h3 = element("h3");
     			h3.textContent = "Use and share";
-    			t37 = space();
-    			div9 = element("div");
-    			div9.textContent = "Get data";
+    			t30 = space();
+    			div6 = element("div");
+    			div6.textContent = "Get data";
+    			t32 = space();
+    			div7 = element("div");
+    			div7.textContent = "Embed";
+    			t34 = space();
+    			div8 = element("div");
+    			div8.textContent = "Share";
+    			t36 = space();
+    			div12 = element("div");
+    			p1 = element("p");
+    			p1.textContent = "Monthly mortgage payments";
+    			t38 = space();
+    			div11 = element("div");
+    			create_component(map.$$.fragment);
     			t39 = space();
     			div10 = element("div");
-    			div10.textContent = "Embed";
-    			t41 = space();
-    			div11 = element("div");
-    			div11.textContent = "Share";
+    			if (if_block1) if_block1.c();
     			if (!src_url_equal(script.src, script_src_value = "https:cdn.ons.gov.uk/vendor/pym/1.3.2/pym.min.js")) attr_dev(script, "src", script_src_value);
-    			add_location(script, file, 198, 1, 4658);
-    			attr_dev(h1, "class", "svelte-1unyewx");
-    			add_location(h1, file, 204, 1, 4882);
-    			add_location(h20, file, 205, 0, 4946);
-    			add_location(hr0, file, 209, 0, 5102);
+    			add_location(script, file, 196, 1, 4521);
+    			attr_dev(h1, "class", "svelte-tzc76h");
+    			add_location(h1, file, 205, 2, 4778);
+    			add_location(h2, file, 206, 2, 4844);
     			attr_dev(label0, "for", "mortgageTerm");
-    			add_location(label0, file, 212, 2, 5129);
+    			add_location(label0, file, 213, 4, 5035);
     			attr_dev(input0, "type", "number");
     			attr_dev(input0, "min", "0");
     			attr_dev(input0, "max", "30");
     			attr_dev(input0, "id", "mortgageTerm");
-    			add_location(input0, file, 213, 2, 5188);
-    			add_location(div0, file, 211, 1, 5121);
+    			add_location(input0, file, 214, 4, 5096);
+    			add_location(div0, file, 212, 3, 5025);
     			attr_dev(label1, "for", "deposit");
-    			add_location(label1, file, 217, 2, 5291);
+    			add_location(label1, file, 224, 4, 5234);
     			attr_dev(input1, "type", "number");
     			attr_dev(input1, "min", "0");
     			attr_dev(input1, "id", "deposit");
-    			add_location(input1, file, 218, 2, 5337);
-    			add_location(div1, file, 216, 1, 5283);
+    			add_location(input1, file, 225, 4, 5282);
+    			add_location(div1, file, 223, 3, 5224);
     			attr_dev(label2, "for", "propertyType");
-    			add_location(label2, file, 222, 2, 5421);
+    			add_location(label2, file, 234, 4, 5396);
     			option0.__value = "Detached";
     			option0.value = option0.__value;
-    			add_location(option0, file, 224, 3, 5534);
+    			add_location(option0, file, 236, 5, 5513);
     			option1.__value = "Semi-detached";
     			option1.value = option1.__value;
-    			add_location(option1, file, 225, 3, 5563);
+    			add_location(option1, file, 237, 5, 5544);
     			option2.__value = "Terraced";
     			option2.value = option2.__value;
-    			add_location(option2, file, 226, 3, 5597);
+    			add_location(option2, file, 238, 5, 5580);
     			option3.__value = "Flat";
     			option3.value = option3.__value;
-    			add_location(option3, file, 227, 3, 5626);
+    			add_location(option3, file, 239, 5, 5611);
     			attr_dev(select, "id", "propertyType");
     			if (/*propertyType*/ ctx[2] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[21].call(select));
-    			add_location(select, file, 223, 2, 5478);
-    			add_location(div2, file, 221, 1, 5413);
-    			add_location(fieldset0, file, 210, 0, 5109);
-    			add_location(hr1, file, 232, 0, 5681);
-    			add_location(summary, file, 234, 1, 5699);
-    			add_location(p, file, 235, 1, 5756);
+    			add_location(select, file, 235, 4, 5455);
+    			add_location(div2, file, 233, 3, 5386);
+    			add_location(fieldset0, file, 211, 2, 5011);
+    			add_location(summary, file, 245, 3, 5687);
+    			add_location(p0, file, 246, 3, 5746);
     			attr_dev(label3, "for", "minimum");
-    			add_location(label3, file, 241, 3, 5873);
+    			add_location(label3, file, 252, 5, 5875);
     			attr_dev(input2, "type", "number");
     			attr_dev(input2, "id", "minimum");
-    			add_location(input2, file, 242, 3, 5913);
-    			add_location(div3, file, 240, 2, 5864);
+    			add_location(input2, file, 253, 5, 5917);
+    			add_location(div3, file, 251, 4, 5864);
     			attr_dev(label4, "for", "maximum");
-    			add_location(label4, file, 246, 3, 5994);
+    			add_location(label4, file, 257, 5, 6004);
     			attr_dev(input3, "type", "number");
     			attr_dev(input3, "id", "maximum");
-    			add_location(input3, file, 247, 3, 6034);
-    			add_location(div4, file, 245, 2, 5985);
-    			add_location(fieldset1, file, 239, 1, 5851);
-    			add_location(details, file, 233, 0, 5688);
+    			add_location(input3, file, 258, 5, 6046);
+    			add_location(div4, file, 256, 4, 5993);
+    			add_location(fieldset1, file, 250, 3, 5849);
+    			add_location(details, file, 244, 2, 5674);
     			attr_dev(div5, "id", "inputs");
-    			attr_dev(div5, "class", "svelte-1unyewx");
-    			add_location(div5, file, 203, 0, 4863);
-    			add_location(h21, file, 275, 1, 6555);
-    			attr_dev(div6, "id", "map-container");
-    			set_style(div6, "height", "585px");
-    			add_location(div6, file, 276, 1, 6597);
-    			add_location(div7, file, 279, 1, 6681);
-    			attr_dev(div8, "id", "results");
-    			add_location(div8, file, 274, 0, 6535);
-    			add_location(hr2, file, 295, 0, 6893);
-    			add_location(h3, file, 297, 1, 6919);
-    			add_location(div9, file, 298, 1, 6943);
-    			add_location(div10, file, 299, 1, 6964);
-    			add_location(div11, file, 300, 1, 6982);
-    			attr_dev(div12, "id", "footer");
-    			add_location(div12, file, 296, 0, 6900);
+    			attr_dev(div5, "class", "svelte-tzc76h");
+    			add_location(div5, file, 204, 1, 4758);
+    			add_location(h3, file, 284, 2, 6611);
+    			add_location(div6, file, 285, 2, 6636);
+    			add_location(div7, file, 286, 2, 6658);
+    			add_location(div8, file, 287, 2, 6677);
+    			attr_dev(div9, "id", "footer");
+    			attr_dev(div9, "class", "svelte-tzc76h");
+    			add_location(div9, file, 283, 1, 6591);
+    			attr_dev(p1, "id", "maptitle");
+    			attr_dev(p1, "class", "svelte-tzc76h");
+    			add_location(p1, file, 291, 2, 6725);
+    			attr_dev(div10, "id", "mapinfo");
+    			attr_dev(div10, "class", "svelte-tzc76h");
+    			add_location(div10, file, 294, 3, 6831);
+    			attr_dev(div11, "id", "map-container");
+    			attr_dev(div11, "class", "svelte-tzc76h");
+    			add_location(div11, file, 292, 2, 6774);
+    			attr_dev(div12, "id", "results");
+    			attr_dev(div12, "class", "svelte-tzc76h");
+    			add_location(div12, file, 290, 1, 6704);
+    			attr_dev(div13, "class", "flex-container svelte-tzc76h");
+    			add_location(div13, file, 201, 0, 4726);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -124892,77 +124900,72 @@ var app = (function () {
     		m: function mount(target, anchor) {
     			append_dev(document.head, script);
     			insert_dev(target, t0, anchor);
-    			insert_dev(target, div5, anchor);
+    			insert_dev(target, div13, anchor);
+    			append_dev(div13, div5);
     			append_dev(div5, h1);
     			append_dev(div5, t2);
-    			append_dev(div5, h20);
+    			append_dev(div5, h2);
     			append_dev(div5, t4);
-    			append_dev(div5, hr0);
-    			append_dev(div5, t5);
     			append_dev(div5, fieldset0);
     			append_dev(fieldset0, div0);
     			append_dev(div0, label0);
-    			append_dev(div0, t7);
+    			append_dev(div0, t6);
     			append_dev(div0, input0);
     			set_input_value(input0, /*mortgageTerm*/ ctx[0]);
-    			append_dev(fieldset0, t8);
+    			append_dev(fieldset0, t7);
     			append_dev(fieldset0, div1);
     			append_dev(div1, label1);
-    			append_dev(div1, t10);
+    			append_dev(div1, t9);
     			append_dev(div1, input1);
     			set_input_value(input1, /*deposit*/ ctx[1]);
-    			append_dev(fieldset0, t11);
+    			append_dev(fieldset0, t10);
     			append_dev(fieldset0, div2);
     			append_dev(div2, label2);
-    			append_dev(div2, t13);
+    			append_dev(div2, t12);
     			append_dev(div2, select);
     			append_dev(select, option0);
     			append_dev(select, option1);
     			append_dev(select, option2);
     			append_dev(select, option3);
     			select_option(select, /*propertyType*/ ctx[2]);
-    			append_dev(div5, t18);
-    			append_dev(div5, hr1);
-    			append_dev(div5, t19);
+    			append_dev(div5, t17);
     			append_dev(div5, details);
     			append_dev(details, summary);
+    			append_dev(details, t19);
+    			append_dev(details, p0);
     			append_dev(details, t21);
-    			append_dev(details, p);
-    			append_dev(details, t23);
     			append_dev(details, fieldset1);
     			append_dev(fieldset1, div3);
     			append_dev(div3, label3);
-    			append_dev(div3, t25);
+    			append_dev(div3, t23);
     			append_dev(div3, input2);
     			set_input_value(input2, /*slidermin*/ ctx[10]);
-    			append_dev(fieldset1, t26);
+    			append_dev(fieldset1, t24);
     			append_dev(fieldset1, div4);
     			append_dev(div4, label4);
-    			append_dev(div4, t28);
+    			append_dev(div4, t26);
     			append_dev(div4, input3);
     			set_input_value(input3, /*slidermax*/ ctx[11]);
-    			append_dev(fieldset1, t29);
+    			append_dev(fieldset1, t27);
     			if (if_block0) if_block0.m(fieldset1, null);
-    			insert_dev(target, t30, anchor);
-    			insert_dev(target, div8, anchor);
-    			append_dev(div8, h21);
-    			append_dev(div8, t32);
-    			append_dev(div8, div6);
-    			mount_component(map, div6, null);
-    			append_dev(div8, t33);
-    			append_dev(div8, div7);
-    			if (if_block1) if_block1.m(div7, null);
-    			insert_dev(target, t34, anchor);
-    			insert_dev(target, hr2, anchor);
-    			insert_dev(target, t35, anchor);
-    			insert_dev(target, div12, anchor);
-    			append_dev(div12, h3);
-    			append_dev(div12, t37);
-    			append_dev(div12, div9);
-    			append_dev(div12, t39);
-    			append_dev(div12, div10);
-    			append_dev(div12, t41);
+    			append_dev(div13, t28);
+    			append_dev(div13, div9);
+    			append_dev(div9, h3);
+    			append_dev(div9, t30);
+    			append_dev(div9, div6);
+    			append_dev(div9, t32);
+    			append_dev(div9, div7);
+    			append_dev(div9, t34);
+    			append_dev(div9, div8);
+    			append_dev(div13, t36);
+    			append_dev(div13, div12);
+    			append_dev(div12, p1);
+    			append_dev(div12, t38);
     			append_dev(div12, div11);
+    			mount_component(map, div11, null);
+    			append_dev(div11, t39);
+    			append_dev(div11, div10);
+    			if (if_block1) if_block1.m(div10, null);
     			current = true;
 
     			if (!mounted) {
@@ -125037,7 +125040,7 @@ var app = (function () {
     					if_block1 = create_if_block(ctx);
     					if_block1.c();
     					transition_in(if_block1, 1);
-    					if_block1.m(div7, null);
+    					if_block1.m(div10, null);
     				}
     			} else if (if_block1) {
     				group_outros();
@@ -125065,16 +125068,10 @@ var app = (function () {
     		d: function destroy(detaching) {
     			detach_dev(script);
     			if (detaching) detach_dev(t0);
-    			if (detaching) detach_dev(div5);
+    			if (detaching) detach_dev(div13);
     			if (if_block0) if_block0.d();
-    			if (detaching) detach_dev(t30);
-    			if (detaching) detach_dev(div8);
     			destroy_component(map);
     			if (if_block1) if_block1.d();
-    			if (detaching) detach_dev(t34);
-    			if (detaching) detach_dev(hr2);
-    			if (detaching) detach_dev(t35);
-    			if (detaching) detach_dev(div12);
     			mounted = false;
     			run_all(dispose);
     		}
@@ -125133,7 +125130,7 @@ var app = (function () {
     	let customise = false;
 
     	onMount(async () => {
-    		(boe = await csv("https://corsproxy.io/?https://www.bankofengland.co.uk/boeapps/database/_iadb-fromshowcolumns.asp?csv.x=yes&Datefrom=01/Sep/2022&Dateto=now&SeriesCodes=IUMZICQ,IUMBV34,IUMZICR,IUMB482,IUM2WTL&CSVF=CN&UsingCodes=Y&VPD=N&VFD=N", autoType), $$invalidate(16, hpi = await csv("https://raw.githubusercontent.com/ONSvisual/land-registry-flat-data/main/landreg.csv", autoType)));
+    		(boe = await csv("https://raw.githubusercontent.com/ONSvisual/land-registry-flat-data/main/boe.csv", autoType), $$invalidate(16, hpi = await csv("https://raw.githubusercontent.com/ONSvisual/land-registry-flat-data/main/landreg.csv", autoType)));
 
     		// find the latest date for HPI data
     		let maxHpiDate = max$1(hpi, d => d["date.value"]).getTime();

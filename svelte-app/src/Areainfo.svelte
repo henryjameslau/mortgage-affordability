@@ -59,38 +59,42 @@
 {#if $areacd && thisarea}
     <button aria-label="close selected area information" on:click={cleararea} />
     <h3>Property prices in {thisarea["regionName.value"]}</h3>
-    <div id="legend">
-        <div class="legend--item">
-            <div
-                class="legend--icon--circle"
-                style="background-color: #206095;"
-            />
-            <div><p class="legend--text">Detached</p></div>
+    <div class='flex-container'>
+        <div id="chart">
+            <div id="legend">
+                <div class="legend--item">
+                    <div
+                        class="legend--icon--circle"
+                        style="background-color: #206095;"
+                    />
+                    <div><p class="legend--text">Detached</p></div>
+                </div>
+                <div class="legend--item">
+                    <div
+                        class="legend--icon--circle"
+                        style="background-color: #27A0CC;"
+                    />
+                    <div><p class="legend--text">Semi-detached</p></div>
+                </div>
+                <div class="legend--item">
+                    <div
+                        class="legend--icon--circle"
+                        style="background-color: #A8BD3A;"
+                    />
+                    <div><p class="legend--text">Terraced</p></div>
+                </div>
+                <div class="legend--item">
+                    <div
+                        class="legend--icon--circle"
+                        style="background-color: #F66068;"
+                    />
+                    <div><p class="legend--text">Flats</p></div>
+                </div>
+            </div>
+            <Chart {areaovertime} />
         </div>
-        <div class="legend--item">
-            <div
-                class="legend--icon--circle"
-                style="background-color: #27A0CC;"
-            />
-            <div><p class="legend--text">Semi-detached</p></div>
-        </div>
-        <div class="legend--item">
-            <div
-                class="legend--icon--circle"
-                style="background-color: #A8BD3A;"
-            />
-            <div><p class="legend--text">Terraced</p></div>
-        </div>
-        <div class="legend--item">
-            <div
-                class="legend--icon--circle"
-                style="background-color: #F66068;"
-            />
-            <div><p class="legend--text">Flats</p></div>
-        </div>
-    </div>
-    <Chart {areaovertime} />
-    {#if thisarea}
+        <div id="textinfo">
+            {#if thisarea}
         {#if payment}
             <p>
                 Typical payments on a 2 year fixed mortgage for an average {propertyType.toLowerCase()}
@@ -116,7 +120,12 @@
             )(fiveyearsago["date.value"])}.
         </p>
     {/if}
+        </div>
+    </div>
+    
+    
 {/if}
+
 {#if $areacd && !thisarea}
     <p>Data unavailable</p>
 {/if}
@@ -162,5 +171,14 @@
         font-size: 14px;
         padding-left: 12px;
         margin: 0;
+    }
+
+    .flex-container{
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    #chart, #textinfo{
+        flex:1 1 300px;
     }
 </style>
