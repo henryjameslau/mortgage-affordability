@@ -36,7 +36,7 @@
 			style,
 			bounds,
 			interactive: true,
-			maxBounds:[[-18, 49],[11, 61]],
+			maxBounds:[[-15, 45],[14, 65]],
 			attributionControl:false
 		});
 

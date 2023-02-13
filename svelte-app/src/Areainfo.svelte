@@ -95,31 +95,31 @@
         </div>
         <div id="textinfo">
             {#if thisarea}
-        {#if payment}
-            <p>
-                Typical payments on a 2 year fixed mortgage for an average {propertyType.toLowerCase()}
-                {propertyType == "Flat" ? "" : "property"} in {thisarea[
-                    "regionName.value"
-                ]} is £{format(",.0f")(payment)} with a deposit of £{format(
-                    ",.0f"
-                )(deposit)} and a {mortgageTerm} year mortgage.
-            </p>
-        {/if}
+                {#if payment}
+                    <p>
+                        Typical payments on a 2 year fixed mortgage for an average {propertyType.toLowerCase()}
+                        {propertyType == "Flat" ? "" : "property"} in {thisarea[
+                            "regionName.value"
+                        ]} is £{format(",.0f")(payment)} with a deposit of £{format(
+                            ",.0f"
+                        )(deposit)} and a {mortgageTerm} year mortgage.
+                    </p>
+                {/if}
 
-        <p>
-            The average price for a {propertyType.toLowerCase()} property in {thisarea[
-                "regionName.value"
-            ]} is £{format(".3~s")(thisarea[propertyLookup[propertyType]])} in {timeFormat(
-                "%b %Y"
-            )(thisarea["date.value"])}.
-        </p>
+                <p>
+                    The average price for a {propertyType.toLowerCase()} property in {thisarea[
+                        "regionName.value"
+                    ]} is £{format(".3~s")(thisarea[propertyLookup[propertyType]])} in {timeFormat(
+                        "%b %Y"
+                    )(thisarea["date.value"])}.
+                </p>
 
-        <p>
-            This has increased by {format(".0f")(percentageChange)}% since {timeFormat(
-                "%b %Y"
-            )(fiveyearsago["date.value"])}.
-        </p>
-    {/if}
+                <p>
+                    This has increased by {format(".0f")(percentageChange)}% since {timeFormat(
+                        "%b %Y"
+                    )(fiveyearsago["date.value"])}.
+                </p>
+            {/if}
         </div>
     </div>
     
@@ -175,10 +175,12 @@
 
     .flex-container{
         display: flex;
-        flex-wrap: wrap;
+        flex-wrap: no-wrap;
     }
 
+
+
     #chart, #textinfo{
-        flex:1 1 300px;
+        flex:1 1 50%;
     }
 </style>

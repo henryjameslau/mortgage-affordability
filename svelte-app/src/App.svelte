@@ -9,10 +9,13 @@
 	import { timeParse } from "d3-time-format";
 	import { scaleThreshold } from "d3-scale";
 	import { format } from "d3-format";
+	import Input from './Input.svelte';
+	import MoneyInput from './MoneyInput.svelte'
 
 	import { equalIntervalBreaks } from "simple-statistics";
 	import { areacd } from "./stores.js";
 	import RangeSlider from "svelte-range-slider-pips";
+    import ButtonGroup from "./ButtonGroup.svelte";
 
 	let mortgageTerm = 25;
 	let deposit = 30000;
@@ -204,33 +207,39 @@
 
 	<div id="inputs">
 		<h1>How are average UK monthly mortgage payments changing?</h1>
-		<h2>
+		<h3>
 			Fill in some details below to find out how average mortgage payments
 			are changing near you. Click on each area to find out about house
 			prices.
-		</h2>
+		</h3>
 		<fieldset>
 			<div>
-				<label for="mortgageTerm">Mortgage term in years</label>
-				<input
+				<!-- <label for="mortgageTerm">Mortgage term in years</label> -->
+				<Input min={0} max={40} label="Mortgage term in years" bind:number={mortgageTerm}/>
+				<!-- <input
 					type="number"
 					min="0"
 					max="30"
 					id="mortgageTerm"
 					bind:value={mortgageTerm}
-				/>
+				/> -->
 			</div>
 
 			<div>
-				<label for="deposit">Deposit amount</label>
+				<!-- <label for="deposit">Deposit amount</label>
 				<input
 					type="number"
 					min="0"
 					id="deposit"
 					bind:value={deposit}
-				/>
+				/> -->
+				<MoneyInput min=0 label="Deposit amount" bind:value={deposit}/>
 			</div>
 
+			<div>
+				<span>Select property type</span>
+				<ButtonGroup bind:selected={propertyType}/>
+			</div>
 			<div>
 				<label for="propertyType">Select property type</label>
 				<select bind:value={propertyType} id="propertyType">
@@ -281,12 +290,7 @@
 		</details>
 	</div>
 
-	<div id="footer">
-		<h3>Use and share</h3>
-		<div>Get data</div>
-		<div>Embed</div>
-		<div>Share</div>
-	</div>
+
 
 	<div id="results">
 		<p id='maptitle'>Monthly mortgage payments</p>
@@ -309,7 +313,12 @@
 	</div>
 
 </div>
-
+<div id="footer">
+	<h3>Use and share</h3>
+	<div>Get data</div>
+	<div>Embed</div>
+	<div>Share</div>
+</div>
 <style>
 
 	.flex-container{
@@ -324,16 +333,15 @@
 	#inputs {
 		background-color: #f4f7fa;
 		flex: 1 1 auto;
-		width: 400px;
+		width: 350px;
 	}
 	#footer {
 		flex:0 0 auto;
-		width:400px;
 	}
 	#results {
 		flex: 0 1 100vh;
 		order:1;
-		width:calc(100% - 400px);
+		width:calc(100% - 350px);
 	}
 
 	h1 {
@@ -347,7 +355,7 @@
 		position: absolute;
 		bottom: 0;
 		background: white;
-		width: calc(100% - 400px);
+		width: calc(100% - 350px);
 
 	}
 
@@ -364,5 +372,11 @@
 		border-left-width: 4px;
 		margin-left: 18px;
 		background-color: white;
+	}
+
+	fieldset{
+		margin:0;
+		border:0;
+		padding:0;
 	}
 </style>
