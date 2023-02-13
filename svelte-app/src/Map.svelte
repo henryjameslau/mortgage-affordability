@@ -60,7 +60,7 @@ compact: true
 							property: "fill",
 						},
 						"fill-opacity": 1,
-						"fill-outline-color": "#707071",
+						"fill-outline-color": "#BCBCBD",
 					},
 				},
 				"place_other"
@@ -88,7 +88,14 @@ compact: true
 		//Add click event
 		map.on("click", "boundary-fill", onClick);
 
-		function onMove(e) {
+		
+
+
+
+	});
+
+	function onMove(e) {
+			if(map){
 				map.getCanvasContainer().style.cursor = 'pointer';
 
 				newAREACD = e.features[0].properties.AREACD;
@@ -97,44 +104,53 @@ compact: true
 					oldAREACD = e.features[0].properties.AREACD;
 					map.setFilter("boundary-line", ["==", "AREACD", e.features[0].properties.AREACD]);
 				}
+			}
 		};
 
 
-		function onLeave() {
-				map.getCanvasContainer().style.cursor = null;
-				map.setFilter("boundary-line", ["==", "AREACD", ""]);
-				oldAREACD = "";
+	function onLeave() {
+		if(map){
+			map.getCanvasContainer().style.cursor = null;
+			map.setFilter("boundary-line", ["==", "AREACD", ""]);
+			oldAREACD = "";
+		}	
 
-		};
+	};
 
-		function onClick(e) {
-				disableMouseEvents();
-				areacd.set(e.features[0].properties.AREACD)
+	function onClick(e) {
+		if(map){
+			disableMouseEvents();
+			areacd.set(e.features[0].properties.AREACD)
 
-				newAREACD = e.features[0].properties.AREACD;
-				if(newAREACD != oldAREACD) {
-					oldAREACD = e.features[0].properties.AREACD;
-					map.setFilter("boundary-line", ["==", "AREACD", e.features[0].properties.AREACD]);
-				}
-		};
+			newAREACD = e.features[0].properties.AREACD;
+			if(newAREACD != oldAREACD) {
+				oldAREACD = e.features[0].properties.AREACD;
+				map.setFilter("boundary-line", ["==", "AREACD", e.features[0].properties.AREACD]);
+			}
+		}
+			
+	};
 
-		function disableMouseEvents() {
-				map.off("mousemove", "boundary-fill", onMove);
-				map.off("mouseleave", "boundary-fill", onLeave);
+	function disableMouseEvents() {
+		if(map){
+			map.off("mousemove", "boundary-fill", onMove);
+			map.off("mouseleave", "boundary-fill", onLeave);
 
-				selected = true;
+			selected = true;
+		}
+			
+	}
+
+	function enableMouseEvents() {
+		if(map){
+			map.on("mousemove", "boundary-fill", onMove);
+			map.on("click", "boundary-fill", onClick);
+			map.on("mouseleave", "boundary-fill", onLeave);
+
+			selected = false;
 		}
 
-		function enableMouseEvents() {
-				map.on("mousemove", "boundary-fill", onMove);
-				map.on("click", "boundary-fill", onClick);
-				map.on("mouseleave", "boundary-fill", onLeave);
-
-				selected = false;
-		}
-
-	});
-
+	}
 
 	function fitBounds(bounds) {
 		if (map) map.fitBounds(bounds, { padding: 20 });
@@ -145,7 +161,7 @@ compact: true
 			if (!isNaN(prices[d.properties.AREACD])) {
 				d.properties.fill = colour(prices[d.properties.AREACD]);
 			} else if(prices[d.properties.AREACD]=='out of budget'){
-				d.properties.fill = "#EC9AA4";
+				d.properties.fill = "#DF0667";
 			} else {
 				d.properties.fill = "#C6C6C6";
 			}
@@ -154,8 +170,20 @@ compact: true
 		if(map && map.getSource("boundary")) map.getSource("boundary").setData(geojson);
 
 	}
-	
 
+	function resetmap(){
+		if(map && map.getSource("boundary")) {
+			map.on("mousemove", "boundary-fill", onMove);
+			map.on("click", "boundary-fill", onClick);
+			map.on("mouseleave", "boundary-fill", onLeave);
+			map.setFilter("boundary-line", ["==", "AREACD", ""]);
+			oldAREACD = "";
+
+			selected = false;
+		}
+	}
+	
+	$: if($areacd==null) resetmap() 
 	$: bounds = geojson
 		? bbox(geojson)
 		: [

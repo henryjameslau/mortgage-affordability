@@ -9,7 +9,7 @@
 </script>
 
 {#if colour}
-    {#if !$areacd}<div><p>Click on areas on the map to learn more about them.</p></div>{/if}
+    {#if !$areacd}<div class='bold'><p>Click on areas on the map to learn more about them.</p></div>{/if}
     <div style="display:flex;">
         {#each colour.range() as d,i }
             <div class='vflex'>
@@ -49,6 +49,14 @@
 {/if}
 
 <style>
+    p{
+        margin:16px 0;
+    }
+
+    .bold{
+        font-weight: 700;
+    }
+
     div.legend-block {
         height: 27px;
         width: 100%;
@@ -68,5 +76,6 @@
 
     p.legend-text{
         text-align: center;
+        margin:0;
     }
 </style>

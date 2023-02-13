@@ -11,6 +11,7 @@
 	import { format } from "d3-format";
 	import Input from './Input.svelte';
 	import MoneyInput from './MoneyInput.svelte'
+	import Select from './Select.svelte'
 
 	import { equalIntervalBreaks } from "simple-statistics";
 	import { areacd } from "./stores.js";
@@ -116,7 +117,7 @@
 				(loan * (monthlyrate * (1 + monthlyrate) ** term)) /
 				((1 + monthlyrate) ** term - 1);
 			if (payment) {
-				return Math.round(payment * 100) / 100;
+				return payment;
 			} else {
 				return "out of budget";
 			}
@@ -133,6 +134,7 @@
 			.filter((d) => !isNaN(d))
 			.sort(ascending);
 		breaks = equalIntervalBreaks(pricevalues, 4);
+		breaks[breaks.length-1]=breaks[breaks.length-1] + 0.01
 
 		if (breaks.some((v) => v < 0)) {
 			breaks.splice(findneg(breaks) + 1, 0, 0);
@@ -146,13 +148,13 @@
 					"#BCD6E9",
 					"#8DB3D3",
 					"#6390B5",
-					"#EC9AA4",
+					"#DF0667",
 				]);
 		} else {
 			//set up colour scales for map
 			colour = scaleThreshold()
 				.domain(breaks.slice(1))
-				.range(["#E9EFF4", "#BCD6E9", "#8DB3D3", "#6390B5", "#EC9AA4"]);
+				.range(["#E9EFF4", "#BCD6E9", "#8DB3D3", "#6390B5", "#DF0667"]);
 		}
 	}
 
@@ -161,13 +163,13 @@
 	}
 
 	$: if (pricevalues) {
-		minimum = pricevalues[0];
-		maximum = pricevalues[pricevalues.length - 1];
+		minimum = Math.floor(pricevalues[0]);
+		maximum = Math.ceil(pricevalues[pricevalues.length - 1]);
 	}
 
 	$: if (!customise) {
-		slidermin = minimum;
-		slidermax = maximum;
+		slidermin = Math.floor(minimum);
+		slidermax = Math.ceil(maximum);
 	}
 
 	$: if (customise && colour) {
@@ -178,7 +180,7 @@
 
 		colour = scaleThreshold()
 			.domain(breaks)
-			.range(["#E9EFF4", "#BCD6E9", "#8DB3D3", "#6390B5", "#EC9AA4"]);
+			.range(["#E9EFF4", "#BCD6E9", "#8DB3D3", "#6390B5", "#DF0667"]);
 	}
 
 	function setSliderInputs(e) {
@@ -213,41 +215,25 @@
 			prices.
 		</h3>
 		<fieldset>
-			<div>
-				<!-- <label for="mortgageTerm">Mortgage term in years</label> -->
-				<Input min={0} max={40} label="Mortgage term in years" bind:number={mortgageTerm}/>
-				<!-- <input
-					type="number"
-					min="0"
-					max="30"
-					id="mortgageTerm"
-					bind:value={mortgageTerm}
-				/> -->
+			<div class='flex-h'>
+				<div>
+					<Input min={1} max={40} label="Mortgage term in years" bind:number={mortgageTerm}/>
+				</div>
+	
+				<div>
+					<MoneyInput min=0 label="Deposit amount" bind:value={deposit}/>
+				</div>
 			</div>
+			
+
+			
 
 			<div>
-				<!-- <label for="deposit">Deposit amount</label>
-				<input
-					type="number"
-					min="0"
-					id="deposit"
-					bind:value={deposit}
-				/> -->
-				<MoneyInput min=0 label="Deposit amount" bind:value={deposit}/>
-			</div>
-
-			<div>
-				<span>Select property type</span>
+				<span class='bold'>Select property type</span>
 				<ButtonGroup bind:selected={propertyType}/>
 			</div>
 			<div>
-				<label for="propertyType">Select property type</label>
-				<select bind:value={propertyType} id="propertyType">
-					<option>Detached</option>
-					<option>Semi-detached</option>
-					<option>Terraced</option>
-					<option>Flat</option>
-				</select>
+				<Select bind:selected={propertyType} label="Select property type" />
 			</div>
 		</fieldset>
 
@@ -258,25 +244,26 @@
 				suits your budget.
 			</p>
 			<fieldset>
-				<div>
-					<label for="minimum">Minimum</label>
-					<input bind:value={slidermin} type="number" id="minimum" />
+				<div class='flex-h'>
+					<div>
+						<MoneyInput bind:value={slidermin} label="Minimum"/>
+					</div>
+	
+					<div>
+						<MoneyInput bind:value={slidermax} label="Maximum"/>
+					</div>
 				</div>
-
-				<div>
-					<label for="maximum">Maximum</label>
-					<input bind:value={slidermax} type="number" id="maximum" />
-				</div>
+				
 				{#if breaks.length > 0}
 					<RangeSlider
 						range
 						values={[slidermin, slidermax]}
-						min={minimum}
-						max={maximum}
+						min={Math.floor(minimum)}
+						max={Math.ceil(maximum)}
 						float="true"
 						hoverable="true"
 						pips
-						pipstep={(maximum - minimum) / 5}
+						pipstep={(maximum - minimum) / 4}
 						all="label"
 						prefix="£"
 						on:change={(e) => {
@@ -284,6 +271,7 @@
 						}}
 						formatter={(v) => format(",.0f")(v)}
 						handleFormatter={(v) => format(",.0f")(v)}
+						id="customise"
 					/>
 				{/if}
 			</fieldset>
@@ -320,6 +308,16 @@
 	<div>Share</div>
 </div>
 <style>
+	.flex-h{
+		display:flex;
+		justify-content: space-between;
+		gap:1%;
+		align-items: flex-end;
+	}
+
+	.bold{
+		font-weight: 700;
+	}
 
 	.flex-container{
 		display: flex;
@@ -334,10 +332,9 @@
 		background-color: #f4f7fa;
 		flex: 1 1 auto;
 		width: 350px;
+		padding:15px;
 	}
-	#footer {
-		flex:0 0 auto;
-	}
+
 	#results {
 		flex: 0 1 100vh;
 		order:1;
@@ -355,8 +352,10 @@
 		position: absolute;
 		bottom: 0;
 		background: white;
-		width: calc(100% - 350px);
-
+		width: calc(100% - 400px);
+		margin:10px;
+		padding:0 15px 15px 15px;
+		border: 1px solid #A6BFD5;
 	}
 
 	#maptitle {
@@ -378,5 +377,13 @@
 		margin:0;
 		border:0;
 		padding:0;
+	}
+
+	:global(.rangeSlider#customise){
+		background-color:#A6BFD5;
+	}
+	
+	:global(#customise .rangeBar){
+		background-color:#206095;
 	}
 </style>

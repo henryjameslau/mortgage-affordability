@@ -2,12 +2,14 @@
     export let options = ["Detached", "Semi-detached", "Terraced", "Flat"];
     export let selected = options[0];
     let button = 'Detached';
+
+    $: selected=selected
 </script>
 
 <div class="grid">
     {#each options as option, i}
         <div class="grid-cell">
-            <label for={"button" + i} class:selected="{button === option}" on:click="{()=> button = option}">
+            <label for={"button" + i} class:selected="{button === option}" on:click="{()=> button = option}" on:keydown="{()=> button = option}">
                 {#if button=== option}
                 <img src={'./build/images/' + option + '_white.png'} alt=""/>
                 {:else}
@@ -54,13 +56,22 @@
         height:100%;
     }
 
-    input[type="radio"]:checked + label {
-       
-    }
-
     label.selected{
         color: white;
         background: #206095;
+    }
+
+
+    label:not(.selected):hover {
+        background-color: rgba(31, 95, 147, 0.2);
+        cursor: pointer;
+    }
+
+    .grid-cell:focus-within{
+        position: relative;
+        box-shadow: 0 0 0px 3pt orange;
+        outline: 2px dotted transparent;
+        z-index: 10;
     }
 
 

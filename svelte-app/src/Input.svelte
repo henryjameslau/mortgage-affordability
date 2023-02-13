@@ -23,6 +23,10 @@
 		width: 100%;
 	}
 
+	label{
+		font-weight: 700;
+	}
+
 	button,
 	input {
 		margin: 2px 0;
@@ -41,6 +45,7 @@
 		height: 36px;
 		background-color: #206095;
 		color: #fff;
+		border-radius: 0;
 	}
 
 	input {
@@ -54,6 +59,7 @@
 		-moz-appearance: textfield;
 		text-align: center;
 		height: 36px;
+		color: #206095;
 	}
 
 	input:focus,

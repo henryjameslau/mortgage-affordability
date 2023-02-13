@@ -95,7 +95,7 @@
         </div>
         <div id="textinfo">
             {#if thisarea}
-                {#if payment}
+                {#if payment!="out of budget"}
                     <p>
                         Typical payments on a 2 year fixed mortgage for an average {propertyType.toLowerCase()}
                         {propertyType == "Flat" ? "" : "property"} in {thisarea[
@@ -133,7 +133,7 @@
 <style>
     button {
         position: relative;
-        top: 0;
+        top: 15px;
         right: 0;
         float: right;
         background-image: url("./images/Close-cross.svg");
@@ -176,6 +176,8 @@
     .flex-container{
         display: flex;
         flex-wrap: no-wrap;
+        justify-content: space-between;
+        gap:20px;
     }
 
 
