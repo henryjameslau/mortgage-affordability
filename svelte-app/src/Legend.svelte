@@ -4,6 +4,7 @@
     export let customise;
     import {format} from 'd3-format';
     import { areacd } from "./stores.js";
+    import MediaQuery from "svelte-media-query"; 
 
      
 </script>
@@ -21,7 +22,14 @@
                         {:else if i==0}
                         Below minimum
                         {:else}
-                        £{format(".2~s")(breaks[i-1])}–£{format(".2~s")(breaks[i])}
+                        <MediaQuery query="(max-width:850px)" let:matches>
+                            {#if matches}
+                                £{format(".2~s")(breaks[i-1])}+
+                            {:else}
+                                £{format(".2~s")(breaks[i-1])}–£{format(".2~s")(breaks[i])}
+                            {/if}
+                        </MediaQuery>
+                        
                         {/if}
                     {:else if breaks.some((v) => v ==0)} 
                         {#if i==colour.range().length-1}
@@ -29,13 +37,26 @@
                         {:else if i==0}
                         Cash buyer
                         {:else}
-                        £{format(".2~s")(breaks[i-1])}–£{format(".2~s")(breaks[i])}
+                        <MediaQuery query="(max-width:850px)" let:matches>
+                            {#if matches}
+                                £{format(".2~s")(breaks[i-1])}+
+                            {:else}
+                                £{format(".2~s")(breaks[i-1])}–£{format(".2~s")(breaks[i])}
+                            {/if}
+                        </MediaQuery>
+                        
                         {/if}
                     {:else}
                         {#if i==colour.range().length-1}
                         Out of budget
                         {:else}
-                        £{format(".2~s")(breaks[i])}–£{format(".2~s")(breaks[i+1])}
+                        <MediaQuery query="(max-width:850px)" let:matches>
+                            {#if matches}
+                                £{format(".2~s")(breaks[i])}+
+                            {:else}
+                                £{format(".2~s")(breaks[i])}–£{format(".2~s")(breaks[i+1])}
+                            {/if}
+                        </MediaQuery>
                         {/if}
                     {/if}
                     

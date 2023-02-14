@@ -17,6 +17,8 @@
 	import { areacd } from "./stores.js";
 	import RangeSlider from "svelte-range-slider-pips";
     import ButtonGroup from "./ButtonGroup.svelte";
+	import MediaQuery from "svelte-media-query"; 
+
 
 	let mortgageTerm = 25;
 	let deposit = 30000;
@@ -208,7 +210,7 @@
 
 
 	<div id="inputs">
-		<h1>How are average UK monthly mortgage payments changing?</h1>
+		<h1>What are average UK monthly mortgage payments?</h1>
 		<h3>
 			Fill in some details below to find out how average mortgage payments
 			are changing near you. Click on each area to find out about house
@@ -227,14 +229,20 @@
 			
 
 			
-
-			<div>
-				<span class='bold'>Select property type</span>
-				<ButtonGroup bind:selected={propertyType}/>
-			</div>
-			<div>
-				<Select bind:selected={propertyType} label="Select property type" />
-			</div>
+			<MediaQuery query="(max-width: 700px)" let:matches>
+				{#if matches}
+					<div>
+						<Select bind:selected={propertyType} label="Select property type" />
+					</div>
+				{:else}
+					<div>
+						<span class='bold'>Select property type</span>
+						<ButtonGroup bind:selected={propertyType}/>
+					</div>
+				{/if}
+			</MediaQuery>
+			
+			
 		</fieldset>
 
 		<details>
@@ -284,28 +292,30 @@
 		<p id='maptitle'>Monthly mortgage payments</p>
 		<div id="map-container">
 			<Map {prices} {colour}/>	
-			<div id="mapinfo">
-				{#if breaks.length > 0}
-					<Areainfo
-						{latestHpi}
-						{propertyType}
-						{areaovertime}
-						{payment}
-						{deposit}
-						{mortgageTerm}
-					/>
-					<Legend {breaks} {colour} {customise} />
-				{/if}
-			</div>
+		</div>
+		<div id="mapinfo">
+			{#if breaks.length > 0}
+				<Areainfo
+					{latestHpi}
+					{propertyType}
+					{areaovertime}
+					{payment}
+					{deposit}
+					{mortgageTerm}
+				/>
+				<Legend {breaks} {colour} {customise} />
+			{/if}
 		</div>
 	</div>
 
 </div>
 <div id="footer">
 	<h3>Use and share</h3>
-	<div>Get data</div>
-	<div>Embed</div>
-	<div>Share</div>
+	<div style="display:flex; gap:5px;">
+		<div>Get data</div>
+		<div>Embed</div>
+		<div>Share</div>
+	</div>
 </div>
 <style>
 	.flex-h{
@@ -321,41 +331,50 @@
 
 	.flex-container{
 		display: flex;
-		flex-direction: column;
-		flex-wrap: wrap;
-		justify-content: flex-start;
-		align-items: space-between;
-		height:100vh;
+		flex-direction: row;
+		flex-wrap: nowrap;
 	}
 
 	#inputs {
 		background-color: #f4f7fa;
-		flex: 1 1 auto;
-		width: 350px;
-		padding:15px;
+		flex: 0 0 350px;
+		padding:0 15px;
+		height:950px;
+		box-sizing: border-box;
 	}
-
+	
 	#results {
-		flex: 0 1 100vh;
-		order:1;
-		width:calc(100% - 350px);
+		flex: 1 0 auto;
+		height:950px;
+		position: relative;
 	}
 
+	@media (max-width:650px){
+		.flex-container{
+			flex-direction: column;
+		}
+
+		#results{
+			height:750px;
+		}
+	}
 	h1 {
 		margin: 0;
 	}
 	#map-container {
 		height: 100%;
+		position:relative
 	}
 
 	#mapinfo {
 		position: absolute;
 		bottom: 0;
 		background: white;
-		width: calc(100% - 400px);
+		width: calc(100% - 20px);
 		margin:10px;
 		padding:0 15px 15px 15px;
 		border: 1px solid #A6BFD5;
+		box-sizing: border-box;
 	}
 
 	#maptitle {
@@ -379,11 +398,10 @@
 		padding:0;
 	}
 
-	:global(.rangeSlider#customise){
-		background-color:#A6BFD5;
-	}
-	
-	:global(#customise .rangeBar){
-		background-color:#206095;
+	:global(#customise) {
+		--range-slider:          #A6BFD5; /* slider main background color */
+		--range-handle-inactive: #79A0BF; /* inactive handle color */
+		--range-handle:          #27A0CC; /* non-focussed handle color */
+		--range-handle-focus:    #206095; /* focussed handle color */
 	}
 </style>

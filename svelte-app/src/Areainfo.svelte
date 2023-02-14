@@ -57,41 +57,11 @@
 </script>
 
 {#if $areacd && thisarea}
-    <button aria-label="close selected area information" on:click={cleararea} />
-    <h3>Property prices in {thisarea["regionName.value"]}</h3>
+    <button tabindex=0 aria-label="close selected area information" on:click={cleararea} />
+    <h3>{propertyType} {propertyType == "Flat" ? "" : "property"} prices in {thisarea["regionName.value"]}</h3>
     <div class='flex-container'>
         <div id="chart">
-            <div id="legend">
-                <div class="legend--item">
-                    <div
-                        class="legend--icon--circle"
-                        style="background-color: #206095;"
-                    />
-                    <div><p class="legend--text">Detached</p></div>
-                </div>
-                <div class="legend--item">
-                    <div
-                        class="legend--icon--circle"
-                        style="background-color: #27A0CC;"
-                    />
-                    <div><p class="legend--text">Semi-detached</p></div>
-                </div>
-                <div class="legend--item">
-                    <div
-                        class="legend--icon--circle"
-                        style="background-color: #A8BD3A;"
-                    />
-                    <div><p class="legend--text">Terraced</p></div>
-                </div>
-                <div class="legend--item">
-                    <div
-                        class="legend--icon--circle"
-                        style="background-color: #F66068;"
-                    />
-                    <div><p class="legend--text">Flats</p></div>
-                </div>
-            </div>
-            <Chart {areaovertime} />
+            <Chart {areaovertime} {propertyType}/>
         </div>
         <div id="textinfo">
             {#if thisarea}
@@ -146,33 +116,7 @@
     button:focus {
         outline: orange 3px;
     }
-    #legend {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .legend--item {
-        display: flex;
-        padding-right: 40px;
-        padding-bottom: 12px;
-    }
-
-    .legend--icon--circle {
-        height: 12px;
-        width: 12px;
-        border-radius: 50%;
-        align-self: center;
-        flex-shrink: 0;
-    }
-
-    .legend--text {
-        color: #707070;
-        line-height: 14px;
-        font-size: 14px;
-        padding-left: 12px;
-        margin: 0;
-    }
-
+  
     .flex-container{
         display: flex;
         flex-wrap: no-wrap;
@@ -180,9 +124,19 @@
         gap:20px;
     }
 
+    @media (max-width:650px){
+        .flex-container{
+            flex-direction: column;
+        }
+    }
+
 
 
     #chart, #textinfo{
         flex:1 1 50%;
+    }
+    p{
+        margin:0;
+        margin-bottom: 10px;
     }
 </style>

@@ -36,7 +36,7 @@
 			style,
 			bounds,
 			interactive: true,
-			maxBounds:[[-15, 45],[14, 65]],
+			maxBounds:[[-15, 37],[14, 65]],
 			attributionControl:false
 		});
 
@@ -173,13 +173,9 @@ compact: true
 
 	function resetmap(){
 		if(map && map.getSource("boundary")) {
-			map.on("mousemove", "boundary-fill", onMove);
-			map.on("click", "boundary-fill", onClick);
-			map.on("mouseleave", "boundary-fill", onLeave);
+			enableMouseEvents() 
 			map.setFilter("boundary-line", ["==", "AREACD", ""]);
 			oldAREACD = "";
-
-			selected = false;
 		}
 	}
 	
