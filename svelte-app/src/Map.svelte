@@ -23,14 +23,6 @@
 			geojson = feature(topo, topo.objects[key]);
 		}
 
-		geojson.features.map(function (d, i) {
-			if (!isNaN(prices[d.properties.AREACD])) {
-				d.properties.fill = colour(prices[d.properties.AREACD]);
-			} else {
-				d.properties.fill = "#ccc";
-			}
-		});
-
 		map = new maplibre.Map({
 			container,
 			style,
@@ -158,7 +150,10 @@ compact: true
 
 	function setData(prices){
 		geojson.features.map(function (d, i) {
-			if (!isNaN(prices[d.properties.AREACD])) {
+
+			if(prices[d.properties.AREACD]=="No data"){
+				d.properties.fill = "#C6C6C6";
+			} else if (!isNaN(prices[d.properties.AREACD])) {
 				d.properties.fill = colour(prices[d.properties.AREACD]);
 			} else if(prices[d.properties.AREACD]=='out of budget'){
 				d.properties.fill = "#902092";

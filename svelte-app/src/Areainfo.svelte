@@ -57,48 +57,50 @@
 </script>
 
 {#if $areacd && thisarea}
-    <button tabindex=0 aria-label="close selected area information" on:click={cleararea} />
-    <h3>{propertyType} {propertyType == "Flat" ? "" : "property"} prices in {thisarea["regionName.value"]}</h3>
-    <div class='flex-container'>
-        <div id="chart">
-            <Chart {areaovertime} {propertyType}/>
-        </div>
-        <div id="textinfo">
-            {#if thisarea}
-                {#if payment!="out of budget"}
+    {#if payment=="No data"}
+        <button tabindex=0 aria-label="close selected area information" on:click={cleararea} />
+        <h3>Data unavailable</h3>
+    {:else}
+        <button tabindex=0 aria-label="close selected area information" on:click={cleararea} />
+        <h3>{propertyType} {propertyType == "Flat" ? "" : "property"} prices in {thisarea["regionName.value"]}</h3>
+        <div class='flex-container'>
+            <div id="chart">
+                <Chart {areaovertime} {propertyType}/>
+            </div>
+            <div id="textinfo">
+                {#if thisarea}
+                    {#if payment!="out of budget"}
+                        <p>
+                            Typical payments on a 2 year fixed mortgage for an average {propertyType.toLowerCase()}
+                            {propertyType == "Flat" ? "" : "property"} in {thisarea[
+                                "regionName.value"
+                            ]} is £{format(",.0f")(payment)} with a deposit of £{format(
+                                ",.0f"
+                            )(deposit)} and a {mortgageTerm} year mortgage.
+                        </p>
+                    {/if}
+
                     <p>
-                        Typical payments on a 2 year fixed mortgage for an average {propertyType.toLowerCase()}
-                        {propertyType == "Flat" ? "" : "property"} in {thisarea[
+                        The average price for a {propertyType.toLowerCase()} property in {thisarea[
                             "regionName.value"
-                        ]} is £{format(",.0f")(payment)} with a deposit of £{format(
-                            ",.0f"
-                        )(deposit)} and a {mortgageTerm} year mortgage.
+                        ]} is £{format(".3~s")(thisarea[propertyLookup[propertyType]])} in {timeFormat(
+                            "%b %Y"
+                        )(thisarea["date.value"])}.
+                    </p>
+
+                    <p>
+                        This has increased by {format(".0f")(percentageChange)}% since {timeFormat(
+                            "%b %Y"
+                        )(fiveyearsago["date.value"])}.
                     </p>
                 {/if}
-
-                <p>
-                    The average price for a {propertyType.toLowerCase()} property in {thisarea[
-                        "regionName.value"
-                    ]} is £{format(".3~s")(thisarea[propertyLookup[propertyType]])} in {timeFormat(
-                        "%b %Y"
-                    )(thisarea["date.value"])}.
-                </p>
-
-                <p>
-                    This has increased by {format(".0f")(percentageChange)}% since {timeFormat(
-                        "%b %Y"
-                    )(fiveyearsago["date.value"])}.
-                </p>
-            {/if}
+            </div>
         </div>
-    </div>
     
-    
+    {/if}
 {/if}
 
-{#if $areacd && !thisarea}
-    <p>Data unavailable</p>
-{/if}
+
 
 <style>
     button {
@@ -106,7 +108,7 @@
         top: 15px;
         right: 0;
         float: right;
-        background-image: url("./images/Close-cross.svg");
+        background-image: url("./images/Close-cross.png");
         height: 13px;
         width: 13px;
         border: 0;
@@ -114,7 +116,7 @@
     }
 
     button:focus {
-        outline: orange 3px;
+        box-shadow: 0 0 0 3px orange;
     }
   
     .flex-container{

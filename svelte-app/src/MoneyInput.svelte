@@ -34,7 +34,6 @@
 
   input[type="number"] {
     -moz-appearance: textfield;
-    appearance: textfield;
     width: 100%;
     position: relative;
     margin: 2px 0;
@@ -50,6 +49,12 @@
     pointer-events: all;
     line-height: 32px;
   }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
   div {
     position: relative;

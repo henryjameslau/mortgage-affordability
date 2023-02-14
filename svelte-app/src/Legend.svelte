@@ -17,7 +17,7 @@
                 <div><p class='legend-text'>
                     {#if customise}
                         {#if i==colour.range().length-1}
-                        Out of budget
+                        Mortgage unavailable
                         {:else if i==0}
                         Below minimum
                         {:else}
@@ -32,7 +32,7 @@
                         {/if}
                     {:else if breaks.some((v) => v ==0)} 
                         {#if i==colour.range().length-1}
-                        Out of budget
+                        Mortgage unavailable
                         {:else if i==0}
                         Cash buyer
                         {:else}
@@ -47,7 +47,7 @@
                         {/if}
                     {:else}
                         {#if i==colour.range().length-1}
-                        Out of budget
+                        Mortgage unavailable
                         {:else}
                         <MediaQuery query="(max-width:850px)" let:matches>
                             {#if matches}

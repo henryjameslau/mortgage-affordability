@@ -37,6 +37,8 @@
 		cursor: pointer;
 		pointer-events: all;
 		float: left;
+	
+
 	}
 
 	button {
@@ -54,12 +56,16 @@
 		border-left: none;
 		border-right: none;
 		width: calc(100% - 80px);
-		appearance: textfield;
-		-webkit-appearance: textfield;
 		-moz-appearance: textfield;
 		text-align: center;
 		height: 36px;
 		color: #206095;
+	}
+
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
 	}
 
 	input:focus,

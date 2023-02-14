@@ -5,7 +5,7 @@
 	import Areainfo from "./Areainfo.svelte";
 	import { csv } from "d3-fetch";
 	import { autoType } from "d3-dsv";
-	import { max, ascending } from "d3-array";
+	import { min, max, ascending } from "d3-array";
 	import { timeParse } from "d3-time-format";
 	import { scaleThreshold } from "d3-scale";
 	import { format } from "d3-format";
@@ -108,6 +108,7 @@
 		}
 
 		function monthlyrepayments(price) {
+			if(price===null)return "No data"
 			let loan = price - deposit;
 			let ltv = loan / price;
 
@@ -139,20 +140,25 @@
 		breaks[breaks.length-1]=breaks[breaks.length-1] + 0.01
 
 		if (breaks.some((v) => v < 0)) {
-			breaks.splice(findneg(breaks) + 1, 0, 0);
-			breaks.shift();
-			console.log(breaks)
 
-			colour = scaleThreshold()
-				.domain(breaks)
-				.range([
-					"#22D0B6",
+			let negindex = findneg(breaks)
+			breaks.splice(negindex+1, 0, 0);
+			breaks=breaks.filter(d=>d>=0);
+
+			let colourrange = [
 					"#E9EFF4",
 					"#BCD6E9",
 					"#8DB3D3",
 					"#6390B5",
 					"#902092",
-				]);
+				]
+
+			colourrange=['#22D0B6'].concat(colourrange.slice(negindex))	
+
+
+			colour = scaleThreshold()
+				.domain(breaks)
+				.range(colourrange);
 		} else {
 			//set up colour scales for map
 			colour = scaleThreshold()
@@ -165,8 +171,8 @@
 		payment = prices[$areacd];
 	}
 
-	$: if (pricevalues) {
-		minimum = Math.floor(pricevalues[0]);
+	$: if (pricevalues&&deposit) {
+		minimum = max([0,Math.floor(pricevalues[0])]);
 		maximum = Math.ceil(pricevalues[pricevalues.length - 1]);
 	}
 
@@ -176,6 +182,8 @@
 	}
 
 	$: if (customise && colour) {
+
+
 		let custompricevalues = pricevalues
 			.filter((d) => d > slidermin)
 			.filter((d) => d < slidermax);
@@ -184,6 +192,10 @@
 		colour = scaleThreshold()
 			.domain(breaks)
 			.range(["#E9EFF4", "#BCD6E9", "#8DB3D3", "#6390B5", "#902092"]);
+	}
+
+	$: if (customise && deposit){
+		slidermax = min([maximum,slidermax])
 	}
 
 	function setSliderInputs(e) {
@@ -219,11 +231,11 @@
 		</h3>
 		<fieldset>
 			<div class='flex-h'>
-				<div>
+				<div class='equalspaced'>
 					<Input min={1} max={40} label="Mortgage term in years" bind:number={mortgageTerm}/>
 				</div>
 	
-				<div>
+				<div class='equalspaced'>
 					<MoneyInput min=0 label="Deposit amount" bind:value={deposit}/>
 				</div>
 			</div>
@@ -306,7 +318,7 @@
 				/>
 				<Legend {breaks} {colour} {customise} />
 			{:else}
-			<p>All areas out of budget.</p>  
+			<p>Mortgage unavailable in all areas.</p>  
 			{/if}
 		</div>
 	</div>
@@ -326,6 +338,10 @@
 		justify-content: space-between;
 		gap:1%;
 		align-items: flex-end;
+	}
+
+	.equalspaced{
+		flex:1;
 	}
 
 	.bold{
