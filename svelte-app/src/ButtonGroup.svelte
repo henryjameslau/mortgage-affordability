@@ -11,9 +11,9 @@
         <div class="grid-cell">
             <label for={"button" + i} class:selected="{button === option}" on:click="{()=> button = option}" on:keydown="{()=> button = option}">
                 {#if button=== option}
-                <img src={'./build/images/' + option + '_white.png'} alt=""/>
+                <img src={'./build/images/' + option + '_white.svg'} alt=""/>
                 {:else}
-                <img src={'./build/images/' + option + '_blue.png'} alt=""/>
+                <img src={'./build/images/' + option + '_blue.svg'} alt=""/>
                 {/if}
                 <div class='button-label'><span>{option}</span></div>
                 <input bind:group={selected} type="radio" class="visuallyhidden" id={"button" + i} value={option} name="button"/></label>

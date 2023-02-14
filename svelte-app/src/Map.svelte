@@ -161,7 +161,7 @@ compact: true
 			if (!isNaN(prices[d.properties.AREACD])) {
 				d.properties.fill = colour(prices[d.properties.AREACD]);
 			} else if(prices[d.properties.AREACD]=='out of budget'){
-				d.properties.fill = "#DF0667";
+				d.properties.fill = "#902092";
 			} else {
 				d.properties.fill = "#C6C6C6";
 			}

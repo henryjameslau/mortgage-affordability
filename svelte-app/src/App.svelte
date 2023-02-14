@@ -141,6 +141,7 @@
 		if (breaks.some((v) => v < 0)) {
 			breaks.splice(findneg(breaks) + 1, 0, 0);
 			breaks.shift();
+			console.log(breaks)
 
 			colour = scaleThreshold()
 				.domain(breaks)
@@ -150,13 +151,13 @@
 					"#BCD6E9",
 					"#8DB3D3",
 					"#6390B5",
-					"#DF0667",
+					"#902092",
 				]);
 		} else {
 			//set up colour scales for map
 			colour = scaleThreshold()
 				.domain(breaks.slice(1))
-				.range(["#E9EFF4", "#BCD6E9", "#8DB3D3", "#6390B5", "#DF0667"]);
+				.range(["#E9EFF4", "#BCD6E9", "#8DB3D3", "#6390B5", "#902092"]);
 		}
 	}
 
@@ -182,7 +183,7 @@
 
 		colour = scaleThreshold()
 			.domain(breaks)
-			.range(["#E9EFF4", "#BCD6E9", "#8DB3D3", "#6390B5", "#DF0667"]);
+			.range(["#E9EFF4", "#BCD6E9", "#8DB3D3", "#6390B5", "#902092"]);
 	}
 
 	function setSliderInputs(e) {
@@ -304,6 +305,8 @@
 					{mortgageTerm}
 				/>
 				<Legend {breaks} {colour} {customise} />
+			{:else}
+			<p>All areas out of budget.</p>  
 			{/if}
 		</div>
 	</div>

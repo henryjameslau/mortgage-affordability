@@ -6,7 +6,6 @@
     import { areacd } from "./stores.js";
     import MediaQuery from "svelte-media-query"; 
 
-     
 </script>
 
 {#if colour}
@@ -59,14 +58,10 @@
                         </MediaQuery>
                         {/if}
                     {/if}
-                    
-                    
                 </p></div>
             </div>
-            
-
         {/each}
-    </div>
+    </div>  
 {/if}
 
 <style>
@@ -92,7 +87,7 @@
     .vflex{
         display: flex;
         flex-direction: column;
-        width: 20%;
+        flex:1;
     }
 
     p.legend-text{
