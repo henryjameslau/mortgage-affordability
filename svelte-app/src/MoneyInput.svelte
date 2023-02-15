@@ -3,11 +3,12 @@
   export let max;
   export let value = 0;
   export let label;
+  export let customise = false
 </script>
 
 <label for="input">{label}</label>
 <div>
-  <input bind:value type="number" id="input" {max} {min} />
+  <input bind:value type="number" id="input" on:change={()=>customise=true} {min} />
 </div>
 
 <style>

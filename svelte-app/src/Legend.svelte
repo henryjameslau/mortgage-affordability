@@ -21,43 +21,43 @@
                             
                             {#if customise}
                                 {#if i==colour.range().length-1}
-                                    Above maximum or mort<wbr>gage unavail<wbr>able
+                                    Above maximum or mortgage unavailable
                                 {:else if (!breaks.some(v=>v==0) && i==0) | (breaks.some(v=>v==0) && i==1)}
                                     Below minimum
                                 {:else if breaks.some(v=>v==0) && i==0}
                                     Cash buyer
                                 {:else}
-                                    <MediaQuery query="(max-width:850px)" let:matches>
+                                    <MediaQuery query="(max-width:500px)" let:matches>
                                         {#if matches}
-                                            £{format(".3~s")(breaks[i-1])}+
+                                            £{format(".2~s")(breaks[i-1])}+
                                         {:else}
-                                            £{format(".2~s")(breaks[i-1])} to £{format(".2~s")(breaks[i])}
+                                            £{format(".3~s")(breaks[i-1])} to £{format(".3~s")(breaks[i])}
                                         {/if}
                                     </MediaQuery>
                                 {/if}
                             {:else if breaks.some((v) => v ==0)} 
                                 {#if i==colour.range().length-1}
-                                    Mort<wbr>gage unavail<wbr>able
+                                    Mortgage unavailable
                                 {:else if i==0}
                                     Cash buyer
                                 {:else}
-                                    <MediaQuery query="(max-width:850px)" let:matches>
+                                    <MediaQuery query="(max-width:500px)" let:matches>
                                         {#if matches}
-                                            £{format(".3~s")(breaks[i-1])}+
+                                            £{format(".2~s")(breaks[i-1])}+
                                         {:else}
-                                            £{format(".2~s")(breaks[i-1])} to £{format(".2~s")(breaks[i])}
+                                            £{format(".3~s")(breaks[i-1])} to £{format(".3~s")(breaks[i])}
                                         {/if}
                                     </MediaQuery>
                                 {/if}
                             {:else}
                                 {#if i==colour.range().length-1}
-                                    Mort<wbr>gage unavail<wbr>able
+                                    Mortgage unavailable
                                 {:else}
-                                    <MediaQuery query="(max-width:850px)" let:matches>
+                                    <MediaQuery query="(max-width:500px)" let:matches>
                                         {#if matches}
-                                            £{format(".3~s")(breaks[i])}+
+                                            £{format(".2~s")(breaks[i])}+
                                         {:else}
-                                            £{format(".2~s")(breaks[i])} to £{format(".2~s")(breaks[i+1])}
+                                            £{format(".3~s")(breaks[i])} to £{format(".3~s")(breaks[i+1])}
                                         {/if}
                                     </MediaQuery>
                                 {/if}
@@ -81,6 +81,7 @@
     .container{
         display:flex; 
         box-sizing:border-box;
+        flex-wrap: wrap;
     }
 
     div.legend-block {
@@ -102,12 +103,16 @@
         width:calc(100% - 20px);
     }
 
+    .vflex > * {
+        width:calc(100% - 10px);
+        margin:0 5px;
+    }
+
     p.legend-text{
         text-align: center;
         box-sizing: border-box;
         overflow-wrap: break-word;
         margin:0;
-        /* word-break: break-all; */
     }
 
 

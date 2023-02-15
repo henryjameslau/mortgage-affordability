@@ -70,14 +70,22 @@
             <div id="textinfo">
                 {#if thisarea}
                     {#if payment!="out of budget"}
-                        <p>
-                            Typical payments on a 2 year fixed mortgage for an average {propertyType.toLowerCase()}
-                            {propertyType == "Flat" ? "" : "property"} in {thisarea[
-                                "regionName.value"
-                            ]} is £{format(",.0f")(payment)} with a deposit of £{format(
-                                ",.0f"
-                            )(deposit)} and a {mortgageTerm} year mortgage.
-                        </p>
+                        {#if payment <0}
+                            <p>It would be possible to buy an average {propertyType.toLowerCase()}
+                            {propertyType == "Flat" ? "" : "property"} with a deposit of £{format(",.0f")(deposit)} without a mortgage.</p>
+                        {:else}
+                            <p>
+                                Typical payments on a 2 year fixed mortgage for an average {propertyType.toLowerCase()}
+                                {propertyType == "Flat" ? "" : "property"} in {thisarea[
+                                    "regionName.value"
+                                ]} is £{format(",.0f")(payment)} with a deposit of £{format(
+                                    ",.0f"
+                                )(deposit)} and a {mortgageTerm} year mortgage.
+                            </p>
+                        {/if}
+                        
+                    
+                        
                     {/if}
 
                     <p>

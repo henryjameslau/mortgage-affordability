@@ -22,7 +22,7 @@
 
 
 	let mortgageTerm = 25;
-	let deposit = 220000;
+	let deposit = 30000;
 	let propertyType;
 
 	let boeLookup = {
@@ -229,6 +229,10 @@
 		let maxindex = max(indices);
 		return maxindex;
 	}
+
+	function onchange(){
+
+	}
 </script>
 
 <svelte:head>
@@ -262,11 +266,11 @@
 			
 			<MediaQuery query="(max-width: 550px)" let:matches>
 				{#if matches}
-					<div>
+					<div class='addtopspace'>
 						<Select bind:selected={propertyType} label="Select property type" />
 					</div>
 				{:else}
-					<div>
+					<div class='addtopspace'>
 						<span class='bold'>Select property type</span>
 						<ButtonGroup bind:selected={propertyType}/>
 					</div>
@@ -277,7 +281,7 @@
 		</fieldset>
 
 		
-		<details>
+		<details class='addtopspace'>
 			<summary>Adjust monthly repayment price range</summary>
 			<p>
 				Enter the minimum and maximum monthly mortgage payments that
@@ -286,11 +290,11 @@
 			<fieldset>
 				<div class='flex-h'>
 					<div>
-						<MoneyInput bind:value={slidermin} label="Minimum"/>
+						<MoneyInput bind:value={slidermin} bind:customise={customise} label="Minimum"/>
 					</div>
 	
 					<div>
-						<MoneyInput bind:value={slidermax} label="Maximum"/>
+						<MoneyInput bind:value={slidermax} bind:customise={customise} label="Maximum"/>
 					</div>
 				</div>
 				
@@ -306,9 +310,7 @@
 						pipstep={(maximum - minimum) / 4}
 						all="label"
 						prefix="£"
-						on:change={(e) => {
-							setSliderInputs(e);
-						}}
+						on:change={(e) => {setSliderInputs(e);}}
 						formatter={(v) => format(",.0f")(v)}
 						handleFormatter={(v) => format(",.0f")(v)}
 						id="customise"
@@ -355,7 +357,7 @@
 	.flex-h{
 		display:flex;
 		justify-content: space-between;
-		gap:1%;
+		gap:5px;
 		align-items: flex-end;
 	}
 
@@ -373,6 +375,10 @@
 		flex-wrap: nowrap;
 	}
 
+	.addtopspace{
+		margin-top: 10px;
+	}
+
 	#inputs {
 		background-color: #f4f7fa;
 		flex: 0 0 350px;
@@ -387,7 +393,7 @@
 		position: relative;
 	}
 
-	@media (max-width:850px){
+	@media (max-width:740px){
 		.flex-container{
 			flex-direction: column;
 		}

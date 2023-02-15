@@ -27,13 +27,13 @@
         flex-wrap: nowrap;
         list-style: none;
         margin: 0;
-        justify-content: space-between;
+        gap:5px;
     }
 
     .grid-cell {
         display: block;
         border: solid 2px #206095;
-        flex:0 0 23%;
+        flex:1 0 23%;
         background-color: white;
     }
 

@@ -30,12 +30,10 @@
 			interactive: true,
 			maxBounds:[[-15, 37],[14, 65]],
 			attributionControl:false
-		});
+		})
 
 		map.addControl(new maplibre.NavigationControl({ showCompass: false }));
-		map.addControl(new maplibre.AttributionControl({
-compact: true
-}), 'top-left');
+		map.addControl(new maplibre.AttributionControl({ compact: true }), 'top-left');
 		
 
 		map.on("load", () => {

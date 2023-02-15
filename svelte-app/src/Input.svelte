@@ -44,7 +44,7 @@
 	button {
 		font-size: 24px;
 		width: 40px;
-		height: 36px;
+		height: 37px;
 		background-color: #206095;
 		color: #fff;
 		border-radius: 0;
@@ -58,7 +58,7 @@
 		-moz-appearance: textfield;
 		appearance: textfield;
 		text-align: center;
-		height: 36px;
+		height: 37px;
 		color: #206095;
 		font-size: 18px;
 	}

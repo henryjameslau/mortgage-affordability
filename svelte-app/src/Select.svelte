@@ -23,10 +23,8 @@
   }
   
 	div{
-        position:relative;
-		top: 3px;
-		left: 3px;
-		width: calc(100% - 6px);
+    position:relative;
+		width: 100%
 	}
 	
 	div::before {
