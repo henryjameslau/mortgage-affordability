@@ -10,56 +10,61 @@
 
 {#if colour}
     {#if !$areacd}<div class='bold'><p>Click on areas on the map to learn more about them.</p></div>{/if}
-    <div style="display:flex;">
+    <div class='container'>
         {#each colour.range() as d,i }
             <div class='vflex'>
-                <div class='legend-block' style="background-color:{d};"></div>
-                <div><p class='legend-text'>
-                    {#if customise}
-                        {#if i==colour.range().length-1}
-                        Mortgage unavailable
-                        {:else if i==0}
-                        Below minimum
-                        {:else}
-                        <MediaQuery query="(max-width:850px)" let:matches>
-                            {#if matches}
-                                £{format(".2~s")(breaks[i-1])}+
+                <div class='legend-block' style="background-color:{d};">
+                </div>
+                   <div class='legend-text-div'>
+                    
+                         <p class='legend-text'>
+                            
+                            {#if customise}
+                                {#if i==colour.range().length-1}
+                                    Above maximum or mort<wbr>gage unavail<wbr>able
+                                {:else if (!breaks.some(v=>v==0) && i==0) | (breaks.some(v=>v==0) && i==1)}
+                                    Below minimum
+                                {:else if breaks.some(v=>v==0) && i==0}
+                                    Cash buyer
+                                {:else}
+                                    <MediaQuery query="(max-width:850px)" let:matches>
+                                        {#if matches}
+                                            £{format(".3~s")(breaks[i-1])}+
+                                        {:else}
+                                            £{format(".2~s")(breaks[i-1])} to £{format(".2~s")(breaks[i])}
+                                        {/if}
+                                    </MediaQuery>
+                                {/if}
+                            {:else if breaks.some((v) => v ==0)} 
+                                {#if i==colour.range().length-1}
+                                    Mort<wbr>gage unavail<wbr>able
+                                {:else if i==0}
+                                    Cash buyer
+                                {:else}
+                                    <MediaQuery query="(max-width:850px)" let:matches>
+                                        {#if matches}
+                                            £{format(".3~s")(breaks[i-1])}+
+                                        {:else}
+                                            £{format(".2~s")(breaks[i-1])} to £{format(".2~s")(breaks[i])}
+                                        {/if}
+                                    </MediaQuery>
+                                {/if}
                             {:else}
-                                £{format(".2~s")(breaks[i-1])}–£{format(".2~s")(breaks[i])}
-                            {/if}
-                        </MediaQuery>
-                        
-                        {/if}
-                    {:else if breaks.some((v) => v ==0)} 
-                        {#if i==colour.range().length-1}
-                        Mortgage unavailable
-                        {:else if i==0}
-                        Cash buyer
-                        {:else}
-                        <MediaQuery query="(max-width:850px)" let:matches>
-                            {#if matches}
-                                £{format(".2~s")(breaks[i-1])}+
-                            {:else}
-                                £{format(".2~s")(breaks[i-1])}–£{format(".2~s")(breaks[i])}
-                            {/if}
-                        </MediaQuery>
-                        
-                        {/if}
-                    {:else}
-                        {#if i==colour.range().length-1}
-                        Mortgage unavailable
-                        {:else}
-                        <MediaQuery query="(max-width:850px)" let:matches>
-                            {#if matches}
-                                £{format(".2~s")(breaks[i])}+
-                            {:else}
-                                £{format(".2~s")(breaks[i])}–£{format(".2~s")(breaks[i+1])}
-                            {/if}
-                        </MediaQuery>
-                        {/if}
-                    {/if}
-                </p></div>
-            </div>
+                                {#if i==colour.range().length-1}
+                                    Mort<wbr>gage unavail<wbr>able
+                                {:else}
+                                    <MediaQuery query="(max-width:850px)" let:matches>
+                                        {#if matches}
+                                            £{format(".3~s")(breaks[i])}+
+                                        {:else}
+                                            £{format(".2~s")(breaks[i])} to £{format(".2~s")(breaks[i+1])}
+                                        {/if}
+                                    </MediaQuery>
+                                {/if}
+                            {/if} 
+                        </p>
+                    </div>  
+            </div><!--  end vflex -->
         {/each}
     </div>  
 {/if}
@@ -71,6 +76,11 @@
 
     .bold{
         font-weight: 700;
+    }
+
+    .container{
+        display:flex; 
+        box-sizing:border-box;
     }
 
     div.legend-block {
@@ -85,13 +95,20 @@
     }
 
     .vflex{
+        flex:1;
         display: flex;
         flex-direction: column;
-        flex:1;
+        box-sizing: border-box;
+        width:calc(100% - 20px);
     }
 
     p.legend-text{
         text-align: center;
+        box-sizing: border-box;
+        overflow-wrap: break-word;
         margin:0;
+        /* word-break: break-all; */
     }
+
+
 </style>

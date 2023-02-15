@@ -51,15 +51,16 @@
 	}
 
 	input {
-		z-index: 1;
 		border-radius: 0;
 		border-left: none;
 		border-right: none;
 		width: calc(100% - 80px);
 		-moz-appearance: textfield;
+		appearance: textfield;
 		text-align: center;
 		height: 36px;
 		color: #206095;
+		font-size: 18px;
 	}
 
 	input::-webkit-outer-spin-button,

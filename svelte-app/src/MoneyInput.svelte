@@ -34,6 +34,7 @@
 
   input[type="number"] {
     -moz-appearance: textfield;
+    appearance: textfield;
     width: 100%;
     position: relative;
     margin: 2px 0;

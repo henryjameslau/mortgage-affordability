@@ -18,10 +18,11 @@
 	import RangeSlider from "svelte-range-slider-pips";
     import ButtonGroup from "./ButtonGroup.svelte";
 	import MediaQuery from "svelte-media-query"; 
+	import pym from 'pym.js'
 
 
 	let mortgageTerm = 25;
-	let deposit = 30000;
+	let deposit = 220000;
 	let propertyType;
 
 	let boeLookup = {
@@ -57,7 +58,7 @@
 
 	onMount(async () => {
 		(boe = await csv(
-			"https://raw.githubusercontent.com/ONSvisual/land-registry-flat-data/main/boe.csv",
+			"https://raw.githubusercontent.com/ONSvisual/bank-of-england-flat-data/main/boe.csv",
 			autoType
 		)),
 			(hpi = await csv(
@@ -98,6 +99,8 @@
 			.range(rates.concat(null));
 
 		latestHpi = hpi.filter((d) => d["date.value"].getTime() == maxHpiDate);
+
+		new pym.Child().sendMessage("height", document.body.height);
 	});
 
 	$: {
@@ -172,7 +175,7 @@
 	}
 
 	$: if (pricevalues&&deposit) {
-		minimum = max([0,Math.floor(pricevalues[0])]);
+		minimum = max([1,Math.floor(pricevalues[0])]);
 		maximum = Math.ceil(pricevalues[pricevalues.length - 1]);
 	}
 
@@ -183,15 +186,30 @@
 
 	$: if (customise && colour) {
 
-
-		let custompricevalues = pricevalues
+		if(pricevalues.some(v=>v<0)){
+			let custompricevalues = pricevalues
 			.filter((d) => d > slidermin)
 			.filter((d) => d < slidermax);
-		breaks = equalIntervalBreaks(custompricevalues, 3);
+			let custombreaks = equalIntervalBreaks(custompricevalues, 3);
 
-		colour = scaleThreshold()
+			breaks = [0].concat(custombreaks)
+			colour = scaleThreshold()
+				.domain(breaks)
+				.range(['#22d0b6',"#E9EFF4", "#BCD6E9", "#8DB3D3", "#6390B5", "#902092"])
+		}else{
+			let custompricevalues = pricevalues
+			.filter((d) => d > slidermin)
+			.filter((d) => d < slidermax);
+			breaks = equalIntervalBreaks(custompricevalues, 3);
+
+			colour = scaleThreshold()
 			.domain(breaks)
 			.range(["#E9EFF4", "#BCD6E9", "#8DB3D3", "#6390B5", "#902092"]);
+
+		}
+
+
+
 	}
 
 	$: if (customise && deposit){
@@ -242,7 +260,7 @@
 			
 
 			
-			<MediaQuery query="(max-width: 700px)" let:matches>
+			<MediaQuery query="(max-width: 550px)" let:matches>
 				{#if matches}
 					<div>
 						<Select bind:selected={propertyType} label="Select property type" />
@@ -258,6 +276,7 @@
 			
 		</fieldset>
 
+		
 		<details>
 			<summary>Adjust monthly repayment price range</summary>
 			<p>
@@ -368,7 +387,7 @@
 		position: relative;
 	}
 
-	@media (max-width:650px){
+	@media (max-width:850px){
 		.flex-container{
 			flex-direction: column;
 		}
