@@ -26,7 +26,8 @@
 		map = new maplibre.Map({
 			container,
 			style,
-			bounds,
+			bounds:bbox(geojson),
+			zoom:5,
 			interactive: true,
 			maxBounds:[[-15, 37],[14, 65]],
 			attributionControl:false
@@ -143,7 +144,7 @@
 	}
 
 	function fitBounds(bounds) {
-		if (map) map.fitBounds(bounds, { padding: 20 });
+		if (map) map.fitBounds(bounds, { padding: {bottom:200} });
 	}
 
 	function setData(prices){

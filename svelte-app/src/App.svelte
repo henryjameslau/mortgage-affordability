@@ -18,7 +18,6 @@
 	import RangeSlider from "svelte-range-slider-pips";
     import ButtonGroup from "./ButtonGroup.svelte";
 	import MediaQuery from "svelte-media-query"; 
-	import pym from 'pym.js'
 
 
 	let mortgageTerm = 25;
@@ -55,6 +54,7 @@
 	let slidermin;
 	let slidermax;
 	let customise = false;
+
 
 	onMount(async () => {
 		(boe = await csv(
@@ -100,7 +100,11 @@
 
 		latestHpi = hpi.filter((d) => d["date.value"].getTime() == maxHpiDate);
 
-		new pym.Child().sendMessage("height", document.body.height);
+		const details = document.querySelector("details")
+
+		details.addEventListener("toggle", function() {
+			updateHeight()
+		})
 	});
 
 	$: {
@@ -216,6 +220,30 @@
 		slidermax = min([maximum,slidermax])
 	}
 
+
+
+
+	// responsive pym embedding from https://github.com/ReallyGoodSmarts/datanews-rig-demo
+    // stuff for Pym, which manages iframe resizing for use as an embed
+	import pym from '../scripts/pym.v1.min.js';
+    var pymChild = new pym.Child();
+    let mainElementHeight
+    let w = 400
+
+	$: if(w) {updateHeight()}
+
+	function updateHeight(event) {
+        // note that i'm actually ignoring the event object itself
+		// only process if the first main element exists    
+        if (document.getElementsByTagName('main')[0]) {
+            // sending height of the first <main> tag to the Pym parent
+            // as a message instead of using pymChild.sendHeight, which sends the 
+            // height of the <body> tag. 
+            mainElementHeight = document.getElementsByTagName('main')[0].offsetHeight.toString()
+            pymChild.sendMessage('height', mainElementHeight);
+        }
+    }
+
 	function setSliderInputs(e) {
 		slidermin = e.detail.values[0];
 		slidermax = e.detail.values[1];
@@ -230,17 +258,12 @@
 		return maxindex;
 	}
 
-	function onchange(){
-
-	}
 </script>
 
-<svelte:head>
-	<script src="https:cdn.ons.gov.uk/vendor/pym/1.3.2/pym.min.js"></script>
-</svelte:head>
+<!-- svelte-ignore non-top-level-reactive-declaration -->
+<!-- svelte-ignore non-top-level-reactive-declaration -->
 
-<!-- svelte-ignore non-top-level-reactive-declaration -->
-<!-- svelte-ignore non-top-level-reactive-declaration -->
+<main>
 <div class='flex-container'>
 
 
@@ -322,7 +345,7 @@
 
 
 
-	<div id="results">
+	<div bind:clientWidth={w} id="results">
 		<p id='maptitle'>Monthly mortgage payments</p>
 		<div id="map-container">
 			<Map {prices} {colour}/>	
@@ -353,6 +376,9 @@
 		<div>Share</div>
 	</div>
 </div>
+</main>
+
+
 <style>
 	.flex-h{
 		display:flex;
@@ -383,13 +409,13 @@
 		background-color: #f4f7fa;
 		flex: 0 0 350px;
 		padding:0 15px;
-		height:950px;
+		height:820px;
 		box-sizing: border-box;
 	}
 	
 	#results {
 		flex: 1 0 auto;
-		height:950px;
+		height:820px;
 		position: relative;
 	}
 
