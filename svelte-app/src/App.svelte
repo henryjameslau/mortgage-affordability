@@ -197,6 +197,8 @@
 			let custombreaks = equalIntervalBreaks(custompricevalues, 3);
 
 			breaks = [0].concat(custombreaks)
+			breaks[breaks.length-1]=breaks[breaks.length-1] + 0.01
+
 			colour = scaleThreshold()
 				.domain(breaks)
 				.range(['#22d0b6',"#E9EFF4", "#BCD6E9", "#8DB3D3", "#6390B5", "#902092"])
@@ -204,11 +206,27 @@
 			let custompricevalues = pricevalues
 			.filter((d) => d > slidermin)
 			.filter((d) => d < slidermax);
+
 			breaks = equalIntervalBreaks(custompricevalues, 3);
 
-			colour = scaleThreshold()
-			.domain(breaks)
-			.range(["#E9EFF4", "#BCD6E9", "#8DB3D3", "#6390B5", "#902092"]);
+			if(breaks.length>1){
+				breaks[breaks.length-1]=breaks[breaks.length-1] + 0.01
+
+				colour = scaleThreshold()
+				.domain(breaks)
+				.range(["#E9EFF4", "#BCD6E9", "#8DB3D3", "#6390B5", "#902092"]);
+			}else if (breaks.length==0){
+				colour = scaleThreshold()
+				.domain([slidermin])
+				.range(["#E9EFF4","#902092"]);
+			}else if (breaks.length==1){
+				breaks = breaks.concat([slidermax])
+
+				colour = scaleThreshold()
+				.domain(breaks)
+				.range(["#E9EFF4","#8DB3D3","#902092"])
+			}
+			
 
 		}
 
