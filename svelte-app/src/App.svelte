@@ -276,6 +276,14 @@
 		return maxindex;
 	}
 
+	function getData(){
+		let csvContent = "data:text/csv;charset=utf-8," 
+    + Object.entries(prices).map(e => e.join(",")).join("\n");
+
+		let encodedUri = encodeURI(csvContent);
+		window.open(encodedUri);
+	}
+
 </script>
 
 <!-- svelte-ignore non-top-level-reactive-declaration -->
@@ -389,7 +397,7 @@
 <div id="footer">
 	<h3>Use and share</h3>
 	<div style="display:flex; gap:5px;">
-		<div>Get data</div>
+		<div on:click={getData}>Get data</div>
 		<div>Embed</div>
 		<div>Share</div>
 	</div>
