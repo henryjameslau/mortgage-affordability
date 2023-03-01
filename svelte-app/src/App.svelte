@@ -340,7 +340,7 @@
 				Enter the minimum and maximum monthly mortgage payments that
 				suits your budget.
 			</p>
-			<fieldset>
+			<fieldset class='customise'>
 				<div class='flex-h'>
 					<div>
 						<MoneyInput bind:value={slidermin} bind:customise={customise} label="Minimum"/>
@@ -492,13 +492,14 @@
 
 	#mapinfo {
 		position: absolute;
-		bottom: 0;
+		bottom: 30px;
 		background: white;
 		width: calc(100% - 20px);
 		margin:10px;
 		padding:0 15px 15px 15px;
 		border: 1px solid #A6BFD5;
 		box-sizing: border-box;
+		z-index: 5;
 	}
 
 	#maptitle {
@@ -524,6 +525,10 @@
 		margin:0;
 		border:0;
 		padding:0;
+	}
+
+	summary, fieldset.customise{
+		margin-bottom: 15px;
 	}
 
 	:global(#customise) {

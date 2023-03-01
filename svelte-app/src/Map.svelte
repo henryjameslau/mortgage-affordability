@@ -34,7 +34,7 @@
 		})
 
 		map.addControl(new maplibre.NavigationControl({ showCompass: false }));
-		map.addControl(new maplibre.AttributionControl({ compact: true }), 'top-left');
+		map.addControl(new maplibre.AttributionControl({ compact: true }), 'bottom-right');
 		
 
 		map.on("load", () => {
