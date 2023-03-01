@@ -52,7 +52,7 @@
     }
 
     function cleararea() {
-        areacd.set(null);
+        areacd.set(undefined);
     }
 </script>
 
@@ -76,9 +76,9 @@
                         {:else}
                             <p>
                                 Typical payments on a 5 year fixed mortgage for an average {propertyType.toLowerCase()}
-                                {propertyType == "Flat" ? "" : "property"} in {thisarea[
+                                {propertyType == "Flat" ? "" : "property"} in <span class="bold">{thisarea[
                                     "regionName.value"
-                                ]} is £{format(",.0f")(payment)} with a deposit of £{format(
+                                ]}</span> is <span class="bold">£{format(",.0f")(payment)}</span> with a deposit of £{format(
                                     ",.0f"
                                 )(deposit)} and a {mortgageTerm} year mortgage.
                             </p>
@@ -97,7 +97,7 @@
                     </p>
 
                     <p>
-                        This has increased by {format(".0f")(percentageChange)}% since {timeFormat(
+                        This has increased by <span class="bold">{format(".0f")(percentageChange)}%</span> since {timeFormat(
                             "%b %Y"
                         )(fiveyearsago["date.value"])}.
                     </p>
@@ -111,6 +111,10 @@
 
 
 <style>
+
+    h3{
+        font-size: 20px;
+    }
     button {
         position: relative;
         top: 15px;
@@ -140,7 +144,9 @@
         }
     }
 
-
+    .bold{
+        font-weight: 700;
+    }
 
     #chart, #textinfo{
         flex:1 1 50%;
@@ -148,5 +154,6 @@
     p{
         margin:0;
         margin-bottom: 10px;
+        font-size: 16px;
     }
 </style>

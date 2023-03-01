@@ -10,33 +10,44 @@
     {#each options as option, i}
         <div class="grid-cell">
             <label for={"button" + i} class:selected="{button === option}" on:click="{()=> button = option}" on:keydown="{()=> button = option}">
-                {#if button=== option}
+                <div class='button-label'><span>{option}</span></div>
+                {#if button===option}
                 <img src={'./build/images/' + option + '_white.svg'} alt=""/>
                 {:else}
                 <img src={'./build/images/' + option + '_blue.svg'} alt=""/>
                 {/if}
-                <div class='button-label'><span>{option}</span></div>
+                
                 <input bind:group={selected} type="radio" class="visuallyhidden" id={"button" + i} value={option} name="button"/></label>
         </div>
     {/each}
 </div>
 
 <style>
+    span{
+        font-weight: 700;
+        margin-left: 5px;
+    }
+
     .grid {
         display: flex;
-        flex-wrap: nowrap;
+        flex-wrap: wrap;
         list-style: none;
-        margin: 0;
+        margin: 2px 0 0 0;
         gap:5px;
     }
 
     .grid-cell {
         display: block;
         border: solid 2px #206095;
-        flex:1 0 23%;
+        flex:1 0 48%;
         background-color: white;
     }
 
+    @media (max-width:740px){
+        .grid-cell{
+            flex-basis: 23%;
+        }
+    }
     .visuallyhidden {
         position: absolute;
         width: 1px;
@@ -50,7 +61,9 @@
 
     .grid-cell label {
         font-size: 16px;
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         margin-right: -1px;
         color: #206095;
         height:100%;
@@ -78,7 +91,7 @@
     img{
         max-width: 40px;
         display:block;
-        margin:auto;
+        margin-right:5px;
        
     }
 

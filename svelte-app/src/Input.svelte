@@ -10,7 +10,7 @@
 </script>
 
 <div>
-	<label for="input">{label}</label>
+	<label for="input">{label}<slot></slot></label>
 	<button disabled={number == min} on:click={minus}><span>-</span> </button>
 	<input id="input" bind:value={number} {min} {max} type="number" />
 	<button disabled={number == max} on:click={add}>
@@ -25,6 +25,7 @@
 
 	label{
 		font-weight: 700;
+		font-size: 18px;
 	}
 
 	button,

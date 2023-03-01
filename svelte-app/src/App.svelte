@@ -116,7 +116,7 @@
 				.sort((a, b) => a["date.value"] - b["date.value"]);
 		}
 
-		function monthlyrepayments(price,areacd) {
+		function monthlyrepayments(price) {
 			if(price===null)return "No data"
 			let loan = price - deposit;
 			let ltv = loan / price;
@@ -129,8 +129,6 @@
 				(loan * (monthlyrate * (1 + monthlyrate) ** term)) /
 				((1 + monthlyrate) ** term - 1);
 
-			// if(areacd=='E08000003')console.log('area',areacd,price,deposit,loan,ourRate,monthlyrate,term,payment)
-
 			if (payment) {
 				return payment;
 			} else {
@@ -142,7 +140,7 @@
 		if (latestHpi)
 			latestHpi.forEach((d) => {
 				prices[d.code] = monthlyrepayments(
-					d[propertyLookup[propertyType]],d.code
+					d[propertyLookup[propertyType]]
 				);
 			});
 
@@ -301,15 +299,15 @@
 
 	<div id="inputs">
 		<h1>What are average UK monthly mortgage payments?</h1>
-		<h3>
+		<p>
 			Fill in some details below to find out how average mortgage payments
 			are changing near you. Click on each area to find out about house
 			prices.
-		</h3>
+		</p>
 		<fieldset>
 			<div class='flex-h'>
 				<div class='equalspaced'>
-					<Input min={1} max={40} label="Mortgage term in years" bind:number={mortgageTerm}/>
+					<Input min={1} max={40} label="Mortgage term " bind:number={mortgageTerm}> <span style="font-size:18px;font-weight:400;"> (years)</span></Input>
 				</div>
 	
 				<div class='equalspaced'>
@@ -392,7 +390,7 @@
 					{deposit}
 					{mortgageTerm}
 				/>
-				<Legend {breaks} {colour} {customise} />
+				<Legend {breaks} {colour} {customise} {latestHpi}/>
 			{:else}
 			<p>Mortgage unavailable in all areas.</p>  
 			{/if}
@@ -415,9 +413,10 @@
 	.flex-h{
 		display:flex;
 		justify-content: space-between;
-		gap:5px;
+		gap:32px;
 		align-items: flex-end;
 	}
+
 
 	.equalspaced{
 		flex:1;
@@ -425,6 +424,7 @@
 
 	.bold{
 		font-weight: 700;
+		font-size: 18px;
 	}
 
 	.flex-container{
@@ -439,11 +439,12 @@
 
 	#inputs {
 		background-color: #f4f7fa;
-		flex: 0 0 350px;
-		padding:0 15px;
+		flex: 0 0 400px;
+		padding:0 24px;
 		height:820px;
 		box-sizing: border-box;
 	}
+
 	
 	#results {
 		flex: 1 0 auto;
@@ -457,12 +458,33 @@
 		}
 
 		#results{
-			height:750px;
+			height:850px;
+		}
+		
+		#inputs{
+			height:auto;
 		}
 	}
+	
+
+	@media (max-width:400px){
+		.flex-h{
+			display: block;
+		}
+
+		
+	}
+
+	
 	h1 {
 		margin: 0;
+		font-size: 30px;
 	}
+
+	p{
+		font-size: 18px;
+	}
+
 	#map-container {
 		height: 100%;
 		position:relative
@@ -492,6 +514,10 @@
 		border-left-width: 4px;
 		margin-left: 18px;
 		background-color: white;
+	}
+
+	summary{
+		font-size: 18px;
 	}
 
 	fieldset{
