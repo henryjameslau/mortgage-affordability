@@ -87,7 +87,7 @@
 		let boeBefore = boe.filter((d) => d.date > maxHpiDate);
 		let latestBoeBeforeHpi = min(boeBefore, (d) => d.date);
 
-		console.log(latestBoeBeforeHpi)
+
 		// find relevant data to latest HPI data
 		let latestBoe = boe
 			.filter((d) => d.fixedTerm == fixedLength)
