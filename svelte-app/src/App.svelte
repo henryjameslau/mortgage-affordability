@@ -357,8 +357,6 @@
 						values={[slidermin, slidermax]}
 						min={Math.floor(minimum)}
 						max={Math.ceil(maximum)}
-						float="true"
-						hoverable="true"
 						pips
 						pipstep={(maximum - minimum) / 4}
 						all="label"

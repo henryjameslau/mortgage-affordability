@@ -89,7 +89,7 @@
 
 
     img{
-        max-width: 40px;
+        max-width: 30px;
         display:block;
         margin-right:5px;
        

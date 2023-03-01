@@ -126636,7 +126636,7 @@ var app = (function () {
     			img = element("img");
     			if (!src_url_equal(img.src, img_src_value = './build/images/' + /*option*/ ctx[7] + '_blue.svg')) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "");
-    			attr_dev(img, "class", "svelte-xeo9ls");
+    			attr_dev(img, "class", "svelte-uyppf7");
     			add_location(img, file$1, 16, 16, 645);
     		},
     		m: function mount(target, anchor) {
@@ -126673,7 +126673,7 @@ var app = (function () {
     			img = element("img");
     			if (!src_url_equal(img.src, img_src_value = './build/images/' + /*option*/ ctx[7] + '_white.svg')) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "");
-    			attr_dev(img, "class", "svelte-xeo9ls");
+    			attr_dev(img, "class", "svelte-uyppf7");
     			add_location(img, file$1, 14, 16, 543);
     		},
     		m: function mount(target, anchor) {
@@ -126744,12 +126744,12 @@ var app = (function () {
     			t2 = space();
     			input = element("input");
     			t3 = space();
-    			attr_dev(span, "class", "svelte-xeo9ls");
+    			attr_dev(span, "class", "svelte-uyppf7");
     			add_location(span, file$1, 12, 42, 461);
-    			attr_dev(div0, "class", "button-label svelte-xeo9ls");
+    			attr_dev(div0, "class", "button-label svelte-uyppf7");
     			add_location(div0, file$1, 12, 16, 435);
     			attr_dev(input, "type", "radio");
-    			attr_dev(input, "class", "visuallyhidden svelte-xeo9ls");
+    			attr_dev(input, "class", "visuallyhidden svelte-uyppf7");
     			attr_dev(input, "id", "button" + /*i*/ ctx[9]);
     			input.__value = input_value_value = /*option*/ ctx[7];
     			input.value = input.__value;
@@ -126757,10 +126757,10 @@ var app = (function () {
     			/*$$binding_groups*/ ctx[4][0].push(input);
     			add_location(input, file$1, 19, 16, 761);
     			attr_dev(label, "for", "button" + /*i*/ ctx[9]);
-    			attr_dev(label, "class", "svelte-xeo9ls");
+    			attr_dev(label, "class", "svelte-uyppf7");
     			toggle_class(label, "selected", /*button*/ ctx[2] === /*option*/ ctx[7]);
     			add_location(label, file$1, 11, 12, 285);
-    			attr_dev(div1, "class", "grid-cell svelte-xeo9ls");
+    			attr_dev(div1, "class", "grid-cell svelte-uyppf7");
     			add_location(div1, file$1, 10, 8, 249);
     		},
     		m: function mount(target, anchor) {
@@ -126853,7 +126853,7 @@ var app = (function () {
     				each_blocks[i].c();
     			}
 
-    			attr_dev(div, "class", "grid svelte-xeo9ls");
+    			attr_dev(div, "class", "grid svelte-uyppf7");
     			add_location(div, file$1, 8, 0, 189);
     		},
     		l: function claim(nodes) {
@@ -127278,8 +127278,6 @@ var app = (function () {
     				values: [/*slidermin*/ ctx[10], /*slidermax*/ ctx[11]],
     				min: Math.floor(/*minimum*/ ctx[8]),
     				max: Math.ceil(/*maximum*/ ctx[9]),
-    				float: "true",
-    				hoverable: "true",
     				pips: true,
     				pipstep: (/*maximum*/ ctx[9] - /*minimum*/ ctx[8]) / 4,
     				all: "label",
@@ -127334,7 +127332,7 @@ var app = (function () {
     	return block;
     }
 
-    // (394:3) {:else}
+    // (392:3) {:else}
     function create_else_block(ctx) {
     	let p;
 
@@ -127343,7 +127341,7 @@ var app = (function () {
     			p = element("p");
     			p.textContent = "Mortgage unavailable in all areas.";
     			attr_dev(p, "class", "svelte-1r79u41");
-    			add_location(p, file, 394, 3, 9955);
+    			add_location(p, file, 392, 3, 9913);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -127360,14 +127358,14 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(394:3) {:else}",
+    		source: "(392:3) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (384:3) {#if breaks.length > 0}
+    // (382:3) {#if breaks.length > 0}
     function create_if_block(ctx) {
     	let areainfo;
     	let t;
@@ -127446,7 +127444,7 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(384:3) {#if breaks.length > 0}",
+    		source: "(382:3) {#if breaks.length > 0}",
     		ctx
     	});
 
@@ -127704,26 +127702,26 @@ var app = (function () {
     			add_location(div6, file, 299, 1, 7561);
     			attr_dev(p2, "id", "maptitle");
     			attr_dev(p2, "class", "svelte-1r79u41");
-    			add_location(p2, file, 378, 2, 9597);
+    			add_location(p2, file, 376, 2, 9555);
     			attr_dev(div7, "id", "map-container");
     			attr_dev(div7, "class", "svelte-1r79u41");
-    			add_location(div7, file, 379, 2, 9646);
+    			add_location(div7, file, 377, 2, 9604);
     			attr_dev(div8, "id", "mapinfo");
     			attr_dev(div8, "class", "svelte-1r79u41");
-    			add_location(div8, file, 382, 2, 9711);
+    			add_location(div8, file, 380, 2, 9669);
     			attr_dev(div9, "id", "results");
     			attr_dev(div9, "class", "svelte-1r79u41");
     			add_render_callback(() => /*div9_elementresize_handler*/ ctx[31].call(div9));
-    			add_location(div9, file, 377, 1, 9555);
+    			add_location(div9, file, 375, 1, 9513);
     			attr_dev(div10, "class", "flex-container svelte-1r79u41");
     			add_location(div10, file, 296, 0, 7529);
-    			add_location(h3, file, 401, 1, 10052);
-    			add_location(div11, file, 403, 2, 10115);
+    			add_location(h3, file, 399, 1, 10010);
+    			add_location(div11, file, 401, 2, 10073);
     			set_style(div12, "display", "flex");
     			set_style(div12, "gap", "5px");
-    			add_location(div12, file, 402, 1, 10076);
+    			add_location(div12, file, 400, 1, 10034);
     			attr_dev(div13, "id", "footer");
-    			add_location(div13, file, 400, 0, 10033);
+    			add_location(div13, file, 398, 0, 9991);
     			add_location(main, file, 295, 0, 7522);
     		},
     		l: function claim(nodes) {
