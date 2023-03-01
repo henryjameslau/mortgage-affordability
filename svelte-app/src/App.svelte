@@ -107,6 +107,14 @@
 		details.addEventListener("toggle", function() {
 			updateHeight()
 		})
+
+		let checkLAcode = new RegExp('([EWSN][0-9]{8})', 'g')
+		let parent = new URLSearchParams(document.location.search).get("parentUrl");
+		let code = parent ? parent.split("#")[1] : null;
+		if (code && checkLAcode.test(code)) {
+			// Action to select area in app using the GSS code "code"
+			areacd.set(code)
+		}
 	});
 
 	$: {
@@ -280,14 +288,6 @@
 		return maxindex;
 	}
 
-	function getData(){
-		let csvContent = "data:text/csv;charset=utf-8," 
-    + Object.entries(prices).map(e => e.join(",")).join("\n");
-
-		let encodedUri = encodeURI(csvContent);
-		window.open(encodedUri);
-	}
-
 </script>
 
 <!-- svelte-ignore non-top-level-reactive-declaration -->
@@ -401,8 +401,6 @@
 <div id="footer">
 	<h3>Use and share</h3>
 	<div style="display:flex; gap:5px;">
-		<div on:click={getData}>Get data</div>
-		<div>Embed</div>
 		<div>Share</div>
 	</div>
 </div>

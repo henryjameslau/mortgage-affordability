@@ -127018,7 +127018,7 @@ var app = (function () {
     			span.textContent = "(years)";
     			set_style(span, "font-size", "18px");
     			set_style(span, "font-weight", "400");
-    			add_location(span, file, 309, 80, 7846);
+    			add_location(span, file, 309, 80, 7949);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, span, anchor);
@@ -127050,7 +127050,7 @@ var app = (function () {
     	let current;
 
     	function buttongroup_selected_binding(value) {
-    		/*buttongroup_selected_binding*/ ctx[24](value);
+    		/*buttongroup_selected_binding*/ ctx[23](value);
     	}
 
     	let buttongroup_props = {};
@@ -127070,9 +127070,9 @@ var app = (function () {
     			t1 = space();
     			create_component(buttongroup.$$.fragment);
     			attr_dev(span, "class", "bold svelte-1r79u41");
-    			add_location(span, file, 326, 6, 8298);
+    			add_location(span, file, 326, 6, 8401);
     			attr_dev(div, "class", "addtopspace svelte-1r79u41");
-    			add_location(div, file, 325, 5, 8266);
+    			add_location(div, file, 325, 5, 8369);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -127126,7 +127126,7 @@ var app = (function () {
     	let current;
 
     	function select_selected_binding(value) {
-    		/*select_selected_binding*/ ctx[23](value);
+    		/*select_selected_binding*/ ctx[22](value);
     	}
 
     	let select_props = { label: "Select property type" };
@@ -127143,7 +127143,7 @@ var app = (function () {
     			div = element("div");
     			create_component(select.$$.fragment);
     			attr_dev(div, "class", "addtopspace svelte-1r79u41");
-    			add_location(div, file, 321, 5, 8136);
+    			add_location(div, file, 321, 5, 8239);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -127197,7 +127197,7 @@ var app = (function () {
     	const if_blocks = [];
 
     	function select_block_type(ctx, dirty) {
-    		if (/*matches*/ ctx[41]) return 0;
+    		if (/*matches*/ ctx[40]) return 0;
     		return 1;
     	}
 
@@ -127284,14 +127284,14 @@ var app = (function () {
     				pipstep: (/*maximum*/ ctx[9] - /*minimum*/ ctx[8]) / 4,
     				all: "label",
     				prefix: "£",
-    				formatter: /*func*/ ctx[29],
-    				handleFormatter: /*func_1*/ ctx[30],
+    				formatter: /*func*/ ctx[28],
+    				handleFormatter: /*func_1*/ ctx[29],
     				id: "customise"
     			},
     			$$inline: true
     		});
 
-    	rangeslider.$on("change", /*change_handler*/ ctx[31]);
+    	rangeslider.$on("change", /*change_handler*/ ctx[30]);
 
     	const block = {
     		c: function create() {
@@ -127343,7 +127343,7 @@ var app = (function () {
     			p = element("p");
     			p.textContent = "Mortgage unavailable in all areas.";
     			attr_dev(p, "class", "svelte-1r79u41");
-    			add_location(p, file, 394, 3, 9852);
+    			add_location(p, file, 394, 3, 9955);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -127502,21 +127502,15 @@ var app = (function () {
     	let if_block1;
     	let div9_resize_listener;
     	let t17;
-    	let div15;
+    	let div13;
     	let h3;
     	let t19;
-    	let div14;
-    	let div11;
-    	let t21;
     	let div12;
-    	let t23;
-    	let div13;
+    	let div11;
     	let current;
-    	let mounted;
-    	let dispose;
 
     	function input_number_binding(value) {
-    		/*input_number_binding*/ ctx[21](value);
+    		/*input_number_binding*/ ctx[20](value);
     	}
 
     	let input_props = {
@@ -127535,7 +127529,7 @@ var app = (function () {
     	binding_callbacks.push(() => bind(input, 'number', input_number_binding));
 
     	function moneyinput0_value_binding(value) {
-    		/*moneyinput0_value_binding*/ ctx[22](value);
+    		/*moneyinput0_value_binding*/ ctx[21](value);
     	}
 
     	let moneyinput0_props = { min: "0", label: "Deposit amount" };
@@ -127553,8 +127547,8 @@ var app = (function () {
     				$$slots: {
     					default: [
     						create_default_slot,
-    						({ matches }) => ({ 41: matches }),
-    						({ matches }) => [0, matches ? 1024 : 0]
+    						({ matches }) => ({ 40: matches }),
+    						({ matches }) => [0, matches ? 512 : 0]
     					]
     				},
     				$$scope: { ctx }
@@ -127563,11 +127557,11 @@ var app = (function () {
     		});
 
     	function moneyinput1_value_binding(value) {
-    		/*moneyinput1_value_binding*/ ctx[25](value);
+    		/*moneyinput1_value_binding*/ ctx[24](value);
     	}
 
     	function moneyinput1_customise_binding(value) {
-    		/*moneyinput1_customise_binding*/ ctx[26](value);
+    		/*moneyinput1_customise_binding*/ ctx[25](value);
     	}
 
     	let moneyinput1_props = { label: "Minimum" };
@@ -127585,11 +127579,11 @@ var app = (function () {
     	binding_callbacks.push(() => bind(moneyinput1, 'customise', moneyinput1_customise_binding));
 
     	function moneyinput2_value_binding(value) {
-    		/*moneyinput2_value_binding*/ ctx[27](value);
+    		/*moneyinput2_value_binding*/ ctx[26](value);
     	}
 
     	function moneyinput2_customise_binding(value) {
-    		/*moneyinput2_customise_binding*/ ctx[28](value);
+    		/*moneyinput2_customise_binding*/ ctx[27](value);
     	}
 
     	let moneyinput2_props = { label: "Maximum" };
@@ -127674,71 +127668,63 @@ var app = (function () {
     			div8 = element("div");
     			if_block1.c();
     			t17 = space();
-    			div15 = element("div");
+    			div13 = element("div");
     			h3 = element("h3");
     			h3.textContent = "Use and share";
     			t19 = space();
-    			div14 = element("div");
-    			div11 = element("div");
-    			div11.textContent = "Get data";
-    			t21 = space();
     			div12 = element("div");
-    			div12.textContent = "Embed";
-    			t23 = space();
-    			div13 = element("div");
-    			div13.textContent = "Share";
+    			div11 = element("div");
+    			div11.textContent = "Share";
     			attr_dev(h1, "class", "svelte-1r79u41");
-    			add_location(h1, file, 300, 2, 7478);
+    			add_location(h1, file, 300, 2, 7581);
     			attr_dev(p0, "class", "svelte-1r79u41");
-    			add_location(p0, file, 301, 2, 7536);
+    			add_location(p0, file, 301, 2, 7639);
     			attr_dev(div0, "class", "equalspaced svelte-1r79u41");
-    			add_location(div0, file, 308, 4, 7740);
+    			add_location(div0, file, 308, 4, 7843);
     			attr_dev(div1, "class", "equalspaced svelte-1r79u41");
-    			add_location(div1, file, 312, 4, 7933);
+    			add_location(div1, file, 312, 4, 8036);
     			attr_dev(div2, "class", "flex-h svelte-1r79u41");
-    			add_location(div2, file, 307, 3, 7715);
+    			add_location(div2, file, 307, 3, 7818);
     			attr_dev(fieldset0, "class", "svelte-1r79u41");
-    			add_location(fieldset0, file, 306, 2, 7701);
+    			add_location(fieldset0, file, 306, 2, 7804);
     			attr_dev(summary, "class", "svelte-1r79u41");
-    			add_location(summary, file, 337, 3, 8495);
+    			add_location(summary, file, 337, 3, 8598);
     			attr_dev(p1, "class", "svelte-1r79u41");
-    			add_location(p1, file, 338, 3, 8554);
-    			add_location(div3, file, 344, 5, 8716);
-    			add_location(div4, file, 348, 5, 8827);
+    			add_location(p1, file, 338, 3, 8657);
+    			add_location(div3, file, 344, 5, 8819);
+    			add_location(div4, file, 348, 5, 8930);
     			attr_dev(div5, "class", "flex-h svelte-1r79u41");
-    			add_location(div5, file, 343, 4, 8690);
+    			add_location(div5, file, 343, 4, 8793);
     			attr_dev(fieldset1, "class", "customise svelte-1r79u41");
-    			add_location(fieldset1, file, 342, 3, 8657);
+    			add_location(fieldset1, file, 342, 3, 8760);
     			attr_dev(details, "class", "addtopspace svelte-1r79u41");
-    			add_location(details, file, 336, 2, 8462);
+    			add_location(details, file, 336, 2, 8565);
     			attr_dev(div6, "id", "inputs");
     			attr_dev(div6, "class", "svelte-1r79u41");
-    			add_location(div6, file, 299, 1, 7458);
+    			add_location(div6, file, 299, 1, 7561);
     			attr_dev(p2, "id", "maptitle");
     			attr_dev(p2, "class", "svelte-1r79u41");
-    			add_location(p2, file, 378, 2, 9494);
+    			add_location(p2, file, 378, 2, 9597);
     			attr_dev(div7, "id", "map-container");
     			attr_dev(div7, "class", "svelte-1r79u41");
-    			add_location(div7, file, 379, 2, 9543);
+    			add_location(div7, file, 379, 2, 9646);
     			attr_dev(div8, "id", "mapinfo");
     			attr_dev(div8, "class", "svelte-1r79u41");
-    			add_location(div8, file, 382, 2, 9608);
+    			add_location(div8, file, 382, 2, 9711);
     			attr_dev(div9, "id", "results");
     			attr_dev(div9, "class", "svelte-1r79u41");
-    			add_render_callback(() => /*div9_elementresize_handler*/ ctx[32].call(div9));
-    			add_location(div9, file, 377, 1, 9452);
+    			add_render_callback(() => /*div9_elementresize_handler*/ ctx[31].call(div9));
+    			add_location(div9, file, 377, 1, 9555);
     			attr_dev(div10, "class", "flex-container svelte-1r79u41");
-    			add_location(div10, file, 296, 0, 7426);
-    			add_location(h3, file, 401, 1, 9949);
-    			add_location(div11, file, 403, 2, 10012);
-    			add_location(div12, file, 404, 2, 10053);
-    			add_location(div13, file, 405, 2, 10072);
-    			set_style(div14, "display", "flex");
-    			set_style(div14, "gap", "5px");
-    			add_location(div14, file, 402, 1, 9973);
-    			attr_dev(div15, "id", "footer");
-    			add_location(div15, file, 400, 0, 9930);
-    			add_location(main, file, 295, 0, 7419);
+    			add_location(div10, file, 296, 0, 7529);
+    			add_location(h3, file, 401, 1, 10052);
+    			add_location(div11, file, 403, 2, 10115);
+    			set_style(div12, "display", "flex");
+    			set_style(div12, "gap", "5px");
+    			add_location(div12, file, 402, 1, 10076);
+    			attr_dev(div13, "id", "footer");
+    			add_location(div13, file, 400, 0, 10033);
+    			add_location(main, file, 295, 0, 7522);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -127784,28 +127770,19 @@ var app = (function () {
     			append_dev(div9, t16);
     			append_dev(div9, div8);
     			if_blocks[current_block_type_index].m(div8, null);
-    			div9_resize_listener = add_resize_listener(div9, /*div9_elementresize_handler*/ ctx[32].bind(div9));
+    			div9_resize_listener = add_resize_listener(div9, /*div9_elementresize_handler*/ ctx[31].bind(div9));
     			append_dev(main, t17);
-    			append_dev(main, div15);
-    			append_dev(div15, h3);
-    			append_dev(div15, t19);
-    			append_dev(div15, div14);
-    			append_dev(div14, div11);
-    			append_dev(div14, t21);
-    			append_dev(div14, div12);
-    			append_dev(div14, t23);
-    			append_dev(div14, div13);
+    			append_dev(main, div13);
+    			append_dev(div13, h3);
+    			append_dev(div13, t19);
+    			append_dev(div13, div12);
+    			append_dev(div12, div11);
     			current = true;
-
-    			if (!mounted) {
-    				dispose = listen_dev(div11, "click", /*getData*/ ctx[16], false, false, false);
-    				mounted = true;
-    			}
     		},
     		p: function update(ctx, dirty) {
     			const input_changes = {};
 
-    			if (dirty[1] & /*$$scope*/ 2048) {
+    			if (dirty[1] & /*$$scope*/ 1024) {
     				input_changes.$$scope = { dirty, ctx };
     			}
 
@@ -127827,7 +127804,7 @@ var app = (function () {
     			moneyinput0.$set(moneyinput0_changes);
     			const mediaquery_changes = {};
 
-    			if (dirty[0] & /*propertyType*/ 4 | dirty[1] & /*$$scope, matches*/ 3072) {
+    			if (dirty[0] & /*propertyType*/ 4 | dirty[1] & /*$$scope, matches*/ 1536) {
     				mediaquery_changes.$$scope = { dirty, ctx };
     			}
 
@@ -127950,8 +127927,6 @@ var app = (function () {
     			destroy_component(map);
     			if_blocks[current_block_type_index].d();
     			div9_resize_listener();
-    			mounted = false;
-    			dispose();
     		}
     	};
 
@@ -127969,7 +127944,7 @@ var app = (function () {
     function instance($$self, $$props, $$invalidate) {
     	let $areacd;
     	validate_store(areacd, 'areacd');
-    	component_subscribe($$self, areacd, $$value => $$invalidate(20, $areacd = $$value));
+    	component_subscribe($$self, areacd, $$value => $$invalidate(19, $areacd = $$value));
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('App', slots, []);
     	let mortgageTerm = 25;
@@ -128013,7 +127988,7 @@ var app = (function () {
     	let customise = false;
 
     	onMount(async () => {
-    		(boe = await csv("https://raw.githubusercontent.com/ONSvisual/bank-of-england-flat-data/main/boe.csv", autoType), $$invalidate(18, hpi = await csv("https://raw.githubusercontent.com/ONSvisual/land-registry-flat-data/main/landreg.csv", autoType)));
+    		(boe = await csv("https://raw.githubusercontent.com/ONSvisual/bank-of-england-flat-data/main/boe.csv", autoType), $$invalidate(17, hpi = await csv("https://raw.githubusercontent.com/ONSvisual/land-registry-flat-data/main/landreg.csv", autoType)));
 
     		// find the latest date for HPI data
     		let maxHpiDate = max$1(hpi, d => d["date.value"]).getTime();
@@ -128035,13 +128010,22 @@ var app = (function () {
     		let latestBoe = boe.filter(d => d.fixedTerm == fixedLength).filter(d => d.date == latestBoeBeforeHpi).sort((a, b) => a.ltv - b.ltv);
 
     		const rates = latestBoe.flatMap(d => d.value);
-    		$$invalidate(17, rate = threshold().domain(latestBoe.flatMap(d => d.ltv)).range(rates.concat(null)));
+    		$$invalidate(16, rate = threshold().domain(latestBoe.flatMap(d => d.ltv)).range(rates.concat(null)));
     		$$invalidate(3, latestHpi = hpi.filter(d => d["date.value"].getTime() == maxHpiDate));
     		const details = document.querySelector("details");
 
     		details.addEventListener("toggle", function () {
     			updateHeight();
     		});
+
+    		let checkLAcode = new RegExp('([EWSN][0-9]{8})', 'g');
+    		let parent = new URLSearchParams(document.location.search).get("parentUrl");
+    		let code = parent ? parent.split("#")[1] : null;
+
+    		if (code && checkLAcode.test(code)) {
+    			// Action to select area in app using the GSS code "code"
+    			areacd.set(code);
+    		}
     	});
 
     	var pymChild = new pym_v1_min.Child();
@@ -128073,12 +128057,6 @@ var app = (function () {
     		return maxindex;
     	}
 
-    	function getData() {
-    		let csvContent = "data:text/csv;charset=utf-8," + Object.entries(prices).map(e => e.join(",")).join("\n");
-    		let encodedUri = encodeURI(csvContent);
-    		window.open(encodedUri);
-    	}
-
     	const writable_props = [];
 
     	Object_1.keys($$props).forEach(key => {
@@ -128107,7 +128085,7 @@ var app = (function () {
 
     	function moneyinput1_value_binding(value) {
     		slidermin = value;
-    		(((((((((((((((($$invalidate(10, slidermin), $$invalidate(12, customise)), $$invalidate(8, minimum)), $$invalidate(9, maximum)), $$invalidate(19, pricevalues)), $$invalidate(1, deposit)), $$invalidate(18, hpi)), $$invalidate(20, $areacd)), $$invalidate(17, rate)), $$invalidate(0, mortgageTerm)), $$invalidate(3, latestHpi)), $$invalidate(37, propertyLookup)), $$invalidate(2, propertyType)), $$invalidate(4, prices)), $$invalidate(5, breaks)), $$invalidate(6, colour)), $$invalidate(11, slidermax));
+    		(((((((((((((((($$invalidate(10, slidermin), $$invalidate(12, customise)), $$invalidate(8, minimum)), $$invalidate(9, maximum)), $$invalidate(18, pricevalues)), $$invalidate(1, deposit)), $$invalidate(17, hpi)), $$invalidate(19, $areacd)), $$invalidate(16, rate)), $$invalidate(0, mortgageTerm)), $$invalidate(3, latestHpi)), $$invalidate(36, propertyLookup)), $$invalidate(2, propertyType)), $$invalidate(4, prices)), $$invalidate(5, breaks)), $$invalidate(6, colour)), $$invalidate(11, slidermax));
     	}
 
     	function moneyinput1_customise_binding(value) {
@@ -128117,7 +128095,7 @@ var app = (function () {
 
     	function moneyinput2_value_binding(value) {
     		slidermax = value;
-    		(((((((((((((((($$invalidate(11, slidermax), $$invalidate(12, customise)), $$invalidate(8, minimum)), $$invalidate(9, maximum)), $$invalidate(1, deposit)), $$invalidate(19, pricevalues)), $$invalidate(18, hpi)), $$invalidate(20, $areacd)), $$invalidate(17, rate)), $$invalidate(0, mortgageTerm)), $$invalidate(3, latestHpi)), $$invalidate(37, propertyLookup)), $$invalidate(2, propertyType)), $$invalidate(4, prices)), $$invalidate(5, breaks)), $$invalidate(6, colour)), $$invalidate(10, slidermin));
+    		(((((((((((((((($$invalidate(11, slidermax), $$invalidate(12, customise)), $$invalidate(8, minimum)), $$invalidate(9, maximum)), $$invalidate(1, deposit)), $$invalidate(18, pricevalues)), $$invalidate(17, hpi)), $$invalidate(19, $areacd)), $$invalidate(16, rate)), $$invalidate(0, mortgageTerm)), $$invalidate(3, latestHpi)), $$invalidate(36, propertyLookup)), $$invalidate(2, propertyType)), $$invalidate(4, prices)), $$invalidate(5, breaks)), $$invalidate(6, colour)), $$invalidate(10, slidermin));
     	}
 
     	function moneyinput2_customise_binding(value) {
@@ -128186,7 +128164,6 @@ var app = (function () {
     		updateHeight,
     		setSliderInputs,
     		findneg,
-    		getData,
     		$areacd
     	});
 
@@ -128196,16 +128173,16 @@ var app = (function () {
     		if ('propertyType' in $$props) $$invalidate(2, propertyType = $$props.propertyType);
     		if ('fixedLength' in $$props) fixedLength = $$props.fixedLength;
     		if ('boeLookup' in $$props) boeLookup = $$props.boeLookup;
-    		if ('propertyLookup' in $$props) $$invalidate(37, propertyLookup = $$props.propertyLookup);
+    		if ('propertyLookup' in $$props) $$invalidate(36, propertyLookup = $$props.propertyLookup);
     		if ('latestHpi' in $$props) $$invalidate(3, latestHpi = $$props.latestHpi);
-    		if ('rate' in $$props) $$invalidate(17, rate = $$props.rate);
+    		if ('rate' in $$props) $$invalidate(16, rate = $$props.rate);
     		if ('prices' in $$props) $$invalidate(4, prices = $$props.prices);
     		if ('boe' in $$props) boe = $$props.boe;
-    		if ('hpi' in $$props) $$invalidate(18, hpi = $$props.hpi);
+    		if ('hpi' in $$props) $$invalidate(17, hpi = $$props.hpi);
     		if ('breaks' in $$props) $$invalidate(5, breaks = $$props.breaks);
     		if ('colour' in $$props) $$invalidate(6, colour = $$props.colour);
     		if ('areaovertime' in $$props) $$invalidate(14, areaovertime = $$props.areaovertime);
-    		if ('pricevalues' in $$props) $$invalidate(19, pricevalues = $$props.pricevalues);
+    		if ('pricevalues' in $$props) $$invalidate(18, pricevalues = $$props.pricevalues);
     		if ('payment' in $$props) $$invalidate(7, payment = $$props.payment);
     		if ('minimum' in $$props) $$invalidate(8, minimum = $$props.minimum);
     		if ('maximum' in $$props) $$invalidate(9, maximum = $$props.maximum);
@@ -128222,7 +128199,7 @@ var app = (function () {
     	}
 
     	$$self.$$.update = () => {
-    		if ($$self.$$.dirty[0] & /*hpi, $areacd, deposit, rate, mortgageTerm, latestHpi, propertyType, prices, pricevalues, breaks*/ 1966143) {
+    		if ($$self.$$.dirty[0] & /*hpi, $areacd, deposit, rate, mortgageTerm, latestHpi, propertyType, prices, pricevalues, breaks*/ 983103) {
     			{
     				if (hpi) {
     					$$invalidate(14, areaovertime = hpi.filter(d => d.code == $areacd).sort((a, b) => a["date.value"] - b["date.value"]));
@@ -128248,7 +128225,7 @@ var app = (function () {
     					$$invalidate(4, prices[d.code] = monthlyrepayments(d[propertyLookup[propertyType]]), prices);
     				});
 
-    				$$invalidate(19, pricevalues = Object.values(prices).filter(d => !isNaN(d)).sort(ascending));
+    				$$invalidate(18, pricevalues = Object.values(prices).filter(d => !isNaN(d)).sort(ascending));
     				$$invalidate(5, breaks = equalIntervalBreaks(pricevalues, 4));
     				$$invalidate(5, breaks[breaks.length - 1] = breaks[breaks.length - 1] + 0.01, breaks);
 
@@ -128266,13 +128243,13 @@ var app = (function () {
     			}
     		}
 
-    		if ($$self.$$.dirty[0] & /*prices, $areacd*/ 1048592) {
+    		if ($$self.$$.dirty[0] & /*prices, $areacd*/ 524304) {
     			if (prices) {
     				$$invalidate(7, payment = prices[$areacd]);
     			}
     		}
 
-    		if ($$self.$$.dirty[0] & /*pricevalues, deposit*/ 524290) {
+    		if ($$self.$$.dirty[0] & /*pricevalues, deposit*/ 262146) {
     			if (pricevalues && deposit) {
     				$$invalidate(8, minimum = max$1([1, Math.floor(pricevalues[0])]));
     				$$invalidate(9, maximum = Math.ceil(pricevalues[pricevalues.length - 1]));
@@ -128292,7 +128269,7 @@ var app = (function () {
     			}
     		}
 
-    		if ($$self.$$.dirty[0] & /*customise, colour, pricevalues, slidermin, slidermax, breaks*/ 531552) {
+    		if ($$self.$$.dirty[0] & /*customise, colour, pricevalues, slidermin, slidermax, breaks*/ 269408) {
     			if (customise && colour) {
     				if (pricevalues.some(v => v < 0)) {
     					let custompricevalues = pricevalues.filter(d => d > slidermin).filter(d => d < slidermax);
@@ -128341,7 +128318,6 @@ var app = (function () {
     		w,
     		areaovertime,
     		setSliderInputs,
-    		getData,
     		rate,
     		hpi,
     		pricevalues,
