@@ -23,13 +23,18 @@
 	let mortgageTerm = 25;
 	let deposit = 30000;
 	let propertyType;
+	let fixedLength=5;
 
 	let boeLookup = {
-		IUMZICQ: "2 year, 60% LTV",
-		IUMBV34: "2 year, 75% LTV",
-		IUMZICR: "2 year, 85% LTV",
-		IUMB482: "2 year, 90% LTV",
-		IUM2WTL: "2 year, 95% LTV",
+		IUMZICQ: {length:2, ltv:0.6},
+		IUMBV34: {length:2, ltv:0.75},
+		IUMZICR: {length:2, ltv:0.85},
+		IUMB482: {length:2, ltv:0.90},
+		IUM2WTL: {length:2, ltv:0.95},
+		IUM5WTL: {length:5, ltv:0.95},
+		IUMZO28: {length:5, ltv:0.90},
+		IUMBV42: {length:5, ltv:0.75},
+		IUMZO27: {length:5, ltv:0.60}
 	};
 
 	let propertyLookup = {
@@ -73,7 +78,8 @@
 		boe = boe.map(function (d) {
 			return {
 				date: timeParse("%d %b %Y")(d.DATE).getTime(),
-				series: boeLookup[d.SERIES],
+				fixedTerm: boeLookup[d.SERIES].length,
+				ltv:boeLookup[d.SERIES].ltv,
 				value: +d.VALUE,
 			};
 		});
@@ -83,19 +89,14 @@
 
 		// find relevant data to latest HPI data
 		let latestBoe = boe
+			.filter((d) => d.fixedTerm == fixedLength)
 			.filter((d) => d.date == latestBoeBeforeHpi)
-			.map(function (d) {
-				return {
-					date: new Date(d.date),
-					series: d.series,
-					value: d.value,
-				};
-			});
+			.sort((a,b)=>a.ltv-b.ltv)
 
 		const rates = latestBoe.flatMap((d) => d.value);
 
 		rate = scaleThreshold()
-			.domain([0.6, 0.75, 0.85, 0.9, 0.95])
+			.domain(latestBoe.flatMap(d=>d.ltv))
 			.range(rates.concat(null));
 
 		latestHpi = hpi.filter((d) => d["date.value"].getTime() == maxHpiDate);
@@ -114,7 +115,7 @@
 				.sort((a, b) => a["date.value"] - b["date.value"]);
 		}
 
-		function monthlyrepayments(price) {
+		function monthlyrepayments(price,areacd) {
 			if(price===null)return "No data"
 			let loan = price - deposit;
 			let ltv = loan / price;
@@ -126,17 +127,21 @@
 			let payment =
 				(loan * (monthlyrate * (1 + monthlyrate) ** term)) /
 				((1 + monthlyrate) ** term - 1);
+
+			// if(areacd=='E08000003')console.log('area',areacd,price,deposit,loan,ourRate,monthlyrate,term,payment)
+
 			if (payment) {
 				return payment;
 			} else {
 				return "out of budget";
 			}
+			
 		}
 
 		if (latestHpi)
 			latestHpi.forEach((d) => {
 				prices[d.code] = monthlyrepayments(
-					d[propertyLookup[propertyType]]
+					d[propertyLookup[propertyType]],d.code
 				);
 			});
 

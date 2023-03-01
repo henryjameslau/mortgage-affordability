@@ -75,7 +75,7 @@
                             {propertyType == "Flat" ? "" : "property"} with a deposit of £{format(",.0f")(deposit)} without a mortgage.</p>
                         {:else}
                             <p>
-                                Typical payments on a 2 year fixed mortgage for an average {propertyType.toLowerCase()}
+                                Typical payments on a 5 year fixed mortgage for an average {propertyType.toLowerCase()}
                                 {propertyType == "Flat" ? "" : "property"} in {thisarea[
                                     "regionName.value"
                                 ]} is £{format(",.0f")(payment)} with a deposit of £{format(
