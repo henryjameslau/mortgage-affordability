@@ -113,6 +113,8 @@
 			disableMouseEvents();
 			areacd.set(e.features[0].properties.AREACD)
 
+			zoomtoarea(e.features[0].properties.AREACD)
+
 			newAREACD = e.features[0].properties.AREACD;
 			if(newAREACD != oldAREACD) {
 				oldAREACD = e.features[0].properties.AREACD;
@@ -121,6 +123,23 @@
 		}
 			
 	};
+
+	function zoomtoarea(code){
+		if(map && geojson){
+			let specificpolygon = geojson.features.filter(function(d) {return d.properties.AREACD == code})
+
+			let specific = bbox(specificpolygon[0].geometry);
+
+			map.fitBounds([[specific[0],specific[1]], [specific[2], specific[3]]], {
+				padding: {top: 50, bottom:600, left: 0, right: 0}
+			});
+		}
+		setTimeout(function(){
+			if(map.getLayer("boundary-line")){
+			map.setFilter("boundary-line", ["==", "AREACD", code])}
+			disableMouseEvents()
+		},1000)
+	}
 
 	function disableMouseEvents() {
 		if(map){
@@ -170,10 +189,13 @@
 			enableMouseEvents() 
 			map.setFilter("boundary-line", ["==", "AREACD", ""]);
 			oldAREACD = "";
+			fitBounds(bounds);
 		}
 	}
 	
-	$: if($areacd==null) resetmap() 
+
+	$: if($areacd==undefined) resetmap() 
+	$: if($areacd) zoomtoarea($areacd)
 	$: bounds = geojson
 		? bbox(geojson)
 		: [

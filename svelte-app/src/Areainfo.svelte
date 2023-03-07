@@ -16,6 +16,8 @@
     let percentageChange;
     let thisarea;
     let textInfoHeight;
+    let stateChange=false;
+
 
     let propertyLookup = {
         Detached: "averagePriceDetached.value",
@@ -32,7 +34,9 @@
     };
 
     $: if (latestHpi && $areacd) {
+        stateChange=true;
         thisarea = latestHpi.filter((d) => d.code == $areacd)[0];
+        setTimeout(function(){stateChange = false;},8)
     }
 
     $: if (areaovertime) {
@@ -69,7 +73,7 @@
         <div class='flex-container'>
             <div id="chart">
           
-                <Chart {areaovertime} {propertyType} height={textInfoHeight}/>
+                <Chart {areaovertime} {propertyType} height={stateChange? 150 : max([150,textInfoHeight])}/>
             </div>
 
             <div bind:clientHeight={textInfoHeight} id="textinfo">

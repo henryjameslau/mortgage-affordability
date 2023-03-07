@@ -57,6 +57,7 @@
             {/if}
         </div>{/if}
     <div class="container">
+        <div class="right"><span>Average monthly mortgage payments</span></div>
         {#each colour.range() as d, i}
             <div class="vflex">
                 <div class="legend-block" style="background-color:{d};" />
@@ -169,14 +170,16 @@
             </div>
             <!--  end vflex -->
         {/each}
-        <div class="right"><span>Average monthly mortgage payments</span></div>
+        
     </div>
 {/if}
 
 <style>
     .right {
-        text-align: end;
+        text-align: start;
         width: 100%;
+        font-weight: bold;
+        padding-bottom:10px;
     }
     span {
         font-size: 14px;

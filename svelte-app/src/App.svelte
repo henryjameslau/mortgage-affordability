@@ -407,6 +407,9 @@
 		<div>Share</div>
 	</div>
 </div> -->
+<p class='small'>
+	Mortgage unavailable are areas where the loan-to-value ratio would exceed 95%. The Bank of England doesn't publish average interest rates for mortgages beyond this threshold.
+</p>
 </main>
 
 
@@ -485,6 +488,11 @@
 	p{
 		font-size: 18px;
 		margin:5px 0 10px 0;
+	}
+
+	p.small{
+		font-size: 14px;
+		margin:10px 20px;
 	}
 
 	#map-container {
