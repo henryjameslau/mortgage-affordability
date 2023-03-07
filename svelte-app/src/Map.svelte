@@ -136,8 +136,8 @@
 		}
 		setTimeout(function(){
 			if(map.getLayer("boundary-line")){
-			map.setFilter("boundary-line", ["==", "AREACD", code])}
-			disableMouseEvents()
+			map.setFilter("boundary-line", ["==", "AREACD", code])
+			disableMouseEvents()}
 		},1000)
 	}
 
@@ -163,7 +163,7 @@
 	}
 
 	function fitBounds(bounds) {
-		if (map) map.fitBounds(bounds, { padding: {bottom:200} });
+		if (map) map.fitBounds(bounds, { padding: {bottom:290} });
 	}
 
 	function setData(prices){
@@ -196,6 +196,7 @@
 
 	$: if($areacd==undefined) resetmap() 
 	$: if($areacd) zoomtoarea($areacd)
+
 	$: bounds = geojson
 		? bbox(geojson)
 		: [
