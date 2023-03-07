@@ -29,8 +29,6 @@
             }))
             .sort((a, b) => a.value.localeCompare(b.value));
     }
-
-    $: console.log($areacd);
 </script>
 
 {#if colour}

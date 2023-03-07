@@ -298,10 +298,10 @@
 
 
 	<div id="inputs">
-		<h1>What are average UK monthly mortgage payments?</h1>
+		<h1>What are average GB monthly mortgage payments?</h1>
 		<p>
-			Fill in some details below to find out how average mortgage payments
-			are changing near you. Click on each area to find out about house
+			Fill in some details below to find out about average mortgage payments
+			near you. Click on each area to find out about house
 			prices.
 		</p>
 		<fieldset>
@@ -334,19 +334,19 @@
 		</fieldset>
 
 		
-		<details class='addtopspace'>
-			<summary>Adjust monthly repayment price range</summary>
+		<div class='addtopspace'>
+			<div class='bold'>Adjust monthly repayment price range</div>
 			<p>
 				Enter the minimum and maximum monthly mortgage payments that
 				suits your budget.
 			</p>
 			<fieldset class='customise'>
 				<div class='flex-h'>
-					<div>
+					<div class='equalspaced'>
 						<MoneyInput bind:value={slidermin} bind:customise={customise} label="Minimum"/>
 					</div>
 	
-					<div>
+					<div class='equalspaced'>
 						<MoneyInput bind:value={slidermax} bind:customise={customise} label="Maximum"/>
 					</div>
 				</div>
@@ -368,7 +368,7 @@
 					/>
 				{/if}
 			</fieldset>
-		</details>
+		</div>
 	</div>
 
 
@@ -396,12 +396,12 @@
 	</div>
 
 </div>
-<div id="footer">
+<!-- <div id="footer">
 	<h3>Use and share</h3>
 	<div style="display:flex; gap:5px;">
 		<div>Share</div>
 	</div>
-</div>
+</div> -->
 </main>
 
 
@@ -437,14 +437,14 @@
 		background-color: #f4f7fa;
 		flex: 0 0 400px;
 		padding:0 24px;
-		height:820px;
+		height:730px;
 		box-sizing: border-box;
 	}
 
 	
 	#results {
 		flex: 1 0 auto;
-		height:820px;
+		height:730px;
 		position: relative;
 	}
 
@@ -479,6 +479,7 @@
 
 	p{
 		font-size: 18px;
+		margin:5px 0 10px 0;
 	}
 
 	#map-container {
@@ -502,7 +503,7 @@
 		position:absolute;
 		top:20px;
 		z-index: 1;
-		color:#A6BFD5;
+		color:#6390B5;
 		padding: 8px 12px 10px 12px;
 		font-size: 16px;
 		font-weight: 600;
@@ -513,17 +514,13 @@
 		background-color: white;
 	}
 
-	summary{
-		font-size: 18px;
-	}
-
 	fieldset{
 		margin:0;
 		border:0;
 		padding:0;
 	}
 
-	summary, fieldset.customise{
+	fieldset.customise{
 		margin-bottom: 15px;
 	}
 

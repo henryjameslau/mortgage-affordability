@@ -54,6 +54,8 @@
     function cleararea() {
         areacd.set(undefined);
     }
+
+
 </script>
 
 {#if $areacd && thisarea}
@@ -65,8 +67,14 @@
         <h3>{propertyType} {propertyType == "Flat" ? "" : "property"} prices in {thisarea["regionName.value"]}</h3>
         <div class='flex-container'>
             <div id="chart">
-                <Chart {areaovertime} {propertyType}/>
+                
+                <Chart {areaovertime} {propertyType}>
+                    <span slot='options'>
+                        Property price
+                    </span>
+                </Chart>
             </div>
+
             <div id="textinfo">
                 {#if thisarea}
                     {#if payment!="out of budget"}
@@ -103,6 +111,7 @@
                     </p>
                 {/if}
             </div>
+            
         </div>
     
     {/if}
@@ -127,7 +136,7 @@
         background-color: white;
     }
 
-    button:focus {
+    button:focus, button:hover {
         box-shadow: 0 0 0 3px orange;
     }
   
