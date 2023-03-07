@@ -110,10 +110,15 @@
 
 		let checkLAcode = new RegExp('([EWSN][0-9]{8})', 'g')
 		let parent = new URLSearchParams(document.location.search).get("parentUrl");
+		let child = window.location.href
+		let childcode = child ? child.split("#")[1]:null
 		let code = parent ? parent.split("#")[1] : null;
 		if (code && checkLAcode.test(code)) {
 			// Action to select area in app using the GSS code "code"
 			areacd.set(code)
+		}
+		if (childcode && checkLAcode.test(childcode)){
+			areacd.set(childcode)
 		}
 	});
 

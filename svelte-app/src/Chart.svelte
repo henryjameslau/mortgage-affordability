@@ -5,6 +5,7 @@
     import {min} from 'd3-array';
     export let areaovertime;
     export let propertyType;
+    export let height;
  
     let propertyLookup = {
 		Detached: "averagePriceDetached.value",

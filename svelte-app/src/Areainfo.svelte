@@ -15,6 +15,7 @@
     let fiveyearsago;
     let percentageChange;
     let thisarea;
+    let textInfoHeight;
 
     let propertyLookup = {
         Detached: "averagePriceDetached.value",
@@ -67,15 +68,11 @@
         <h3>{propertyType} {propertyType == "Flat" ? "" : "property"} prices in {thisarea["regionName.value"]}</h3>
         <div class='flex-container'>
             <div id="chart">
-                
-                <Chart {areaovertime} {propertyType}>
-                    <span slot='options'>
-                        Property price
-                    </span>
-                </Chart>
+          
+                <Chart {areaovertime} {propertyType} height={textInfoHeight}/>
             </div>
 
-            <div id="textinfo">
+            <div bind:clientHeight={textInfoHeight} id="textinfo">
                 {#if thisarea}
                     {#if payment!="out of budget"}
                         {#if payment <0}
