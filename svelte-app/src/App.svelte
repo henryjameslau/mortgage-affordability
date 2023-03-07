@@ -303,7 +303,7 @@
 
 
 	<div id="inputs">
-		<h1>What are average GB monthly mortgage payments?</h1>
+		<h1>What are average Great Britain monthly mortgage payments?</h1>
 		<p>
 			Fill in some details below to find out about average mortgage payments
 			near you. Click on each area to find out about house
