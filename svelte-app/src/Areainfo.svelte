@@ -73,12 +73,12 @@
         <div class='flex-container'>
             <div id="chart">
           
-                <Chart {areaovertime} {propertyType} height={stateChange? 150 : max([150,textInfoHeight])}/>
+                <Chart {areaovertime} {propertyType} height={stateChange ? 0 : textInfoHeight}/>
             </div>
 
             <div bind:clientHeight={textInfoHeight} id="textinfo">
                 {#if thisarea}
-                    {#if payment!="out of budget"}
+                    {#if payment!="Mortgage unavailable"}
                         {#if payment <0}
                             <p>It would be possible to buy an average {propertyType.toLowerCase()}
                             {propertyType == "Flat" ? "" : "property"} with a deposit of £{format(",.0f")(deposit)} without a mortgage.</p>
@@ -146,11 +146,13 @@
         flex-wrap: no-wrap;
         justify-content: space-between;
         gap:20px;
+        align-items: flex-start;
     }
 
     @media (max-width:650px){
         .flex-container{
             flex-direction: column;
+            align-items: stretch;
         }
     }
 
@@ -161,6 +163,12 @@
     #chart, #textinfo{
         flex:1 1 50%;
     }
+
+
+    #textinfo{
+        align-items: flex-start;
+    }
+
     p{
         margin:0;
         margin-bottom: 10px;

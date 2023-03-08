@@ -66,10 +66,10 @@
 			"https://raw.githubusercontent.com/ONSvisual/bank-of-england-flat-data/main/boe.csv",
 			autoType
 		)),
-			(hpi = await csv(
-				"https://raw.githubusercontent.com/ONSvisual/land-registry-flat-data/main/landreg.csv",
-				autoType
-			));
+		(hpi = await csv(
+			"https://raw.githubusercontent.com/ONSvisual/land-registry-flat-data/main/landreg.csv",
+			autoType
+		));
 
 		// find the latest date for HPI data
 		let maxHpiDate = max(hpi, (d) => d["date.value"]).getTime();
@@ -145,7 +145,7 @@
 			if (payment) {
 				return payment;
 			} else {
-				return "out of budget";
+				return "Mortgage unavailable";
 			}
 			
 		}
