@@ -6,6 +6,7 @@
     export let areaovertime;
     export let propertyType;
     export let height = "150px";
+    import {afterUpdate} from 'svelte';
  
     let propertyLookup = {
 		Detached: "averagePriceDetached.value",
@@ -17,8 +18,6 @@
     $:linedata = areaovertime.map(function(d){
         return {date:d['date.value'],'value':d[propertyLookup[propertyType]]};   
     })
-
- 
    
 </script>
 

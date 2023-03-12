@@ -4,6 +4,7 @@
     import { timeFormat } from "d3-time-format";
     import { max, ascending } from "d3-array";
     import { timeYear } from "d3-time";
+    import {afterUpdate} from 'svelte';
 
     import Chart from "./Chart.svelte";
     export let latestHpi;
@@ -16,7 +17,7 @@
     let percentageChange;
     let thisarea;
     let textInfoHeight;
-    let stateChange=false;
+    let infoReady=false;
 
 
     let propertyLookup = {
@@ -34,9 +35,7 @@
     };
 
     $: if (latestHpi && $areacd) {
-        stateChange=true;
         thisarea = latestHpi.filter((d) => d.code == $areacd)[0];
-        setTimeout(function(){stateChange = false;},8)
     }
 
     $: if (areaovertime) {
@@ -60,6 +59,10 @@
         areacd.set(undefined);
     }
 
+    afterUpdate(()=>{
+        if($areacd){infoReady=true}
+        else{infoReady=false}
+    })
 
 </script>
 
@@ -71,9 +74,11 @@
         <button tabindex=0 aria-label="close selected area information" on:click={cleararea} />
         <h3>{propertyType} {propertyType == "Flat" ? "" : "property"} prices in {thisarea["regionName.value"]}</h3>
         <div class='flex-container'>
-            <div id="chart">
-          
-                <Chart {areaovertime} {propertyType} height={stateChange ? 0 : textInfoHeight}/>
+            <div id="chart" style="height:{textInfoHeight}">
+                {#if infoReady}
+                    <Chart {areaovertime} {propertyType} height={textInfoHeight}/>
+                {/if}
+                
             </div>
 
             <div bind:clientHeight={textInfoHeight} id="textinfo">
