@@ -63,11 +63,11 @@
 
 	onMount(async () => {
 		(boe = await csv(
-			"https://raw.githubusercontent.com/ONSvisual/bank-of-england-flat-data/main/boe.csv",
+			"https://raw.githubusercontent.com/ONSdigital/bank-of-england-flat-data/main/boe.csv",
 			autoType
 		)),
 		(hpi = await csv(
-			"https://raw.githubusercontent.com/ONSvisual/land-registry-flat-data/main/landreg.csv",
+			"https://raw.githubusercontent.com/ONSdigital/land-registry-flat-data/main/landreg.csv",
 			autoType
 		));
 
